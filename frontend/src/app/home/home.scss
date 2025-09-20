@@ -1,0 +1,27 @@
+.login-wrap {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  background-color: var(--mat-sys-background);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 360px;
+  padding: 16px;
+  box-shadow: var(--mat-sys-level3);
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 16px;
+  font: var(--mat-sys-headline-small);
+  color: var(--mat-sys-primary);
+}
+
+.full {
+  width: 100%;
+  margin-top: 12px;
+}
