@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">My App</mat-toolbar>
+<!-- <mat-toolbar color="primary">My App</mat-toolbar> -->
 
 <div class="login-wrap">
   <mat-card class="login-card">
@@ -16,6 +16,11 @@
 
     <button mat-raised-button color="primary" class="full">
       <mat-icon>login</mat-icon>&nbsp;Entrar
+    </button>
+
+    <!-- BOTÓN REGISTRO -->
+    <button mat-raised-button color="accent" class="full" (click)="goToRegister()">
+      <mat-icon>person_add</mat-icon>&nbsp;Regístrate ahora
     </button>
   </mat-card>
 </div>

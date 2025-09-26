@@ -1,0 +1,29 @@
+<mat-card class="form-card">
+  <h1>Regístrate ahora</h1>
+
+  <form [formGroup]="registerForm" (ngSubmit)="TryToRegister()" class="form-container" novalidate>
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Nombre</mat-label>
+      <input matInput placeholder="Escribe tu nombre" formControlName="firstName" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Apellidos</mat-label>
+      <input matInput placeholder="Escribe tus apellidos" formControlName="lastName" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" placeholder="Escribe tu correo" formControlName="email" required/>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Contraseña</mat-label>
+      <input matInput type="password" placeholder="Escribe tu contraseña" formControlName="password" />
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" class="full" type="submit">
+      <mat-icon>send</mat-icon>&nbsp;Registrarme CAMBIADO
+    </button>
+  </form>
+</mat-card>
