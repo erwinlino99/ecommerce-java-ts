@@ -1,4 +1,11 @@
 TAREAS -----------
+
+-- HACER UNA CLASE BASEMODEL , DONDE TENGA TODA LA FUNCIONALIDAD , Y UNA VEZ TERMINADA QUE HEREDEN LAS CLASES NORMALES
+-- UNA VEZ EL USUARIO SE DE DE ALTA , QUE le ha redirecion a '/home' . Y hacer el header de redireccion en front para que renderizce
+una cosa u otra :
+-- HACER DIRECTAMETE EL PANEL CONTROL DE NUESTRO E COMMERCE
+
+ -----------
  ✅✅✅✅✅✅✅✅✅
  ❌❌❌❌❌❌❌❌❌
  ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
@@ -33,7 +40,7 @@ Se establecerán rutas públicas y privadas, de modo que el acceso a datos de us
 5. Catálogo de productos
 
 Esta etapa se centra en la parte pública del e-commerce: productos, categorías y marcas.
-Se implementarán endpoints REST para listar marcas (/api/shop_product_brands), productos (/api/shop_products) y obtener detalles individuales (/api/shop_product/{id}).
+Se implementarán endpoints REST para listar marcas (/api/shop_producññt_brands), productos (/api/shop_products) y obtener detalles individuales (/api/shop_product/{id}).
 Se añadirán filtros por categoría, marca y rango de precio.
 El objetivo es que el frontend pueda mostrar el catálogo completo con opciones de búsqueda y filtrado.
 

@@ -1,0 +1,38 @@
+<configuration>
+
+  <!-- === Consola (para ver todo, incluso arranque) === -->
+  <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <!-- === Base de datos (solo tus logs personalizados) === -->
+  <appender name="DB" class="ch.qos.logback.classic.db.DBAppender">
+    <connectionSource class="ch.qos.logback.core.db.DriverManagerConnectionSource">
+      <driverClass>com.mysql.cj.jdbc.Driver</driverClass>
+      <url>jdbc:mysql://localhost:3306/e-commerce?useSSL=false&amp;serverTimezone=Europe/Madrid&amp;allowPublicKeyRetrieval=true</url>
+      <user>root</user>
+      <password>1234</password>
+    </connectionSource>
+
+    <!-- Solo guardar logs a partir de nivel INFO -->
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>INFO</level>
+    </filter>
+
+    <includeCallerData>true</includeCallerData>
+  </appender>
+
+  <!-- === Solo tus clases se guardan en BD === -->
+  <logger name="com.ecommerce.backend" level="INFO" additivity="false">
+    <appender-ref ref="CONSOLE"/>
+    <appender-ref ref="DB"/>
+  </logger>
+
+  <!-- === El resto del sistema solo va a consola === -->
+  <root level="WARN">
+    <appender-ref ref="CONSOLE"/>
+  </root>
+
+</configuration>

@@ -1,4 +1,6 @@
+ng serve 
 
+PARA LEVANTAR EL FRONTEND
  ✅✅✅✅✅✅✅✅✅
  ❌❌❌❌❌❌❌❌❌
  ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
