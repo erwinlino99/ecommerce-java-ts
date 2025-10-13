@@ -3,6 +3,7 @@ package com.ecommerce.backend.models;
 import java.time.LocalDateTime;
 
 public class WebUser {
+
     private Integer id;
     private String name;
     private String lastName;
@@ -20,42 +21,107 @@ public class WebUser {
     public WebUser() {
     }
 
-    public Integer getId() { return id; }
-    public void setId(Integer id) { this.id = id; }
+    public Integer getId() {
+        return id;
+    }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-    public String getLastName() { return lastName; }
-    public void setLastName(String lastName) { this.lastName = lastName; }
+    public String getName() {
+        return name;
+    }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public String getCif() { return cif; }
-    public void setCif(String cif) { this.cif = cif; }
+    public String getLastName() {
+        return lastName;
+    }
 
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-    public LocalDateTime getCreated() { return created; }
-    public void setCreated(LocalDateTime created) { this.created = created; }
+    public String getEmail() {
+        return email;
+    }
 
-    public LocalDateTime getModified() { return modified; }
-    public void setModified(LocalDateTime modified) { this.modified = modified; }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-    public LocalDateTime getDeleted() { return deleted; }
-    public void setDeleted(LocalDateTime deleted) { this.deleted = deleted; }
+    public String getCif() {
+        return cif;
+    }
 
-    public Boolean getIsActive() { return isActive; }
-    public void setIsActive(Boolean isActive) { this.isActive = isActive; }
+    public void setCif(String cif) {
+        this.cif = cif;
+    }
 
-    public Boolean getIsBlocked() { return isBlocked; }
-    public void setIsBlocked(Boolean isBlocked) { this.isBlocked = isBlocked; }
+    public String getPassword() {
+        return password;
+    }
 
-    public LocalDateTime getLastTimeLogin() { return lastTimeLogin; }
-    public void setLastTimeLogin(LocalDateTime lastTimeLogin) { this.lastTimeLogin = lastTimeLogin; }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-    public String getData() { return data; }
-    public void setData(String data) { this.data = data; }
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
+    public LocalDateTime getModified() {
+        return modified;
+    }
+
+    public void setModified(LocalDateTime modified) {
+        this.modified = modified;
+    }
+
+    public LocalDateTime getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(LocalDateTime deleted) {
+        this.deleted = deleted;
+    }
+
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    public Boolean getIsBlocked() {
+        return isBlocked;
+    }
+
+    public void setIsBlocked(Boolean isBlocked) {
+        this.isBlocked = isBlocked;
+    }
+
+    public LocalDateTime getLastTimeLogin() {
+        return lastTimeLogin;
+    }
+
+    public void setLastTimeLogin(LocalDateTime lastTimeLogin) {
+        this.lastTimeLogin = lastTimeLogin;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
 }
