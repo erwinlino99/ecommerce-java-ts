@@ -22,7 +22,11 @@ export class ApiService {
   // ---------- MÉTODOS PÚBLICOS ----------
   get<T>(endpoint: string | Path[], options?: RequestOptions): Observable<T> {
     const { url, opts } = this.prepare(endpoint, undefined, options);
+    // console.log('calling -->',url);
     return this.http.get<T>(url, opts).pipe(catchError(this.handleError));
+  }
+  getRootUrl():String{
+    return this.baseUrl;
   }
 
   post<T>(endpoint: string | Path[], body?: any, options?: RequestOptions): Observable<T> {

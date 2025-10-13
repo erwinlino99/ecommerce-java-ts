@@ -1,0 +1,122 @@
+TAREAS -----------
+ ✅✅✅✅✅✅✅✅✅
+ ❌❌❌❌❌❌❌❌❌
+ ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
+1. Preparación 
+✅✅✅✅✅✅✅✅✅
+En esta primera fase se configurará el entorno de desarrollo tanto para el backend como para el frontend.
+Se crearán las ramas principales del repositorio (main, dev y feature), se añadirán las dependencias necesarias para Spring Boot (Web, JPA, Security, Validation, BCrypt, etc.) y se configurarán los perfiles de entorno (dev, local, prod).
+En el frontend se instalarán Angular Material, Router, HttpClient y los módulos de formularios.
+Finalmente, se verificará que los comandos mvn spring-boot:run y ng serve funcionen correctamente y que ambos entornos se comuniquen por CORS.
+
+2. Base de datos ✅✅✅✅❌❌❌❌
+En esta fase se diseñará y creará la estructura principal de la base de datos MySQL.
+Las tablas iniciales incluirán:
+web_user, shop_product_brand, shop_product_category, shop_product, shop_favorite, shop_cart, shop_cart_item, shop_order, shop_order_item y address.
+Se añadirán registros de ejemplo (semilla) y se configurarán migraciones automáticas mediante Flyway o Liquibase.
+El objetivo es contar con una base de datos sólida y consistente antes de conectar el backend.
+
+3. Conexión Backend – Base de datos
+
+ ✅✅✅✅✅✅✅✅✅
+Aquí se configurará la conexión de Spring Boot con MySQL.
+Se crearán las clases de modelo (entidades), los repositorios JPA y la clase DatabaseConnection con JdbcTemplate para ejecutar consultas directas.
+Se harán pruebas simples, como consultar todas las marcas desde shop_product_brand, verificando que la comunicación entre la aplicación y la base de datos sea correcta.
+
+4. Autenticación y sesiones
+
+En esta fase se implementará el sistema de registro y autenticación de usuarios.
+Se crearán los endpoints /register, /login, /logout y /me.
+Las contraseñas se cifrarán con BCrypt y se utilizarán sesiones gestionadas por Spring Security (sin JWT por el momento).
+Se establecerán rutas públicas y privadas, de modo que el acceso a datos de usuario, carrito o pedidos requiera sesión activa.
+
+5. Catálogo de productos
+
+Esta etapa se centra en la parte pública del e-commerce: productos, categorías y marcas.
+Se implementarán endpoints REST para listar marcas (/api/shop_product_brands), productos (/api/shop_products) y obtener detalles individuales (/api/shop_product/{id}).
+Se añadirán filtros por categoría, marca y rango de precio.
+El objetivo es que el frontend pueda mostrar el catálogo completo con opciones de búsqueda y filtrado.
+
+6. Favoritos
+
+Se permitirá a los usuarios guardar productos como favoritos.
+Se implementarán los endpoints /api/favorites para agregar (POST), eliminar (DELETE) y listar (GET) los productos marcados por cada usuario autenticado.
+La lógica del backend asegurará que no se repita un mismo producto en los favoritos del mismo usuario.
+
+7. Carrito de compra
+
+Aquí se desarrollará la lógica completa del carrito.
+Cada usuario tendrá un carrito activo (shop_cart) que contendrá los productos (shop_cart_item).
+Los endpoints incluirán:
+GET /api/cart para obtener el carrito,
+POST /api/cart/items para añadir productos,
+PATCH /api/cart/items/{id} para modificar cantidades,
+DELETE /api/cart/items/{id} para eliminarlos,
+y POST /api/cart/clear para vaciar el carrito.
+El backend recalculará automáticamente los totales y validará el stock.
+
+8. Pedidos y checkout
+
+En esta fase se gestionará la conversión del carrito en pedido.
+Se implementará un flujo de checkout con dos pasos:
+
+/api/checkout/preview: recalcula precios, stock y totales.
+
+/api/checkout/confirm: crea el registro en shop_order y los ítems en shop_order_item.
+El carrito pasará a estado ORDERED y el pedido podrá simularse como PAID o PENDING.
+Esta fase incluye la gestión básica de direcciones de envío y facturación.
+
+9. Frontend — Angular
+
+Se desarrollarán las vistas principales de la aplicación:
+
+Login y registro de usuario
+
+Listado y detalle de productos
+
+Carrito de compra
+
+Lista de favoritos
+
+Checkout y pedidos del usuario
+
+Se implementarán los servicios AuthService, ProductService, CartService y FavoritesService para comunicar el frontend con el backend.
+También se añadirán guards de rutas (AuthGuard, GuestGuard) y notificaciones con Angular Material (MatSnackBar).
+El sistema de rutas se definirá en app-routing.module.ts.
+
+10. Panel de administración (opcional)
+
+Se añadirá un panel interno para gestionar productos, categorías, marcas y pedidos.
+Permitirá crear, editar y eliminar registros desde un entorno protegido por rol ADMIN.
+También mostrará métricas básicas como ventas y stock.
+
+11. Calidad y seguridad
+
+En esta fase se reforzará la robustez del sistema.
+Se aplicarán validaciones con @NotBlank, @Email, @Min, etc., manejo global de errores con @ControllerAdvice, y registros con Logger.
+Se documentará la API mediante Swagger (springdoc-openapi) y se implementarán pruebas unitarias y de integración.
+También se revisarán cabeceras de seguridad (cookies HttpOnly, SameSite y CORS controlado).
+
+12. DevOps y despliegue
+
+Se crearán los archivos Dockerfile y docker-compose.yml para levantar MySQL, backend y frontend con un solo comando.
+Se configurará un flujo CI/CD en GitHub Actions para automatizar el build, los tests y el despliegue.
+El objetivo es que el entorno sea totalmente reproducible.
+
+13. Mejoras futuras
+
+Implementar JWT en lugar de sesiones.
+
+Añadir sistema de reseñas y valoraciones.
+
+Crear descuentos y cupones.
+
+Internacionalización (multi-idioma).
+
+Integrar pasarelas de pago reales (Stripe, Redsys).
+
+Envío de correos automáticos.
+
+Subida de imágenes a un servicio externo (S3).
+
+Crear una versión PWA o móvil (Ionic).

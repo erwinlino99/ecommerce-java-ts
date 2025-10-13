@@ -6,6 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { ApiService } from '../service/api.service';
+import { WebUser } from '../model_interface/WebUser';
 
 @Component({
   selector: 'app-register-page',
@@ -16,38 +17,59 @@ import { ApiService } from '../service/api.service';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
   ],
   templateUrl: './register-page.html',
   styleUrls: ['./register-page.scss'],
 })
 export class RegisterPage {
+  //FIRST TIME IS A EMPTY ARRAY
+  webUsers: WebUser[] = [];
 
   constructor(private api: ApiService) {}
-
   registerForm = new FormGroup({
     firstName: new FormControl<string>(''),
-    lastName:  new FormControl<string>(''),
-    email:     new FormControl<string>(''),
-    password:  new FormControl<string>(''),
+    lastName: new FormControl<string>(''),
+    email: new FormControl<string>(''),
+    password: new FormControl<string>(''),
   });
 
   TryToRegister(): void {
     const newWebUser = this.registerForm.getRawValue();
-    console.log('DATOS DEL FORMULARIO:', newWebUser);
-
-    // 👉 Llamada de prueba al backend (GET /) que devuelve TEXTO
-    this.api.get<string>('', { responseType: 'text' }).subscribe({
-      next: (txt) => console.log('BACKEND DICE:', txt),
-      error: (err) => console.error('ERROR PING /:', err)
+    const endpoint = 'web_user';
+    //TRYING TO GET ALL THE INFORMATION FROM BBDD AND BINDING TO OUR WEBUSER ARRAYS EMPTY
+    this.api.get<WebUser[]>(endpoint).subscribe({
+      next: (resp) => {
+        this.webUsers = resp;
+        console.log('NEW ->',newWebUser);
+        //TRY TO SEARCH IF THIS newWebUser.email is on this.webUsers if this is in console.log goood else ba
+        console.log('ALL -->', this.webUsers);
+        const userExists = this.webUsers.some(
+          (user) => user.email.toLowerCase() === newWebUser.email?.toLowerCase()
+        );
+        if(!userExists){
+        this.api.post(endpoint, newWebUser).subscribe({
+          next: (resp) => {
+            console.log('📥 Response from backend:', resp);
+            alert('Data sent successfully! Check the console.');
+          },
+          error: (err) => {
+            console.error("Error sending data to backend:', err");
+          },
+        });
+        }
+      },
+      error: (err) => {
+        console.error('ERROR GET /:' + endpoint, err);
+        this.webUsers = [];
+      },
     });
   }
-
-  // (Opcional) botón separado en la vista:
+  
   pingBackend(): void {
     this.api.get<string>('', { responseType: 'text' }).subscribe({
-      next: (txt) => console.log('FROM BACKEND', txt),
-      error: (err) => console.error('ERROR PING /:', err)
+      next: (txt) => console.log('INFO FROM BACKEND :', txt),
+      error: (err) => console.error('ERROR PING /:', err),
     });
   }
 }
