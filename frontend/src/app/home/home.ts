@@ -5,20 +5,60 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
-
-// DECORADOR DEL MISMO COMPONENTE 
+//NEED TO IMPORT FORMGROUP Y FORMCONTROL TO RECOVER OUR INPUTS FROM USER FOR LOGIN IN
+import { FormGroup, FormControl, ReactiveFormsModule, Validator, Validators } from '@angular/forms';
+//IMPORT API SERVICE
+import { ApiService } from '../service/api.service';
+import { LoginWebUser } from '../model_interface/LoginWebUser';
+// DECORADOR DEL MISMO COMPONENTE
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MatToolbarModule, MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule],
+  imports: [
+    ReactiveFormsModule,
+    MatToolbarModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+  ],
   templateUrl: './home.html',
   styleUrls: ['./home.scss'],
 })
 
 //TODAS LAS FUNCIONES QUE HABRAN DENTRO DEL MISMO
 export class Home {
+  emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-  goToRegister(){
+  constructor(private api: ApiService) {
+    
+  }
+  //CREATE A FORMGROUP TO RECOVER THE DATA FROM THE INPUTS
+
+  webUserLoginForm = new FormGroup({
+    email: new FormControl<string>('', [Validators.required, Validators.pattern(this.emailRegex)]),
+    password: new FormControl<string>(''),
+  });
+
+  //FUNCTIONS ->
+  goToHomeApp() {
+    const email = this.webUserLoginForm.get('email')?.value ?? '';
+    const password = this.webUserLoginForm.get('password')?.value ?? 'pepe';
+
+    if (this.emailRegex.test(email) && password.length > 0) {
+      const endpoint = 'login';
+      const LoginWebUser: LoginWebUser = { email, password };
+      console.log('LOGIN WEBUSER ->', LoginWebUser);
+      //POST TO THE BACKEND
+      this.api.post<LoginWebUser>(endpoint, LoginWebUser).subscribe({
+        next(value) {
+          console.log('BBDD RESPONDE', value);
+        },
+      });
+    }
+  }
+  goToRegister() {
     window.location.href = '/register';
   }
 }

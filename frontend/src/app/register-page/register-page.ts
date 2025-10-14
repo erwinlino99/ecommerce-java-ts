@@ -25,8 +25,9 @@ import { WebUser } from '../model_interface/WebUser';
 export class RegisterPage {
   //FIRST TIME IS A EMPTY ARRAY
   webUsers: WebUser[] = [];
+  constructor(private api: ApiService) {
 
-  constructor(private api: ApiService) {}
+  }
   registerForm = new FormGroup({
     firstName: new FormControl<string>(''),
     lastName: new FormControl<string>(''),
@@ -41,22 +42,22 @@ export class RegisterPage {
     this.api.get<WebUser[]>(endpoint).subscribe({
       next: (resp) => {
         this.webUsers = resp;
-        console.log('NEW ->',newWebUser);
+        console.log('NEW ->', newWebUser);
         //TRY TO SEARCH IF THIS newWebUser.email is on this.webUsers if this is in console.log goood else ba
         console.log('ALL -->', this.webUsers);
         const userExists = this.webUsers.some(
           (user) => user.email.toLowerCase() === newWebUser.email?.toLowerCase()
         );
-        if(!userExists){
-        this.api.post(endpoint, newWebUser).subscribe({
-          next: (resp) => {
-            console.log('📥 Response from backend:', resp);
-            alert('Data sent successfully! Check the console.');
-          },
-          error: (err) => {
-            console.error("Error sending data to backend:', err");
-          },
-        });
+        if (!userExists) {
+          this.api.post(endpoint, newWebUser).subscribe({
+            next: (resp) => {
+              console.log('📥 Response from backend:', resp);
+              alert('Data sent successfully! Check the console.');
+            },
+            error: (err) => {
+              console.error("Error sending data to backend:', err");
+            },
+          });
         }
       },
       error: (err) => {
@@ -65,7 +66,6 @@ export class RegisterPage {
       },
     });
   }
-  
   pingBackend(): void {
     this.api.get<string>('', { responseType: 'text' }).subscribe({
       next: (txt) => console.log('INFO FROM BACKEND :', txt),

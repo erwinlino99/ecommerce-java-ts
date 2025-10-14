@@ -1,5 +1,8 @@
 package com.ecommerce.backend.rest_controllers;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 )
 public class HelloWorld {
     @GetMapping("/")
-    public String ok() {
-        return "JAVA ENVIRONMENT IS UP AND RUNNING";
+  public String ok() {
+        LocalDateTime now = LocalDateTime.now();
+        String formattedTime = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        return "Ok.JAVA ENVIRONMENT IS UP AND RUNNING :<br> Current Time: " + formattedTime;
     }
 }
