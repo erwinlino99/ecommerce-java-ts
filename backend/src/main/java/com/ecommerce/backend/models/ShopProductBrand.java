@@ -2,7 +2,7 @@ package com.ecommerce.backend.models;
 
 import java.time.LocalDateTime;
 
-public class ShopProductBrand {
+public class ShopProductBrand extends BaseModel{
 
     private Integer id;
     private String name;
@@ -12,9 +12,10 @@ public class ShopProductBrand {
     private Boolean isActive;
 
     public ShopProductBrand() {
+        super("shop_product_brand","spb");
     }
-
     public ShopProductBrand(Integer id, String name, LocalDateTime created, LocalDateTime modified, LocalDateTime deleted, Boolean isActive) {
+     super("shop_product_brand","spb");
         this.id = id;
         this.name = name;
         this.created = created;
