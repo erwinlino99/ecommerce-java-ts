@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import com.ecommerce.backend.models.WebUser;
 
 @RestController
 public class WebUserController {
@@ -24,32 +25,18 @@ public class WebUserController {
 
     @GetMapping("/web_user")
     public List<Map<String, Object>> getAllWebUsers() {
-        return jdbc.queryForList("SELECT * FROM `web_user`");
+        WebUser wb = new WebUser();
+        return wb.getAll();
     }
 
     @PostMapping("/web_user")
     public boolean tryToRegister(@RequestBody Map<String, Object> newUser) {
-        // TRY CATH ARE COMMENTED , WE NEED TO DEBUG 'newUser' 
-        log.info("NEW WEB USER INFO> {} ", newUser);
-        try {
-            //NEED TO ENCRYP INFORMATION FOR SECURUTY
-            String password = String.valueOf(newUser.get("password"));
-            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-            String encodePassWord = encoder.encode(password);
-            String sql = """
-            INSERT INTO web_user (name, last_name, email, password, created)
-            VALUES (?, ?, ?, ?, NOW()) """;
-            jdbc.update(sql,
-                    newUser.get("firstName"),
-                    newUser.get("lastName"),
-                    newUser.get("email"),
-                    encodePassWord
-            );
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+        log.info("WEB USER : {} ", newUser);
+        BCryptPasswordEncoder encoder= new BCryptPasswordEncoder();
+        String passwordEncoded=encoder.encode(String.valueOf(newUser.get("password")));
+        newUser.put("password", passwordEncoded);
+        WebUser wb = new WebUser();
+        return wb.createNewRecord(newUser);
     }
 
     @PostMapping("/login")

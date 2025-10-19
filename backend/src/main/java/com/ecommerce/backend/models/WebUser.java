@@ -2,7 +2,7 @@ package com.ecommerce.backend.models;
 
 import java.time.LocalDateTime;
 
-public class WebUser  {
+public class WebUser extends BaseModel{
 
     private Integer id;
     private String name;
@@ -19,6 +19,7 @@ public class WebUser  {
     private String data;
 
     public WebUser() {
+        super("web_user","wu");
     }
 
     public Integer getId() {

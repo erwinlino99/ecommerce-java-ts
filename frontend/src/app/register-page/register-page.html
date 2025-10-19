@@ -4,12 +4,12 @@
   <form [formGroup]="registerForm" (ngSubmit)="TryToRegister()" class="form-container" novalidate>
     <mat-form-field appearance="outline" class="full">
       <mat-label>Nombre</mat-label>
-      <input matInput placeholder="Escribe tu nombre" formControlName="firstName" required/>
+      <input matInput placeholder="Escribe tu nombre" formControlName="name" required/>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full">
       <mat-label>Apellidos</mat-label>
-      <input matInput placeholder="Escribe tus apellidos" formControlName="lastName" required />
+      <input matInput placeholder="Escribe tus apellidos" formControlName="last_name" required />
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full">

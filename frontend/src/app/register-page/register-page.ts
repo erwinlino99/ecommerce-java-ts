@@ -29,13 +29,14 @@ export class RegisterPage {
 
   }
   registerForm = new FormGroup({
-    firstName: new FormControl<string>(''),
-    lastName: new FormControl<string>(''),
+    name: new FormControl<string>(''),
+    last_name: new FormControl<string>(''),
     email: new FormControl<string>(''),
     password: new FormControl<string>(''),
   });
 
   TryToRegister(): void {
+    //THIS BAD ASF , NOT USING WEBUSER INTERFACE
     const newWebUser = this.registerForm.getRawValue();
     const endpoint = 'web_user';
     //TRYING TO GET ALL THE INFORMATION FROM BBDD AND BINDING TO OUR WEBUSER ARRAYS EMPTY
