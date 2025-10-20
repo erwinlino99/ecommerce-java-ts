@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { ApiService } from '../service/api.service';
 import { WebUser } from '../model_interface/WebUser';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-page',
@@ -25,9 +26,7 @@ import { WebUser } from '../model_interface/WebUser';
 export class RegisterPage {
   //FIRST TIME IS A EMPTY ARRAY
   webUsers: WebUser[] = [];
-  constructor(private api: ApiService) {
-
-  }
+  constructor(private api: ApiService, private router: Router) {}
   registerForm = new FormGroup({
     name: new FormControl<string>(''),
     last_name: new FormControl<string>(''),
@@ -36,7 +35,7 @@ export class RegisterPage {
   });
 
   TryToRegister(): void {
-    //THIS BAD ASF , NOT USING WEBUSER INTERFACE
+    //TODO THIS BAD ASF , NOT USING WEBUSER INTERFACE
     const newWebUser = this.registerForm.getRawValue();
     const endpoint = 'web_user';
     //TRYING TO GET ALL THE INFORMATION FROM BBDD AND BINDING TO OUR WEBUSER ARRAYS EMPTY

@@ -1,0 +1,8 @@
+<mat-card class="home-card" *ngIf="!loading">
+  <h1>Home</h1>
+
+  <p *ngIf="userId">Sesión iniciada. ID de usuario: <strong>{{ userId }}</strong></p>
+</mat-card> 
+<mat-card *ngIf="loading">
+  <p>Cargando…</p>
+</mat-card>

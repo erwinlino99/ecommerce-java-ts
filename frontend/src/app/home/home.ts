@@ -10,6 +10,9 @@ import { FormGroup, FormControl, ReactiveFormsModule, Validator, Validators } fr
 //IMPORT API SERVICE
 import { ApiService } from '../service/api.service';
 import { LoginWebUser } from '../model_interface/LoginWebUser';
+import { SessionService } from '../service/session.service';
+import { Router } from '@angular/router';
+type LoginResponse = { id: number; [k: string]: any };
 // DECORADOR DEL MISMO COMPONENTE
 @Component({
   selector: 'app-home',
@@ -31,8 +34,10 @@ import { LoginWebUser } from '../model_interface/LoginWebUser';
 export class Home {
   emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-  constructor(private api: ApiService) {
-    
+  constructor(
+    private api: ApiService,
+    private router:Router,
+    private session: SessionService) {
   }
   //CREATE A FORMGROUP TO RECOVER THE DATA FROM THE INPUTS
 
@@ -44,16 +49,17 @@ export class Home {
   //FUNCTIONS ->
   goToHomeApp() {
     const email = this.webUserLoginForm.get('email')?.value ?? '';
-    const password = this.webUserLoginForm.get('password')?.value ?? 'pepe';
-
+    const password = this.webUserLoginForm.get('password')?.value ?? '-';
     if (this.emailRegex.test(email) && password.length > 0) {
       const endpoint = 'login';
-      const LoginWebUser: LoginWebUser = { email, password };
+      let LoginWebUser: LoginWebUser = {id:3,email, password };
       console.log('LOGIN WEBUSER ->', LoginWebUser);
       //POST TO THE BACKEND
       this.api.post<LoginWebUser>(endpoint, LoginWebUser).subscribe({
-        next(value) {
-          console.log('BBDD RESPONDE', value);
+        next:(value)=> {
+          LoginWebUser.id=value.id;
+          this.session.setUserId(value.id);  
+          this.router.navigate(['/home']);   
         },
       });
     }
