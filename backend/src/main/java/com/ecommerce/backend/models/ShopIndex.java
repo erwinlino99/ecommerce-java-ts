@@ -21,6 +21,8 @@ public class ShopIndex {
 
     @Column(nullable = false, length = 255)
     private String name;
+    @Column(nullable = false, length = 255)
+    private String path;
 
     @Column(columnDefinition = "TEXT")
     private String description;
@@ -46,6 +48,12 @@ public class ShopIndex {
     // getters & setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
+    public void setPath(String path){
+        this.path=path;
+    }
+    public String getPath(){
+        return this.path;
+    }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }

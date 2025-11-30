@@ -1,12 +1,12 @@
-<mat-card class="home-card" >
+<mat-card class="home-card">
   <h3>Bienvenido {{ webUser?.name }}</h3>
   <div class="header-menu">
-    <button mat-button *ngFor="let item of shopIndex">
+    <button
+      mat-button
+      *ngFor="let item of shopIndex"
+      [routerLink]="['/', item.path]"
+    >
       {{ item.name }}
     </button>
   </div>
 </mat-card>
-<!-- 
-<mat-card *ngIf="loading">
-  <p>Recuperando Información : Cargando…</p>
-</mat-card> -->

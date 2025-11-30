@@ -7,11 +7,12 @@ import { SessionService } from '../service/session.service';
 import { ApiService } from '../service/api.service';
 import { WebUser } from '../model_interface/WebUser';
 import { ShopIndex } from '../model_interface/ShopIndex';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule],
+  imports: [CommonModule, MatCardModule, MatButtonModule,RouterLink],
   templateUrl: './home-page.html',
   styleUrls: ['./home-page.scss'],
 })
@@ -39,6 +40,7 @@ export class HomePage implements OnInit {
     this.api.get<ShopIndex[]>('shop_index').subscribe({
       next: (items) => {
         this.shopIndex = items;
+        console.log("Index",this.shopIndex)
       },
       error: (err) => {
         console.error('Error loading shop_index:', err);

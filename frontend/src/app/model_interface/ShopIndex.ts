@@ -3,5 +3,6 @@ export interface ShopIndex {
   name: string;
   description: string;
   created: string;           
-  modified: string;              
+  modified: string;
+  path : string;              
 }
