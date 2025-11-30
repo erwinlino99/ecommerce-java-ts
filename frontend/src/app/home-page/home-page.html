@@ -1,8 +1,11 @@
 <mat-card class="home-card" *ngIf="!loading">
-  <h1>Home</h1>
+  <div class="header-menu">
+    <button mat-button *ngFor="let item of shopIndex">
+      {{ item.name }}
+    </button>
+  </div>
+</mat-card>
 
-  <p *ngIf="userId">Sesión iniciada. ID de usuario: <strong>{{ userId }}</strong></p>
-</mat-card> 
 <mat-card *ngIf="loading">
-  <p>Cargando…</p>
+  <p>Recuperando Información : Cargando…</p>
 </mat-card>

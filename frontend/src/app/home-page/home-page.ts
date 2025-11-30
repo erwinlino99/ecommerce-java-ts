@@ -6,6 +6,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { SessionService } from '../service/session.service';
 import { ApiService } from '../service/api.service';
 import { WebUser } from '../model_interface/WebUser';
+import { ShopIndex } from '../model_interface/ShopIndex';
+
 @Component({
   selector: 'app-home-page',
   standalone: true,
@@ -18,32 +20,41 @@ export class HomePage implements OnInit {
   user: WebUser | null = null;
   loading = false;
   errorMsg = '';
-  constructor(
-    private session: SessionService,
-    private api: ApiService,
-    private router: Router
-  ) {}
+  shopIndex : ShopIndex[]=[];
+
+  constructor(private session: SessionService, private api: ApiService, private router: Router) {
+  }
+
   ngOnInit(): void {
-    console.log('[HomePage] sessionStorage ->', sessionStorage);
     this.userId = this.session.getUserId();
-    console.log('[HomePage] userId ->', this.userId);
-    // 1) Recuperar el id desde la "sesión" (sessionStorage)
-    this.userId = this.session.getUserId();
-    // 2) Si no hay sesión, volver al home original app
     if (!this.userId) {
       this.router.navigate(['/']);
       return;
     }
-    // 3) (Opcional) Cargar datos del usuario desde el backend
-    // ESTO SE LA INVENTADO XDDDDD
-    // this.fetchUser();
+    this.fetchUser(this.userId);
+    this.fetchShopIndex();
   }
-  private fetchUser(): void {
+
+  private fetchShopIndex(): void {
+    this.api.get<ShopIndex[]>('shop-index').subscribe({   // 👈 ajusta string si tu ApiService usa otro path
+      next: (items) => {
+        this.shopIndex = items;
+        console.log("INIDICES -->",this.shopIndex)
+      },
+      error: (err) => {
+        console.error('Error loading shop_index:', err);
+        this.errorMsg = 'No se pudo cargar el menú principal.';
+      },
+    });
+  }
+  private fetchUser(userId:number): void {
     this.loading = true;
     this.errorMsg = '';
-    // Como no tenemos endpoint /web_user/:id, traemos todos y filtramos en el front.
-    this.api.get<WebUser[]>('web_user').subscribe({
+    console.log("ID DE MI USUARIO->",userId)
+    //AHORA NECESITAMOS HACER UN GET CON EL userId y sacar toda la informacion y asiganarala al interfaz de WebUser
+    this.api.get<WebUser[]>(['web_user',userId]).subscribe({
       next: (list) => {
+        console.log("-->",list)
         this.user = list.find((u) => Number(u.id) === this.userId) ?? null;
         this.loading = false;
       },
@@ -54,6 +65,7 @@ export class HomePage implements OnInit {
       },
     });
   }
+
   logout(): void {
     this.session.clear();
     this.router.navigate(['/register']);
