@@ -17,7 +17,7 @@ import { ShopIndex } from '../model_interface/ShopIndex';
 })
 export class HomePage implements OnInit {
   userId: number | null = null;
-  user: WebUser | null = null;
+  webUser: WebUser | null = null;
   loading = false;
   errorMsg = '';
   shopIndex : ShopIndex[]=[];
@@ -36,10 +36,9 @@ export class HomePage implements OnInit {
   }
 
   private fetchShopIndex(): void {
-    this.api.get<ShopIndex[]>('shop-index').subscribe({   // 👈 ajusta string si tu ApiService usa otro path
+    this.api.get<ShopIndex[]>('shop_index').subscribe({
       next: (items) => {
         this.shopIndex = items;
-        console.log("INIDICES -->",this.shopIndex)
       },
       error: (err) => {
         console.error('Error loading shop_index:', err);
@@ -50,13 +49,10 @@ export class HomePage implements OnInit {
   private fetchUser(userId:number): void {
     this.loading = true;
     this.errorMsg = '';
-    console.log("ID DE MI USUARIO->",userId)
-    //AHORA NECESITAMOS HACER UN GET CON EL userId y sacar toda la informacion y asiganarala al interfaz de WebUser
-    this.api.get<WebUser[]>(['web_user',userId]).subscribe({
-      next: (list) => {
-        console.log("-->",list)
-        this.user = list.find((u) => Number(u.id) === this.userId) ?? null;
-        this.loading = false;
+    this.api.get<WebUser>(['web_user',userId]).subscribe({
+      next: (webUserFound) => {
+        this.webUser=webUserFound;
+        console.log("WEBUSER:",this.webUser)
       },
       error: (err) => {
         console.error('Error loading user list:', err);
@@ -70,10 +66,8 @@ export class HomePage implements OnInit {
     this.session.clear();
     this.router.navigate(['/register']);
   }
-  // Ejemplo de acción protegida que requiere sesión
   goToMyProfile(): void {
     if (!this.userId) return;
-    // Aquí no exponemos el id en URL; podrías usar un estado interno si tu ruta lo necesita
     this.router.navigate(['/profile']);
   }
 }

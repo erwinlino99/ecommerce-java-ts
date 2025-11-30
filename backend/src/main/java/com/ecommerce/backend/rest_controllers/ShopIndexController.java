@@ -11,7 +11,7 @@ import com.ecommerce.backend.models.ShopIndex;
 import com.ecommerce.backend.services.ShopIndexService;
 
 @RestController
-@RequestMapping("/shop-index")
+@RequestMapping("/shop_index")
 @CrossOrigin // opcional, si llamas desde frontend en otro dominio/puerto
 public class ShopIndexController {
 
@@ -20,7 +20,7 @@ public class ShopIndexController {
     public ShopIndexController(ShopIndexService shopIndexService) {
         this.shopIndexService = shopIndexService;
     }
-
+    
     @GetMapping
     public List<ShopIndex> getAll() {
         return shopIndexService.getAll();
