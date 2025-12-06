@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -22,8 +24,8 @@ public class ShopProduct {
     @Column
     private String name;
 
-    @Column(name = "short_descrition")
-    private String short_description;
+    @Column(name = "short_description")
+    private String shortDescription;
 
     @Column
     private String description;
@@ -40,8 +42,16 @@ public class ShopProduct {
     @Column(name = "shop_product_brand_id")
     private Integer shopProductBrandId;
 
-    @Column(name = "shop_product_measurement_id")
-    private Integer shopProductMeasurementId;
+    // @ManyToOne
+    // @JoinColumn(name="shop_product_brand_id")
+    // private ShopBrand brand;
+
+    // @Column(name = "shop_product_measurement_id")
+    // private Integer shopProductMeasurementId;
+
+    @ManyToOne
+    @JoinColumn(name="shop_product_measurement_id")
+    private ShopProductMeasurement measurement;
 
     @Column(name = "current_stock")
     private Integer currentStock;
@@ -81,11 +91,11 @@ public class ShopProduct {
     }
 
     public String getShort_description() {
-        return short_description;
+        return shortDescription;
     }
 
-    public void setShort_description(String short_description) {
-        this.short_description = short_description;
+    public void setShort_description(String shortDescription) {
+        this.shortDescription = shortDescription;
     }
 
     public String getDescription() {
@@ -128,12 +138,12 @@ public class ShopProduct {
         this.shopProductBrandId = shopProductBrandId;
     }
 
-    public Integer getShopProductMeasurementId() {
-        return shopProductMeasurementId;
+    public ShopProductMeasurement getShopProductMeasurementId() {
+        return this.measurement;
     }
 
-    public void setShopProductMeasurementId(Integer shopProductMeasurementId) {
-        this.shopProductMeasurementId = shopProductMeasurementId;
+    public void setShopProductMeasurementId(ShopProductMeasurement measurement) {
+        this.measurement = measurement;
     }
 
     public Integer getCurrentStock() {
