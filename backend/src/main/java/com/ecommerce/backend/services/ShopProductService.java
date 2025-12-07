@@ -22,9 +22,14 @@ public class ShopProductService {
         return products.stream().map(p -> new ShopProductDto(
                 p.getId(),
                 p.getName(),
+                p.getDescription(),
+                p.getShortDescription(),
                 p.getPrice(),
                 p.getMeasurementName(),
-                p.getMeasurmentUnit()
+                p.getMeasurmentUnit(),
+                p.getCreated(),
+                p.getModified(),
+                p.getDeleted()
         )).toList();
 
     }

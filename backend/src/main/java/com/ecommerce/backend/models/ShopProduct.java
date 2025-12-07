@@ -88,7 +88,7 @@ public class ShopProduct {
         this.name = name;
     }
 
-    public String getShort_description() {
+    public String getShortDescription() {
         return shortDescription;
     }
 
