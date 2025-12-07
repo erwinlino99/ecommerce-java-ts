@@ -23,8 +23,8 @@ public class ShopProductService {
                 p.getId(),
                 p.getName(),
                 p.getPrice(),
-                p.getMeasurement() != null ? p.getMeasurement().getName() : null,
-                p.getMeasurement() != null ? p.getMeasurement().getUnit() : null
+                p.getMeasurementName(),
+                p.getMeasurmentUnit()
         )).toList();
 
     }
