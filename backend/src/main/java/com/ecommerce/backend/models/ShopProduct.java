@@ -138,11 +138,11 @@ public class ShopProduct {
         this.shopProductBrandId = shopProductBrandId;
     }
 
-    public ShopProductMeasurement getShopProductMeasurementId() {
+    public ShopProductMeasurement getMeasurement() {
         return this.measurement;
     }
 
-    public void setShopProductMeasurementId(ShopProductMeasurement measurement) {
+    public void setMeasurement(ShopProductMeasurement measurement) {
         this.measurement = measurement;
     }
 

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ecommerce.backend.models.ShopProduct;
+import com.ecommerce.backend.dto.ShopProductDto;
 import com.ecommerce.backend.services.ShopProductService;
 
 @RestController
@@ -20,7 +20,7 @@ public class ShopProductController {
     }
 
     @GetMapping("/shop_product")
-    public List<ShopProduct> getAll() {
+    public List<ShopProductDto> getAll() {
         return this.service.getAllRecords();
     }
 
