@@ -25,6 +25,7 @@ public class ShopProductService {
                 p.getDescription(),
                 p.getShortDescription(),
                 p.getPrice(),
+                p.getCurrentStock(),
                 p.getMeasurementName(),
                 p.getMeasurmentUnit(),
                 p.getCreated(),

@@ -1,4 +1,4 @@
-package com.ecommerce.backend.rest_controllers;
+package com.ecommerce.backend.controllers;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;

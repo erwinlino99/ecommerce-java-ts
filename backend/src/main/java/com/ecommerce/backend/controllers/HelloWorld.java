@@ -1,4 +1,4 @@
-package com.ecommerce.backend.rest_controllers;
+package com.ecommerce.backend.controllers;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

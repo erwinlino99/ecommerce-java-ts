@@ -9,18 +9,20 @@ public class ShopProductDto {
     private final String description;
     private final String shortDescription;
     private final double price;
+    private final Integer currentStock;
     private final String measurementName;
     private final Integer measurementUnit;
     private final LocalDateTime created;
     private final LocalDateTime modified;
     private final LocalDateTime deleted;
 
-    public ShopProductDto(Integer id, String name, String description, String shortDescription, double price, String measurementName, Integer measurementUnit, LocalDateTime created, LocalDateTime modified, LocalDateTime deleted) {
+    public ShopProductDto(Integer id, String name, String description, String shortDescription, double price,Integer currentStock, String measurementName, Integer measurementUnit, LocalDateTime created, LocalDateTime modified, LocalDateTime deleted) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.shortDescription = shortDescription;
         this.price = price;
+        this.currentStock=currentStock;
         this.measurementName = measurementName;
         this.measurementUnit = measurementUnit;
         this.created = created;
@@ -66,6 +68,10 @@ public class ShopProductDto {
 
     public LocalDateTime getDeleted() {
         return this.deleted;
+    }
+    
+    public Integer getCurrentStock(){
+        return this.currentStock;
     }
 
 }

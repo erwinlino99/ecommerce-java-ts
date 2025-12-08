@@ -1,4 +1,4 @@
-package com.ecommerce.backend.rest_controllers;
+package com.ecommerce.backend.controllers;
 
 import java.util.List;
 import java.util.Map;

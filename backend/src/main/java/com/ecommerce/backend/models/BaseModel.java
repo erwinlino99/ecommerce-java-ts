@@ -7,7 +7,7 @@ import java.util.*;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.ecommerce.backend.config.SpringContext;
-import com.ecommerce.backend.rest_controllers.DatabaseConnection;
+import com.ecommerce.backend.controllers.DatabaseConnection;
 
 public class BaseModel {
 
