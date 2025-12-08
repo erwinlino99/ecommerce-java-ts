@@ -36,30 +36,58 @@ public class ShopCart {
     @Column
     private LocalDateTime created;
 
-    public ShopCart() {
-
-    }
+    public ShopCart() {}
 
     public Integer getId() {
         return this.id;
     }
 
-    public Integer getWebUserId() {
-        return this.webUser.getId();
+    public NewWebUser getWebUser() {
+        return this.webUser;
+    }
+
+    public void setWebUser(NewWebUser webUser) {
+        this.webUser = webUser;
+    }
+
+    public ShopCartStatus getShopCartStatus() {
+        return shopCartStatus;
+    }
+
+    public void setShopCartStatus(ShopCartStatus shopCartStatus) {
+        this.shopCartStatus = shopCartStatus;
     }
 
     public Double getTotalAmount() {
         return this.totalAmount;
     }
 
+    public void setTotalAmount(Double totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
     public Integer getTotalItems() {
         return this.totalItems;
     }
-    public LocalDateTime getCreated(){
-        return this.created;
-    }
-    public String getCartStatus(){
-        return this.shopCartStatus.getName();
+
+    public void setTotalItems(Integer totalItems) {
+        this.totalItems = totalItems;
     }
 
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
+    public LocalDateTime getCreated() {
+        return this.created;
+    }
+
+    // Helpers opcionales
+    public Integer getWebUserId() {
+        return webUser != null ? webUser.getId() : null;
+    }
+
+    public String getCartStatus() {
+        return shopCartStatus != null ? shopCartStatus.getName() : null;
+    }
 }

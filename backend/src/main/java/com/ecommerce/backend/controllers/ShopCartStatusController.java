@@ -15,7 +15,7 @@ import com.ecommerce.backend.services.ShopCartStatusService;
 @CrossOrigin
 public class ShopCartStatusController {
 
-    private ShopCartStatusService service;
+    private final ShopCartStatusService service;
 
     public ShopCartStatusController(ShopCartStatusService service){
         this.service=service;

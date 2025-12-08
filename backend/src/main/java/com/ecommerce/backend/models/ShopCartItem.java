@@ -31,11 +31,15 @@ public class ShopCartItem {
     @Column(name = "unit_price")
     private Double unitPrice;
 
-    @Column(name = "sub_total")
+    @Column(name = "subtotal")
     private Double subTotal;
 
     public ShopCartItem() {
 
+    }
+
+    public void setShopCart(ShopCart shopCart) {
+        this.shopCart = shopCart;
     }
 
     public Integer getId() {
@@ -46,8 +50,16 @@ public class ShopCartItem {
         return this.shopCart.getId();
     }
 
+    public void setShopProduct(ShopProduct shopProduct) {
+        this.shopProduct = shopProduct;
+    }
+
     public Integer getShopProductId() {
         return this.shopProduct.getId();
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     public Integer getQuantity() {
