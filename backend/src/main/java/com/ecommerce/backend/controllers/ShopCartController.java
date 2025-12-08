@@ -22,13 +22,13 @@ public class ShopCartController {
         this.cartService = cartService;
     }
 
-    // POST /shop-cart/{webUserId}/add/{productId}?quantity=7
     @PostMapping("/{webUserId}/add/{productId}")
     public ResponseEntity<ShopCart> addProductToCart(
             @PathVariable Integer webUserId,
             @PathVariable Integer productId,
             @RequestParam(defaultValue = "1") Integer quantity
     ) {
+        //LLAMADO A LA LOGICA DEL CARRITO 
         ShopCart cart = cartService.addProduct(webUserId, productId, quantity);
         return ResponseEntity.ok(cart);
     }

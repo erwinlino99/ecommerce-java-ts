@@ -165,10 +165,29 @@ public class ShopProduct {
     }
 
     public double getPrice() {
-        return price;
+        return this.price;
     }
 
     public void setPrice(double price) {
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return "ShopProduct{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + ", shortDescription='" + shortDescription + '\''
+                + ", description='" + description + '\''
+                + ", created=" + created
+                + ", modified=" + modified
+                + ", deleted=" + deleted
+                + ", shopProductBrandId=" + shopProductBrandId
+                + ", measurementName=" + getMeasurementName()
+                + ", measurementUnit=" + getMeasurmentUnit()
+                + ", currentStock=" + currentStock
+                + ", price=" + price
+                + '}';
+    }
+
 }

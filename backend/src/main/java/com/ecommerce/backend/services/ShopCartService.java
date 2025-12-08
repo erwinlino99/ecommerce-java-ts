@@ -2,6 +2,8 @@ package com.ecommerce.backend.services;
 
 import java.time.LocalDateTime;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.ecommerce.backend.models.ShopCart;
@@ -18,6 +20,7 @@ import jakarta.transaction.Transactional;
 @Service
 public class ShopCartService {
 
+    private static final Logger log = LoggerFactory.getLogger(ShopCartService.class);
     private final ShopCartRepository cartRepo;
     private final ShopCartItemRepository cartItemRepo;
     private final ShopProductRepository shopProductRepo;
@@ -41,7 +44,6 @@ public class ShopCartService {
                     cart.setWebUser(user);
                     cart.setTotalItems(0);
                     cart.setTotalAmount(0.0);
-
                     ShopCartStatus status = new ShopCartStatus();
                     status.setId(1);
                     cart.setShopCartStatus(status);
@@ -53,24 +55,39 @@ public class ShopCartService {
 
     @Transactional
     public ShopCart addProduct(Integer webUserId, Integer shopProductId, int quantity) {
-        ShopCart cart = getOrCreateCart(webUserId);
 
+        ShopCart currentCart = getOrCreateCart(webUserId);
         ShopProduct product = shopProductRepo.findById(shopProductId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
+        log.info("PRODUCT ADDED : {}", product.toString());
         ShopCartItem item = cartItemRepo
-                .findByShopCart_IdAndShopProduct_Id(cart.getId(), shopProductId)
+                .findByShopCart_IdAndShopProduct_Id(currentCart.getId(), shopProductId)
                 .orElseGet(() -> {
-                    ShopCartItem newItem = new ShopCartItem();
-                    newItem.setShopCart(cart);
-                    newItem.setShopProduct(product);
-                    newItem.setQuantity(0);
-                    return newItem;
+                    ShopCartItem shopCartItem = new ShopCartItem();
+                    shopCartItem.setShopCart(currentCart);
+                    shopCartItem.setShopProduct(product);
+                    shopCartItem.setQuantity(0);
+                    shopCartItem.setUnitPrice(product.getPrice());
+                    currentCart.getItems().add(shopCartItem);
+                    return shopCartItem;
                 });
-
         item.setQuantity(item.getQuantity() + quantity);
+        item.setSubtotal(item.getQuantity() * product.getPrice());
+        //VOLVEMOS A RECALCULAR EL CARRO
+        this.recalculateShopCart(currentCart);
         cartItemRepo.save(item);
+        return currentCart;
+    }
 
-        return cart;
+    private void recalculateShopCart(ShopCart shopCart) {
+        int totalItems = 0;
+        double totalAmount = 0;
+        for (ShopCartItem item : shopCart.getItems()) {
+            totalItems = totalItems + item.getQuantity();
+            totalAmount = totalAmount + item.getSubtotal();
+        }
+        shopCart.setTotalAmount(totalAmount);
+        shopCart.setTotalItems(totalItems);
     }
 
 }

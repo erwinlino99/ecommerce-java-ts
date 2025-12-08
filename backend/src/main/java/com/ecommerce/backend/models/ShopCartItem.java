@@ -32,7 +32,7 @@ public class ShopCartItem {
     private Double unitPrice;
 
     @Column(name = "subtotal")
-    private Double subTotal;
+    private Double subtotal;
 
     public ShopCartItem() {
 
@@ -70,8 +70,16 @@ public class ShopCartItem {
         return this.unitPrice;
     }
 
-    public Double getSubTotal() {
-        return this.subTotal;
+    public void setUnitPrice(double unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+
+    public Double getSubtotal() {
+        return this.subtotal;
+    }
+
+    public void setSubtotal(double subtotal) {
+        this.subtotal = subtotal;
     }
 
 }
