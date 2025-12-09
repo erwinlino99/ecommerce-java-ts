@@ -25,7 +25,7 @@ public class ShopCart {
 
     //PONEMOS LA RELACION DE UNO A MUCHOS DE SHOP_CART A SHOP_CART_ITEMS
     @OneToMany(mappedBy = "shopCart", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ShopCartItem> shopCartItems = new ArrayList();
+    private final List<ShopCartItem> shopCartItems = new ArrayList();
 
     @ManyToOne
     @JoinColumn(name = "web_user_id")

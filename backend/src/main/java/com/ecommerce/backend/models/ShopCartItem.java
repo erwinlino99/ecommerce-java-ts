@@ -34,6 +34,8 @@ public class ShopCartItem {
     @Column(name = "subtotal")
     private Double subtotal;
 
+    private String productName;
+
     public ShopCartItem() {
 
     }
@@ -58,10 +60,12 @@ public class ShopCartItem {
         return this.shopProduct.getId();
     }
 
+    public ShopProduct getShopProduct() {
+        return this.shopProduct;
+    }
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
-
     public Integer getQuantity() {
         return this.quantity;
     }
@@ -80,6 +84,14 @@ public class ShopCartItem {
 
     public void setSubtotal(double subtotal) {
         this.subtotal = subtotal;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getProductName() {
+        return this.productName;
     }
 
 }

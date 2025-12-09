@@ -1,6 +1,7 @@
 package com.ecommerce.backend.services;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,6 +69,7 @@ public class ShopCartService {
                     shopCartItem.setShopProduct(product);
                     shopCartItem.setQuantity(0);
                     shopCartItem.setUnitPrice(product.getPrice());
+                    shopCartItem.setProductName(product.getName());
                     currentCart.getItems().add(shopCartItem);
                     return shopCartItem;
                 });
@@ -90,4 +92,26 @@ public class ShopCartService {
         shopCart.setTotalItems(totalItems);
     }
 
+    @Transactional
+    public boolean tryToBuyItems(ShopCart cart) {
+        List<ShopCartItem> items = cart.getItems();
+        for (ShopCartItem item : items) {
+            ShopProduct product = item.getShopProduct();
+            int currentStock = product.getCurrentStock();
+            int quantity = item.getQuantity();
+            if (quantity > currentStock) {
+                log.info("\u001B[36m No HAY STOCK-> {}\u001B[0m");
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    @Transactional
+    public boolean prepareOrder(ShopCart currentCart) {
+        // ShopOrder shopOrder = new ShopOrder();
+
+
+        return true;
+    }
 }
