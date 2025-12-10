@@ -38,7 +38,7 @@ public class ShopCartController {
     }
 
     @PostMapping("/web-user-id={webUserId}")
-    public boolean butCart(@PathVariable Integer webUserId) {
+    public boolean purcharseCart(@PathVariable Integer webUserId) {
         ShopCart currentCart = this.cartService.getOrCreateCart(webUserId);
         if (this.cartService.tryToBuyItems(currentCart)) {
             this.cartService.prepareOrder(currentCart);

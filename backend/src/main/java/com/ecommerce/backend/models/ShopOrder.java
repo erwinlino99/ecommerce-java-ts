@@ -27,7 +27,7 @@ public class ShopOrder {
     private NewWebUser webUser;
 
     @ManyToOne
-    @JoinColumn(name = "shop_oder_status_id", nullable = false)
+    @JoinColumn(name = "shop_order_status_id", nullable = false)
     private ShopOrderStatus shopOrderStatus;
 
     @Column(name = "total_amount", nullable = false)
@@ -37,10 +37,14 @@ public class ShopOrder {
     private Integer totalItems;
 
     @OneToMany(mappedBy = "shopOrder", cascade = CascadeType.ALL, orphanRemoval = true)
-    private final List<ShopOrderItem> shopOrderItems = new ArrayList();
+    private List<ShopOrderItem> shopOrderItems = new ArrayList();
 
     public ShopOrder() {
 
+    }
+
+    public void setWebUser(NewWebUser webUser) {
+        this.webUser = webUser;
     }
 
     public NewWebUser getWebUser() {
@@ -51,8 +55,23 @@ public class ShopOrder {
         return this.shopOrderStatus;
     }
 
+    public void setShopOrderStatus(ShopOrderStatus shopOrderStatus) {
+        this.shopOrderStatus = shopOrderStatus;
+    }
+
     public List<ShopOrderItem> getItems() {
         return this.shopOrderItems;
     }
 
+    public void setItems(List<ShopOrderItem> items) {
+        this.shopOrderItems = items;
+    }
+
+    public void setTotalAmount(Double totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public void setTotalItems(Integer totalItems) {
+        this.totalItems = totalItems;
+    }
 }

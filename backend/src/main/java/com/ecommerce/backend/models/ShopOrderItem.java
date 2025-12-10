@@ -38,13 +38,44 @@ public class ShopOrderItem {
 
     }
 
+    public void setShopOrder(ShopOrder shopOrder) {
+        this.shopOrder = shopOrder;
+    }
+
     public ShopOrder getShopOrder() {
         return this.shopOrder;
-
     }
 
     public ShopProduct getShopProduct() {
         return this.shopProduct;
+    }
+
+    public void setShopProduct(ShopProduct shopProduct) {
+        this.shopProduct = shopProduct;
+    }
+
+    public void setUnitPrice(Double unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+
+    public Double getUnitPrice() {
+        return this.unitPrice;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public Integer getQuantity() {
+        return this.quantity;
+    }
+
+    public void setSubtotal(Double subtotal) {
+        this.subtotal = subtotal;
+    }
+
+    public Double getSubtotal() {
+        return this.subtotal;
     }
 
 }

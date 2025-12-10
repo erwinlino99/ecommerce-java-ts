@@ -1,6 +1,7 @@
 package com.ecommerce.backend.services;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -10,10 +11,15 @@ import org.springframework.stereotype.Service;
 import com.ecommerce.backend.models.ShopCart;
 import com.ecommerce.backend.models.ShopCartItem;
 import com.ecommerce.backend.models.ShopCartStatus;
+import com.ecommerce.backend.models.ShopOrder;
+import com.ecommerce.backend.models.ShopOrderItem;
+import com.ecommerce.backend.models.ShopOrderStatus;
 import com.ecommerce.backend.models.ShopProduct;
 import com.ecommerce.backend.repositories.NewWebUserRepository;
 import com.ecommerce.backend.repositories.ShopCartItemRepository;
 import com.ecommerce.backend.repositories.ShopCartRepository;
+import com.ecommerce.backend.repositories.ShopOrderItemRepository;
+import com.ecommerce.backend.repositories.ShopOrderRepository;
 import com.ecommerce.backend.repositories.ShopProductRepository;
 
 import jakarta.transaction.Transactional;
@@ -26,12 +32,18 @@ public class ShopCartService {
     private final ShopCartItemRepository cartItemRepo;
     private final ShopProductRepository shopProductRepo;
     private final NewWebUserRepository webUserRepo;
+    private final ShopOrderRepository orderRepo;
+    private final ShopOrderItemRepository orderItemRepo;
 
-    public ShopCartService(ShopCartRepository cartRepo, ShopCartItemRepository cartItemRepo, ShopProductRepository shopProductRepo, NewWebUserRepository webUserRepo) {
+    public ShopCartService(ShopCartRepository cartRepo, ShopCartItemRepository cartItemRepo, ShopProductRepository shopProductRepo, NewWebUserRepository webUserRepo,
+            ShopOrderRepository orderRepo, ShopOrderItemRepository orderItemRepo
+    ) {
         this.cartRepo = cartRepo;
         this.cartItemRepo = cartItemRepo;
         this.shopProductRepo = shopProductRepo;
         this.webUserRepo = webUserRepo;
+        this.orderRepo = orderRepo;
+        this.orderItemRepo = orderItemRepo;
     }
 
     @Transactional
@@ -106,12 +118,35 @@ public class ShopCartService {
         }
         return true;
     }
-    
+
     @Transactional
     public boolean prepareOrder(ShopCart currentCart) {
-        // ShopOrder shopOrder = new ShopOrder();
+        if (!currentCart.getItems().isEmpty()) {
+            ShopOrderStatus shopOrderStatus = new ShopOrderStatus();
+            shopOrderStatus.setId(1);
+            ShopOrder newShopOrder = new ShopOrder();
+            newShopOrder.setShopOrderStatus(shopOrderStatus);
+            newShopOrder.setWebUser(currentCart.getWebUser());
+            newShopOrder.setTotalAmount(currentCart.getTotalAmount());
+            newShopOrder.setTotalItems(currentCart.getTotalItems());
 
+            List<ShopOrderItem> orderItems = new ArrayList<>();
+            List<ShopCartItem> cartItems = currentCart.getItems();
 
-        return true;
+            for (ShopCartItem cartItem : cartItems) {
+                ShopOrderItem orderItem = new ShopOrderItem();
+                orderItem.setShopOrder(newShopOrder);
+                orderItem.setShopProduct(cartItem.getShopProduct());
+                orderItem.setUnitPrice(cartItem.getUnitPrice());
+                orderItem.setQuantity(cartItem.getQuantity());
+                orderItem.setSubtotal(cartItem.getSubtotal());
+                orderItems.add(orderItem);
+            }
+            newShopOrder.setItems(orderItems);
+            //AL FINAL LLAMAR AL REPO QUE EXTIENDE DE JPA PARA GUARDAR EL REGISTRO 
+            orderRepo.save(newShopOrder);
+            return true;
+        }
+        return false;
     }
 }
