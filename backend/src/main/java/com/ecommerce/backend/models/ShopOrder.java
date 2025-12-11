@@ -1,5 +1,6 @@
 package com.ecommerce.backend.models;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 @Entity
@@ -28,7 +31,7 @@ public class ShopOrder {
 
     @ManyToOne
     @JoinColumn(name = "shop_order_status_id", nullable = false)
-    private ShopOrderStatus shopOrderStatus;
+    private ShopOrderStatus shopOrderStatus=new ShopOrderStatus();
 
     @Column(name = "total_amount", nullable = false)
     private Double totalAmount;
@@ -39,8 +42,29 @@ public class ShopOrder {
     @OneToMany(mappedBy = "shopOrder", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ShopOrderItem> shopOrderItems = new ArrayList();
 
+    @Column
+    private LocalDateTime created;
+
+    @Column
+    private LocalDateTime deleted;
+
+    @Column
+    private LocalDateTime modified;
+
     public ShopOrder() {
 
+    }
+
+    @PrePersist
+    public void prePersist() {
+        this.shopOrderStatus.setId(1);
+        this.created = LocalDateTime.now();
+        this.modified = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.modified = LocalDateTime.now();
     }
 
     public void setWebUser(NewWebUser webUser) {

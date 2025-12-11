@@ -13,7 +13,6 @@ import com.ecommerce.backend.models.ShopCartItem;
 import com.ecommerce.backend.models.ShopCartStatus;
 import com.ecommerce.backend.models.ShopOrder;
 import com.ecommerce.backend.models.ShopOrderItem;
-import com.ecommerce.backend.models.ShopOrderStatus;
 import com.ecommerce.backend.models.ShopProduct;
 import com.ecommerce.backend.repositories.NewWebUserRepository;
 import com.ecommerce.backend.repositories.ShopCartItemRepository;
@@ -122,10 +121,7 @@ public class ShopCartService {
     @Transactional
     public boolean prepareOrder(ShopCart currentCart) {
         if (!currentCart.getItems().isEmpty()) {
-            ShopOrderStatus shopOrderStatus = new ShopOrderStatus();
-            shopOrderStatus.setId(1);
             ShopOrder newShopOrder = new ShopOrder();
-            newShopOrder.setShopOrderStatus(shopOrderStatus);
             newShopOrder.setWebUser(currentCart.getWebUser());
             newShopOrder.setTotalAmount(currentCart.getTotalAmount());
             newShopOrder.setTotalItems(currentCart.getTotalItems());
@@ -143,10 +139,19 @@ public class ShopCartService {
                 orderItems.add(orderItem);
             }
             newShopOrder.setItems(orderItems);
-            //AL FINAL LLAMAR AL REPO QUE EXTIENDE DE JPA PARA GUARDAR EL REGISTRO 
             orderRepo.save(newShopOrder);
             return true;
         }
         return false;
+    }
+
+    @Transactional
+    public boolean emptyCurrentCart(ShopCart currentCart) {
+        cartItemRepo.deleteAll(currentCart.getItems());
+        currentCart.getItems().clear();
+        currentCart.setTotalAmount(0.0);
+        currentCart.setTotalItems(0);
+        cartRepo.save(currentCart);
+        return true;
     }
 }

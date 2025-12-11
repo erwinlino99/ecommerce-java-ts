@@ -9,9 +9,7 @@ import com.ecommerce.backend.models.ShopCartItem;
 
 @Repository
 public interface ShopCartItemRepository extends JpaRepository<ShopCartItem, Integer> {
+
+    Optional<ShopCartItem> findByShopCart_IdAndShopProduct_Id(Integer shopCartId, Integer shopProductId);
     
-      Optional<ShopCartItem> findByShopCart_IdAndShopProduct_Id(Integer shopCartId, Integer shopProductId);
-
-
-
 }

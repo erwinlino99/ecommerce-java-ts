@@ -10,7 +10,6 @@ import com.ecommerce.backend.models.NewWebUser;
 import com.ecommerce.backend.repositories.NewWebUserRepository;
 
 @RestController
-//ESTO ES COMO EL PADRE ->
 @RequestMapping("/web_user")
 public class NewWebUserController {
     private final NewWebUserRepository repository;

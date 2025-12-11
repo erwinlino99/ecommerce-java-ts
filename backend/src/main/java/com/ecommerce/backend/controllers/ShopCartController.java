@@ -41,10 +41,13 @@ public class ShopCartController {
     public boolean purcharseCart(@PathVariable Integer webUserId) {
         ShopCart currentCart = this.cartService.getOrCreateCart(webUserId);
         if (this.cartService.tryToBuyItems(currentCart)) {
-            this.cartService.prepareOrder(currentCart);
-            return true;
+            if (this.cartService.prepareOrder(currentCart)) {
+                this.cartService.emptyCurrentCart(currentCart);
+                return true;
+            }
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Fallo al realizar el pedido");
         }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No hay stock manin");
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Sin stock para algunos productos");
     }
 
     @GetMapping("/web-user-id={id}")
