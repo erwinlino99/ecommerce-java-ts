@@ -11,8 +11,8 @@ import com.ecommerce.backend.models.ShopIndex;
 import com.ecommerce.backend.services.ShopIndexService;
 
 @RestController
-@RequestMapping("/shop_index")
-@CrossOrigin // opcional, si llamas desde frontend en otro dominio/puerto
+@RequestMapping("/shop-index")
+@CrossOrigin 
 public class ShopIndexController {
 
     private final ShopIndexService shopIndexService;

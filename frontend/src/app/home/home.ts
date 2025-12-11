@@ -5,15 +5,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
-//NEED TO IMPORT FORMGROUP Y FORMCONTROL TO RECOVER OUR INPUTS FROM USER FOR LOGIN IN
-import { FormGroup, FormControl, ReactiveFormsModule, Validator, Validators } from '@angular/forms';
-//IMPORT API SERVICE
+import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApiService } from '../service/api.service';
-import { LoginWebUser } from '../model_interface/LoginWebUser';
 import { SessionService } from '../service/session.service';
 import { Router } from '@angular/router';
-type LoginResponse = { id: number; [k: string]: any };
-// DECORADOR DEL MISMO COMPONENTE
+
+type LoginResponse = { token: string };
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -29,42 +27,47 @@ type LoginResponse = { id: number; [k: string]: any };
   templateUrl: './home.html',
   styleUrls: ['./home.scss'],
 })
-
-//TODAS LAS FUNCIONES QUE HABRAN DENTRO DEL MISMO
 export class Home {
   emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-  constructor(
-    private api: ApiService,
-    private router:Router,
-    private session: SessionService) {
-  }
-  //CREATE A FORMGROUP TO RECOVER THE DATA FROM THE INPUTS
+  constructor(private api: ApiService, private router: Router, private session: SessionService) {}
 
   webUserLoginForm = new FormGroup({
     email: new FormControl<string>('', [Validators.required, Validators.pattern(this.emailRegex)]),
-    password: new FormControl<string>(''),
+    password: new FormControl<string>('', [Validators.required]),
   });
 
-  //FUNCTIONS ->
   goToHomeApp() {
+    const endpoint = 'auth/login';
+
     const email = this.webUserLoginForm.get('email')?.value ?? '';
-    const password = this.webUserLoginForm.get('password')?.value ?? '-';
-    if (this.emailRegex.test(email) && password.length > 0) {
-      const endpoint = 'login';
-      let LoginWebUser: LoginWebUser = {id:3,email, password };
-      console.log('LOGIN WEBUSER ->', LoginWebUser);
-      //POST TO THE BACKEND
-      this.api.post<LoginWebUser>(endpoint, LoginWebUser).subscribe({
-        next:(value)=> {
-          LoginWebUser.id=value.id;
-          this.session.setUserId(value.id);  
-          this.router.navigate(['/home']);   
-        },
-      });
+    const password = this.webUserLoginForm.get('password')?.value ?? '';
+
+    if (!this.emailRegex.test(email) || password.length === 0) {
+      return;
     }
+
+    const body = { email, password };
+
+    this.api.post<LoginResponse>(endpoint, body).subscribe({
+      next: (resp) => {
+        console.log('DESDE EL BACK ->', resp);
+        const jwt = resp.token;
+        this.session.setToken(jwt);
+        const payloadBase64 = jwt.split('.')[1];
+        const payloadJson = atob(payloadBase64);
+        const payload = JSON.parse(payloadJson);
+        const userId = payload.userId as number;
+        this.session.setUserId(userId);
+        this.router.navigate(['/home']);
+      },
+      error: (err) => {
+        console.error('Error en login:', err);
+      },
+    });
   }
+
   goToRegister() {
-    window.location.href = '/register';
+    this.router.navigate(['/register']);
   }
 }

@@ -1,7 +1,7 @@
 export interface WebUser {
   id: number;
   name: string;
-  last_name: string;
+  lastName: string;
   email: string;
   password: string;
   cif: string | null;
