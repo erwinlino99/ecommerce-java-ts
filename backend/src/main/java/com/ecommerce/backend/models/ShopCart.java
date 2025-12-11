@@ -29,7 +29,7 @@ public class ShopCart {
 
     @ManyToOne
     @JoinColumn(name = "web_user_id")
-    private NewWebUser webUser;
+    private WebUser webUser;
 
     @ManyToOne
     @JoinColumn(name = "shop_cart_status_id")
@@ -56,11 +56,11 @@ public class ShopCart {
         return this.id;
     }
 
-    public NewWebUser getWebUser() {
+    public WebUser getWebUser() {
         return this.webUser;
     }
 
-    public void setWebUser(NewWebUser webUser) {
+    public void setWebUser(WebUser webUser) {
         this.webUser = webUser;
     }
 

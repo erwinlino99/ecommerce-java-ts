@@ -2,24 +2,80 @@ package com.ecommerce.backend.models;
 
 import java.time.LocalDateTime;
 
-public class WebUser extends BaseModel{
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "web_user")
+public class WebUser {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(length = 150, nullable = false)
     private String name;
+
+    @Column(name = "last_name", length = 150)
     private String lastName;
+
+    @Column(length = 255, nullable = false, unique = true)
     private String email;
+
+    @Column(length = 50)
     private String cif;
+
+    @Column(length = 255, nullable = false)
     private String password;
+
+    @Column(nullable = false)
     private LocalDateTime created;
+
+    @Column
     private LocalDateTime modified;
+
+    @Column
     private LocalDateTime deleted;
+
+    @Column(nullable = false)
     private Boolean isActive;
+
+    @Column(nullable = false)
     private Boolean isBlocked;
+
+    @Column(name = "last_time_login")
     private LocalDateTime lastTimeLogin;
+
+    @Column(columnDefinition = "TEXT")
     private String data;
 
     public WebUser() {
-        super("web_user","wu");
+       
+    }
+
+    @PrePersist
+    public void prePersist() {
+        LocalDateTime now = LocalDateTime.now();
+        this.created = now;
+        this.modified = now;
+
+        if (this.isActive == null) {
+            this.isActive = true;
+        }
+        if (this.isBlocked == null) {
+            this.isBlocked = false;
+        }
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.modified = LocalDateTime.now();
     }
 
     public Integer getId() {

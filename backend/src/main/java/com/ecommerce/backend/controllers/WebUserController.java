@@ -3,69 +3,52 @@ package com.ecommerce.backend.controllers;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.ecommerce.backend.models.WebUser;
+import com.ecommerce.backend.services.WebUserService;
 
 @RestController
+@CrossOrigin
 public class WebUserController {
 
-    private static final Logger log = LoggerFactory.getLogger(WebUserController.class);
-    private final JdbcTemplate jdbc;
+    private final WebUserService webUserService;
 
-    public WebUserController(JdbcTemplate jdbc) {
-        this.jdbc = jdbc;
+    public WebUserController(WebUserService webUserService) {
+        this.webUserService = webUserService;
     }
 
-    @GetMapping("/web_user")
-    public List<Map<String, Object>> getAllWebUsers() {
-        WebUser wb = new WebUser();
-        return wb.getAll();
+    @GetMapping("/{id}")
+    public ResponseEntity<WebUser> getById(@PathVariable Integer id) {
+        WebUser user = webUserService.findById(id);
+        return ResponseEntity.ok(user);
+    }
+
+    @GetMapping
+    public List<WebUser> getAll() {
+        return webUserService.getAll();
     }
 
     @PostMapping("/web_user")
-    public boolean tryToRegister(@RequestBody Map<String, Object> newUser) {
-        log.info("WEB USER : {} ", newUser);
-        BCryptPasswordEncoder encoder= new BCryptPasswordEncoder();
-        String passwordEncoded=encoder.encode(String.valueOf(newUser.get("password")));
-        newUser.put("password", passwordEncoded);
-        WebUser wb = new WebUser();
-        return wb.createNewRecord(newUser);
+    public WebUser register(@RequestBody WebUser newUser) {
+        return webUserService.register(newUser);
     }
 
     @PostMapping("/login")
-    public Map<String, Object> tryToLogin(@RequestBody Map<String, Object> loginWebUser) {
-        log.info("LOGIN WEB USER INFO> {}", loginWebUser);
-        String email = String.valueOf(loginWebUser.get("email"));
-        String password = String.valueOf(loginWebUser.get("password"));
-        try {
-            String sql = "SELECT id, password FROM web_user WHERE email = ?";
-            Map<String, Object> user = jdbc.queryForMap(sql, email);
-            String hashedPassword = String.valueOf(user.get("password"));
-            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-            if (encoder.matches(password, hashedPassword)) {
-                log.info(" LOGIN CORRECTO PARA {}", email);
-                //web_user_id = id
-                return Map.of(
-                        "status", 200,
-                        "id", user.get("id")
-                );
-            } else {
-                log.warn(" Contraseña incorrecta para {}", email);
-                return Map.of("status", "invalid_password");
-            }
-        } catch (org.springframework.dao.EmptyResultDataAccessException e) {
-            log.warn(" Usuario no encontrado: {}", email);
-            return Map.of("status", "user_not_found");
-        } catch (Exception e) {
-            log.error(" Error en login: {}", e.getMessage());
-            return Map.of("status", "error");
-        }
+    public Map<String, Object> login(@RequestBody Map<String, String> body) {
+        String email = body.get("email");
+        String password = body.get("password");
+        WebUser user = webUserService.login(email, password);
+        return Map.of(
+                "status", 200,
+                "id", user.getId(),
+                "email", user.getEmail()
+        );
     }
 }

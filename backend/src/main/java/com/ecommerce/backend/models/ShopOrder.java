@@ -27,7 +27,7 @@ public class ShopOrder {
 
     @ManyToOne
     @JoinColumn(name = "web_user_id", nullable = false)
-    private NewWebUser webUser;
+    private WebUser webUser;
 
     @ManyToOne
     @JoinColumn(name = "shop_order_status_id", nullable = false)
@@ -67,11 +67,11 @@ public class ShopOrder {
         this.modified = LocalDateTime.now();
     }
 
-    public void setWebUser(NewWebUser webUser) {
+    public void setWebUser(WebUser webUser) {
         this.webUser = webUser;
     }
 
-    public NewWebUser getWebUser() {
+    public WebUser getWebUser() {
         return this.webUser;
     }
 

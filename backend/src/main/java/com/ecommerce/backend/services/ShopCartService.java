@@ -14,12 +14,12 @@ import com.ecommerce.backend.models.ShopCartStatus;
 import com.ecommerce.backend.models.ShopOrder;
 import com.ecommerce.backend.models.ShopOrderItem;
 import com.ecommerce.backend.models.ShopProduct;
-import com.ecommerce.backend.repositories.NewWebUserRepository;
 import com.ecommerce.backend.repositories.ShopCartItemRepository;
 import com.ecommerce.backend.repositories.ShopCartRepository;
 import com.ecommerce.backend.repositories.ShopOrderItemRepository;
 import com.ecommerce.backend.repositories.ShopOrderRepository;
 import com.ecommerce.backend.repositories.ShopProductRepository;
+import com.ecommerce.backend.repositories.WebUserRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -30,11 +30,11 @@ public class ShopCartService {
     private final ShopCartRepository cartRepo;
     private final ShopCartItemRepository cartItemRepo;
     private final ShopProductRepository shopProductRepo;
-    private final NewWebUserRepository webUserRepo;
+    private final WebUserRepository webUserRepo;
     private final ShopOrderRepository orderRepo;
     private final ShopOrderItemRepository orderItemRepo;
 
-    public ShopCartService(ShopCartRepository cartRepo, ShopCartItemRepository cartItemRepo, ShopProductRepository shopProductRepo, NewWebUserRepository webUserRepo,
+    public ShopCartService(ShopCartRepository cartRepo, ShopCartItemRepository cartItemRepo, ShopProductRepository shopProductRepo, WebUserRepository webUserRepo,
             ShopOrderRepository orderRepo, ShopOrderItemRepository orderItemRepo
     ) {
         this.cartRepo = cartRepo;
