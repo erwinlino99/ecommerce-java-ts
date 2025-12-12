@@ -19,7 +19,7 @@ public class ShopProductController {
         this.service = service;
     }
 
-    @GetMapping("/shop_product")
+    @GetMapping("/shop-product")
     public List<ShopProductDto> getAll() {
         return this.service.getAllRecords();
     }
