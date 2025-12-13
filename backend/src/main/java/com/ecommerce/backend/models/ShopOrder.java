@@ -67,6 +67,9 @@ public class ShopOrder {
         this.modified = LocalDateTime.now();
     }
 
+    public Integer getId(){
+        return this.id;
+    }
     public void setWebUser(WebUser webUser) {
         this.webUser = webUser;
     }
@@ -97,5 +100,12 @@ public class ShopOrder {
 
     public void setTotalItems(Integer totalItems) {
         this.totalItems = totalItems;
+    }
+
+    public Double getTotalAmount() {
+        return this.totalAmount;
+    }
+    public LocalDateTime getCreated(){
+        return this.created;
     }
 }

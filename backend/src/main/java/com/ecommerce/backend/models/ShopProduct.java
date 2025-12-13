@@ -144,7 +144,7 @@ public class ShopProduct {
         }
     }
 
-    public Integer getMeasurmentUnit() {
+    public Integer getMeasurementUnit() {
         if (this.measurement != null) {
             return this.measurement.getUnit();
         } else {
@@ -184,7 +184,7 @@ public class ShopProduct {
                 + ", deleted=" + deleted
                 + ", shopProductBrandId=" + shopProductBrandId
                 + ", measurementName=" + getMeasurementName()
-                + ", measurementUnit=" + getMeasurmentUnit()
+                + ", measurementUnit=" + getMeasurementUnit()
                 + ", currentStock=" + currentStock
                 + ", price=" + price
                 + '}';
