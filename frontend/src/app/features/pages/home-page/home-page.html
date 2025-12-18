@@ -1,11 +1,10 @@
 <mat-card class="home-card">
   <h3>Bienvenido  {{ webUser?.name }} {{webUser?.lastName}} </h3>
-
   <div class="header-menu">
     <button
       mat-button
       *ngFor="let item of shopIndex"
-      [routerLink]="['/', item.path]"
+      [routerLink]="[item.path]"
     >
       {{ item.name }}
     </button>
