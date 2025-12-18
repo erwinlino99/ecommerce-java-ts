@@ -1,0 +1,1 @@
+ng g c features/pages/new-page --standalone --skip-tests

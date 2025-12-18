@@ -5,10 +5,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { ApiService } from '../service/api.service';
-import { WebUser } from '../model_interface/WebUser';
+import { ApiService } from '../../../service/api.service';
+import { WebUser } from '../../../shared/model-interface/WebUser';
 import { Router } from '@angular/router';
-import { LoginResponse } from '../model_interface/LoginResponse';
+import { LoginResponse } from '../../../shared/model-interface/LoginResponse';
 @Component({
   selector: 'app-register-page',
   standalone: true,

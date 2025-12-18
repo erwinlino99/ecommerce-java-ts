@@ -3,16 +3,16 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { SessionService } from '../service/session.service';
-import { ApiService } from '../service/api.service';
-import { WebUser } from '../model_interface/WebUser';
-import { ShopIndex } from '../model_interface/ShopIndex';
+import { SessionService } from '../../../service/session.service';
+import { ApiService } from '../../../service/api.service';
+import { WebUser } from '../../../shared/model-interface/WebUser';
+import { ShopIndex } from '../../../shared/model-interface/ShopIndex';
 import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule,RouterLink],
+  imports: [CommonModule, MatCardModule, MatButtonModule, RouterLink],
   templateUrl: './home-page.html',
   styleUrls: ['./home-page.scss'],
 })
@@ -21,48 +21,48 @@ export class HomePage implements OnInit {
   webUser: WebUser | null = null;
   loading = false;
   errorMsg = '';
-  shopIndex : ShopIndex[]=[];
+  shopIndex: ShopIndex[] = [];
 
-  constructor(private session: SessionService, private api: ApiService, private router: Router) {
-    
-  }
+  constructor(private session: SessionService, private api: ApiService, private router: Router) {}
 
   ngOnInit(): void {
     this.userId = this.session.getUserId();
     if (!this.userId) {
       this.router.navigate(['/']);
       return;
+    } else {
+      this.fetchUser(this.userId);
+      this.fetchShopIndex();
     }
-    this.fetchUser(this.userId);
-    this.fetchShopIndex();
   }
 
   private fetchShopIndex(): void {
-
     this.api.get<ShopIndex[]>('shop-index').subscribe({
       next: (items) => {
         this.shopIndex = items;
-        console.log("Index",this.shopIndex)
+        console.log('Index', this.shopIndex);
       },
       error: (err) => {
         console.error('Error loading shop_index:', err);
         this.errorMsg = 'No se pudo cargar el menú principal.';
       },
     });
-
   }
 
-  private fetchUser(userId:number): void {
+  private fetchUser(userId: number): void {
     this.loading = true;
     this.errorMsg = '';
-    this.api.get<WebUser>(['web-user',userId]).subscribe({
+    
+    this.api.get<WebUser>(['web-user', userId]).subscribe({
       next: (webUserFound) => {
-        this.webUser=webUserFound;
-        console.log("WEBUSER:",this.webUser)
+        this.webUser = webUserFound;
+        console.log('WEBUSER:', this.webUser);
       },
       error: (err) => {
-        console.error('Error loading user list:', err);
+        console.error('Error loading user:', err);
         this.errorMsg = 'No se pudo cargar la información del usuario.';
+      },
+      complete: () => {
         this.loading = false;
       },
     });

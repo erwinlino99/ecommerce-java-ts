@@ -1,0 +1,2 @@
+Usaremos este directorio de SHARED para :
+intefaces de modelos , helpers , UI
