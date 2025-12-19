@@ -6,6 +6,7 @@ public class ShopProductDto {
 
     private final Integer id;
     private final String name;
+    private final String shopProductBrand;
     private final String description;
     private final String shortDescription;
     private final double price;
@@ -16,9 +17,10 @@ public class ShopProductDto {
     private final LocalDateTime modified;
     private final LocalDateTime deleted;
 
-    public ShopProductDto(Integer id, String name, String description, String shortDescription, double price,Integer currentStock, String measurementName, Integer measurementUnit, LocalDateTime created, LocalDateTime modified, LocalDateTime deleted) {
+    public ShopProductDto(Integer id, String name,String shopProductBrand, String description, String shortDescription, double price,Integer currentStock, String measurementName, Integer measurementUnit, LocalDateTime created, LocalDateTime modified, LocalDateTime deleted) {
         this.id = id;
         this.name = name;
+        this.shopProductBrand=shopProductBrand;
         this.description = description;
         this.shortDescription = shortDescription;
         this.price = price;
@@ -36,6 +38,9 @@ public class ShopProductDto {
 
     public String getName() {
         return this.name;
+    }
+    public String getBrandName(){
+        return this.shopProductBrand;
     }
 
     public double getPrice() {

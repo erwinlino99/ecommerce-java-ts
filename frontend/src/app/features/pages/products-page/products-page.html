@@ -1,12 +1,5 @@
-
-<h1>LISTADO DE TODOS LOS PRODUCTOSDD LOS PEPES</h1>
-
-<p>Count: {{ shopProduct.length }}</p>
-
-<!-- LLAMAMOS AL COMPONETE HIJO -> -->
+<!-- LLAMAMOS AL COMPONENTE HIJO -> -->
 <shop-product-card
-  *ngFor="let p of shopProduct"
+  *ngFor="let p of (shopProduct$ | async)"
   [shopProduct]="p">
 </shop-product-card>
-<!-- -- -->
- <h1>FIN </h1>

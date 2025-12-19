@@ -3,7 +3,7 @@ export interface ShopProduct{
     name:string,
     shortDescription:string,
     description:string,
-    shopProductBrand:string,
+    brandName:string,
     shopProductMeasurement:string,
     currentStock:number,
     price:number,

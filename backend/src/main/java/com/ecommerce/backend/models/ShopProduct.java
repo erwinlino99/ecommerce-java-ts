@@ -39,14 +39,10 @@ public class ShopProduct {
     @Column
     private LocalDateTime deleted;
 
-    @Column(name = "shop_product_brand_id")
-    private Integer shopProductBrandId;
+    @ManyToOne
+    @JoinColumn(name = "shop_product_brand_id")
+    private ShopProductBrand brand;
 
-    // @ManyToOne
-    // @JoinColumn(name="shop_product_brand_id")
-    // private ShopBrand brand;
-    // @Column(name = "shop_product_measurement_id")
-    // private Integer shopProductMeasurementId;
     @ManyToOne
     @JoinColumn(name = "shop_product_measurement_id")
     private ShopProductMeasurement measurement;
@@ -86,6 +82,14 @@ public class ShopProduct {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getBrandName() {
+        if (this.brand != null) {
+            return this.brand.getName();
+        } else {
+            return null;
+        }
     }
 
     public String getShortDescription() {
@@ -129,11 +133,7 @@ public class ShopProduct {
     }
 
     public Integer getShopProductBrandId() {
-        return shopProductBrandId;
-    }
-
-    public void setShopProductBrandId(Integer shopProductBrandId) {
-        this.shopProductBrandId = shopProductBrandId;
+        return this.brand.getId();
     }
 
     public String getMeasurementName() {
@@ -182,7 +182,7 @@ public class ShopProduct {
                 + ", created=" + created
                 + ", modified=" + modified
                 + ", deleted=" + deleted
-                + ", shopProductBrandId=" + shopProductBrandId
+                + ", shopProductBrandName=" + this.brand.getName()
                 + ", measurementName=" + getMeasurementName()
                 + ", measurementUnit=" + getMeasurementUnit()
                 + ", currentStock=" + currentStock

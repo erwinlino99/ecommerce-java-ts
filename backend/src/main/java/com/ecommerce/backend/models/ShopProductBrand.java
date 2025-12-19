@@ -2,26 +2,38 @@ package com.ecommerce.backend.models;
 
 import java.time.LocalDateTime;
 
-public class ShopProductBrand extends BaseModel{
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "shop_product_brand")
+public class ShopProductBrand {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column
     private String name;
+
+    @Column
     private LocalDateTime created;
+
+    @Column
     private LocalDateTime modified;
+
+    @Column
     private LocalDateTime deleted;
+
+    @Column
     private Boolean isActive;
 
     public ShopProductBrand() {
-        super("shop_product_brand","spb");
-    }
-    public ShopProductBrand(Integer id, String name, LocalDateTime created, LocalDateTime modified, LocalDateTime deleted, Boolean isActive) {
-     super("shop_product_brand","spb");
-        this.id = id;
-        this.name = name;
-        this.created = created;
-        this.modified = modified;
-        this.deleted = deleted;
-        this.isActive = isActive;
+
     }
 
     public Integer getId() {
@@ -33,7 +45,7 @@ public class ShopProductBrand extends BaseModel{
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {

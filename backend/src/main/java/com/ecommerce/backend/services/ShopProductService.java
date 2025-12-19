@@ -22,6 +22,7 @@ public class ShopProductService {
         return products.stream().map(p -> new ShopProductDto(
                 p.getId(),
                 p.getName(),
+                p.getBrandName(),
                 p.getDescription(),
                 p.getShortDescription(),
                 p.getPrice(),

@@ -1,12 +1,16 @@
 <mat-card class="home-card">
-  <h3>Bienvenido  {{ webUser?.name }} {{webUser?.lastName}} </h3>
+  <h3>
+    Bienvenido
+    {{ (webUser$ | async)?.name }}
+    {{ (webUser$ | async)?.lastName }}
+  </h3>
+
   <div class="header-menu">
-    <button
-      mat-button
-      *ngFor="let item of shopIndex"
-      [routerLink]="[item.path]"
-    >
+    <button mat-button *ngFor="let item of (shopIndex$ | async)" [routerLink]="[item.path]">
       {{ item.name }}
     </button>
   </div>
+
+  <p *ngIf="loading">Loading...</p>
+  <p *ngIf="errorMsg">{{ errorMsg }}</p>
 </mat-card>
