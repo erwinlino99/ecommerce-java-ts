@@ -1,9 +1,9 @@
-<div class="product-card">
+<div class="product-card" style="border-style: solid;">
 
     <h1>{{ shopProduct.name }}</h1>
     <h3>{{ shopProduct.brandName }}</h3>
 
-    <button>Comprar</button>
-    <button>Ver detalle</button>
+    <button (click)="buyItem( shopProduct.id )">Comprar</button>
+    <button (click)="goDetailPage( shopProduct.id )">Ver detalle</button>
 
 </div>
