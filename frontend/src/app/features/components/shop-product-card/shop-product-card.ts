@@ -5,7 +5,7 @@ import { ApiService } from '../../../service/api.service';
 import { SessionService } from '../../../service/session.service';
 import { error } from 'console';
 import { PopupService } from '../../../service/pop.up.data.service';
-
+import { Route, Router  } from '@angular/router';
 //METEMOS AL HIJO DENTRO DE IMPORTS
 @Component({
   selector: 'shop-product-card',
@@ -18,7 +18,9 @@ export class ShopProductCard implements OnInit {
   //INYECTAMOS LA INFORMACION DEL COMPONENTE PADRE DE "PRODUCTS-PAGE.TS"
   @Input({ required: true }) shopProduct!: ShopProduct;
 
-  constructor(private api: ApiService, private session: SessionService,private popup:PopupService) {}
+  constructor(private api: ApiService, private session: SessionService,private popup:PopupService, private router:Router) {
+
+  }
 
   ngOnInit(): void {}
 
@@ -29,7 +31,7 @@ export class ShopProductCard implements OnInit {
     this.api.post(endpoint).subscribe({
       next: (answer) => {
         console.log("agregado",answer)
-        this.popup.success("HEMOS AGREGADO LOS PEPES")
+        this.popup.success("Producto agregado")
       },
       error: (error) => {
         console.error(error);
@@ -38,7 +40,6 @@ export class ShopProductCard implements OnInit {
   }
 
   goDetailPage(shopProductId: number) {
-    
-    console.log(shopProductId);
+    this.router.navigate(['/products/detail/',shopProductId])
   }
 }

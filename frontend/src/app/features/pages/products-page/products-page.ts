@@ -24,8 +24,7 @@ export class ProductsPage implements OnInit {
   }
 
   private getShopProducts() {
-    const endoint = 'shop-product';
-
+    const endoint = '/all-shop-products';
     this.shopProduct$ = this.api.get<ShopProduct[]>(endoint).pipe(
       tap((items) => {
         console.log('Products BACKEND', items);
@@ -35,5 +34,6 @@ export class ProductsPage implements OnInit {
         return of([] as ShopProduct[]);
       })
     );
+
   }
 }

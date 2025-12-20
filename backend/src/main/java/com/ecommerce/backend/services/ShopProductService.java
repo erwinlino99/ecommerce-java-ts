@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 import com.ecommerce.backend.dto.ShopProductDto;
 import com.ecommerce.backend.models.ShopProduct;
 import com.ecommerce.backend.repositories.ShopProductRepository;
+
 @Service
 public class ShopProductService {
+
     private final ShopProductRepository repo;
 
     public ShopProductService(ShopProductRepository repo) {
@@ -33,6 +35,28 @@ public class ShopProductService {
                 p.getModified(),
                 p.getDeleted()
         )).toList();
+
+    }
+
+    @SuppressWarnings("null")
+    public ShopProductDto getShopProductById(Integer shopProductId) {
+        ShopProduct p = this.repo.findById(shopProductId)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+                
+        return new ShopProductDto(
+                p.getId(),
+                p.getName(),
+                p.getBrandName(),
+                p.getDescription(),
+                p.getShortDescription(),
+                p.getPrice(),
+                p.getCurrentStock(),
+                p.getMeasurementName(),
+                p.getMeasurementUnit(),
+                p.getCreated(),
+                p.getModified(),
+                p.getDeleted()
+        );
 
     }
 }
