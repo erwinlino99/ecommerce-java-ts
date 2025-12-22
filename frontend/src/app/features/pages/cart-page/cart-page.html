@@ -1,0 +1,5 @@
+<p>cart-page works!</p>
+
+<div *ngIf="shopCart$ | async as cart">
+  <p>Total amount: {{ cart.totalAmount }}</p>
+</div>

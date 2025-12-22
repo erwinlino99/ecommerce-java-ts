@@ -4,7 +4,6 @@ import { routes } from './app.routes';
 import { AuthInterceptor } from './service/auth.interceptor';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),

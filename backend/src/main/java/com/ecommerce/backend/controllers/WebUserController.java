@@ -21,7 +21,7 @@ public class WebUserController {
         this.service = service;
     }
 
-    @GetMapping("web-user/me")
+    @GetMapping("/web-user")
     public ResponseEntity<WebUser> getWebUserByToken(Authentication auth) {
         if (auth == null || !auth.isAuthenticated()) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");

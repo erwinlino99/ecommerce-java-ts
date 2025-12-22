@@ -4,8 +4,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.ecommerce.backend.models.ShopCart;
@@ -26,7 +24,6 @@ import jakarta.transaction.Transactional;
 @Service
 public class ShopCartService {
 
-    private static final Logger log = LoggerFactory.getLogger(ShopCartService.class);
     private final ShopCartRepository cartRepo;
     private final ShopCartItemRepository cartItemRepo;
     private final ShopProductRepository shopProductRepo;

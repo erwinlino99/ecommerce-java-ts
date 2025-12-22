@@ -1,7 +1,5 @@
 package com.ecommerce.backend.controllers;
 
-import java.util.List;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -15,8 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.ecommerce.backend.dto.AddToCartDto;
+import com.ecommerce.backend.dto.ShopCartDto;
+import com.ecommerce.backend.dto.mapper.ShopCartMapper;
 import com.ecommerce.backend.models.ShopCart;
-import com.ecommerce.backend.models.ShopCartItem;
 import com.ecommerce.backend.repositories.WebUserRepository;
 import com.ecommerce.backend.services.ShopCartService;
 import com.ecommerce.backend.util.UseLogger;
@@ -63,10 +62,14 @@ public class ShopCartController {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Sin stock para algunos productos");
     }
 
-    @GetMapping("/web-user-id={id}")
-    public List<ShopCartItem> getCurrentCart(@PathVariable("id") Integer webUserId) {
+    @GetMapping("/cart")
+    public ShopCartDto getCart(Authentication auth) {
+        String email = auth.getName();
+        Integer webUserId = (int) webUserRepo.findByEmail(email)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not found"))
+                .getId();
         ShopCart currentCart = cartService.getOrCreateCart(webUserId);
-        return currentCart.getItems();
+        return ShopCartMapper.toDto(currentCart);
     }
 
 }

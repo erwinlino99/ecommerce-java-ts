@@ -28,7 +28,6 @@ export class ToolBar implements OnInit {
 
   ngOnInit(): void {
     this.userToken = this.session.getToken();
-    console.log('VER ESTO -> ',this.userToken)
     if (!this.userToken) {
       // this.router.navigate(['/']);
       return;
@@ -52,8 +51,8 @@ export class ToolBar implements OnInit {
   private fetchUser(): void {
     this.loading = true;
     this.errorMsg = '';
-
-    this.webUser = this.api.get<WebUser>('web-user/me').pipe(
+    const endpoint="/web-user"
+    this.webUser = this.api.get<WebUser>(endpoint).pipe(
       catchError((err) => {
         console.error('Error loading user:', err);
         this.errorMsg = 'No se pudo cargar la información del usuario.';
