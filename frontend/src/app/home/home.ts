@@ -10,7 +10,7 @@ import { ApiService } from '../service/api.service';
 import { SessionService } from '../service/session.service';
 import { Router } from '@angular/router';
 
-type LoginResponse = { token: string };
+type LoginResponse = { token: string,webUserId:number };
 
 @Component({
   selector: 'app-home',
@@ -38,8 +38,8 @@ export class Home {
   });
 
   goToHomeApp() {
+    
     const endpoint = 'auth/login';
-
     const email = this.webUserLoginForm.get('email')?.value ?? '';
     const password = this.webUserLoginForm.get('password')?.value ?? '';
 
@@ -51,15 +51,9 @@ export class Home {
 
     this.api.post<LoginResponse>(endpoint, body).subscribe({
       next: (resp) => {
-        console.log('DESDE EL BACK ->', resp);
-        const jwt = resp.token;
-        this.session.setToken(jwt);
-        const payloadBase64 = jwt.split('.')[1];
-        const payloadJson = atob(payloadBase64);
-        const payload = JSON.parse(payloadJson);
-        const userId = payload.userId as number;
-        this.session.setUserId(userId);
-        this.router.navigate(['/home']);
+        this.session.setToken(resp.token);
+        this.session.setUserId(resp.webUserId)
+        this.router.navigate(["/home"]);
       },
       error: (err) => {
         console.error('Error en login:', err);

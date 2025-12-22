@@ -1,0 +1,26 @@
+.app-footer {
+  background-color: #1f2937; // gris oscuro
+  color: #e5e7eb;
+  padding: 16px 24px;
+  font-size: 14px;
+}
+
+.app-footer__content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-footer__nav {
+  display: flex;
+  gap: 16px;
+}
+
+.app-footer__nav a {
+  color: #9ca3af;
+  text-decoration: none;
+}
+
+.app-footer__nav a:hover {
+  color: #ffffff;
+}

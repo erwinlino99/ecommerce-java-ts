@@ -5,7 +5,7 @@ import { ApiService } from '../../../service/api.service';
 import { SessionService } from '../../../service/session.service';
 import { error } from 'console';
 import { PopupService } from '../../../service/pop.up.data.service';
-import { Route, Router  } from '@angular/router';
+import { Route, Router } from '@angular/router';
 //METEMOS AL HIJO DENTRO DE IMPORTS
 @Component({
   selector: 'shop-product-card',
@@ -14,24 +14,29 @@ import { Route, Router  } from '@angular/router';
   templateUrl: './shop-product-card.html',
   styleUrl: './shop-product-card.scss',
 })
-export class ShopProductCard implements OnInit {
+export class ShopProductCard {
   //INYECTAMOS LA INFORMACION DEL COMPONENTE PADRE DE "PRODUCTS-PAGE.TS"
   @Input({ required: true }) shopProduct!: ShopProduct;
 
-  constructor(private api: ApiService, private session: SessionService,private popup:PopupService, private router:Router) {
-
-  }
-
-  ngOnInit(): void {}
+  constructor(
+    private api: ApiService,
+    private session: SessionService,
+    private popup: PopupService,
+    private router: Router
+  ) {}
 
   buyItem(shopProductId: number) {
-    const quantity = 1;
-    const webUserId = this.session.getUserId();
-    const endpoint = `/shop-cart/web-user-id=${webUserId}/shop-product-id=${shopProductId}/quantity=${quantity}`;
-    this.api.post(endpoint).subscribe({
+    console.log('EN CARD', this.session.getToken());
+    const endpoint = `shop-cart/add`;
+
+    const body = {
+      shopProductId: shopProductId,
+      quantity: 1,
+    };
+
+    this.api.post(endpoint, body).subscribe({
       next: (answer) => {
-        console.log("agregado",answer)
-        this.popup.success("Producto agregado")
+        this.popup.success('Producto agregado');
       },
       error: (error) => {
         console.error(error);
@@ -40,6 +45,6 @@ export class ShopProductCard implements OnInit {
   }
 
   goDetailPage(shopProductId: number) {
-    this.router.navigate(['/products/detail/',shopProductId])
+    this.router.navigate(['/products/detail/', shopProductId]);
   }
 }

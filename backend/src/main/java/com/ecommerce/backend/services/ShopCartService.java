@@ -71,7 +71,6 @@ public class ShopCartService {
         ShopCart currentCart = getOrCreateCart(webUserId);
         ShopProduct product = shopProductRepo.findById(shopProductId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
-        log.info("PRODUCT ADDED : {}", product.toString());
         ShopCartItem item = cartItemRepo
                 .findByShopCart_IdAndShopProduct_Id(currentCart.getId(), shopProductId)
                 .orElseGet(() -> {
@@ -111,7 +110,6 @@ public class ShopCartService {
             int currentStock = product.getCurrentStock();
             int quantity = item.getQuantity();
             if (quantity > currentStock) {
-                log.info("\u001B[36m No HAY STOCK-> {}\u001B[0m");
                 return false;
             }
         }

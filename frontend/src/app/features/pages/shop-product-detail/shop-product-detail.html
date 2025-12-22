@@ -1,8 +1,18 @@
-<!-- DETALLE DE MI PRODUCTO ->  -->
-<p><strong>ID:</strong> {{ shopProduct?.id }}</p>
-<p><strong>Name:</strong> {{ shopProduct?.name }}</p>
-<p><strong>Description:</strong> {{ shopProduct?.description }}</p>
-<p><strong>Short description:</strong> {{ shopProduct?.shortDescription }}</p>
-<p><strong>Price:</strong> {{ shopProduct?.price }} €</p>
-<p><strong>Stock:</strong> {{ shopProduct?.currentStock }}</p>
-<p><strong>Brand:</strong> {{ shopProduct?.brandName }}</p>
+<ng-container *ngIf="shopProduct | async as product; else loading">
+  <p><strong>ID:</strong> {{ product.id }}</p>
+  <p><strong>Name:</strong> {{ product.name }}</p>
+  <p><strong>Description:</strong> {{ product.description }}</p>
+  <p><strong>Short description:</strong> {{ product.shortDescription }}</p>
+  <p><strong>Price:</strong> {{ product.price }} €</p>
+  <p><strong>Stock:</strong> {{ product.currentStock }}</p>
+  <p><strong>Brand:</strong> {{ product.brandName }}</p>
+
+  <button (click)="buyItem(product.id)">Agregar al carrito</button>
+
+</ng-container>
+
+<ng-template #loading>
+  <p>Loading product...</p>
+</ng-template>
+
+

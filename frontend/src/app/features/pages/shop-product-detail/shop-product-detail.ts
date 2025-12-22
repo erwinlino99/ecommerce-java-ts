@@ -1,36 +1,56 @@
 import { Component, OnInit } from '@angular/core';
-import { ShopProduct } from '../../../shared/model-interface/ShopProduct';
-import { ApiService } from '../../../service/api.service';
-import { error } from 'console';
+import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { Observable, of, catchError, tap } from 'rxjs';
+import { ApiService } from '../../../service/api.service';
+import { ShopProduct } from '../../../shared/model-interface/ShopProduct';
+import { SessionService } from '../../../service/session.service';
+
 @Component({
   selector: 'app-shop-product-detail',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './shop-product-detail.html',
-  styleUrl: './shop-product-detail.scss',
+  styleUrls: ['./shop-product-detail.scss'],
 })
 export class ShopProductDetail implements OnInit {
-  shopProduct?: ShopProduct;
+  shopProduct!: Observable<ShopProduct | null>;
 
-  constructor(private api: ApiService, private route: ActivatedRoute) {}
+  constructor(private api: ApiService, private route: ActivatedRoute, private session:SessionService) {
+
+  }
+
   ngOnInit(): void {
-
     const id = Number(this.route.snapshot.paramMap.get('shopProductId'));
     const endpoint = `shop-product-id=${id}`;
-    console.log("endpoint ",endpoint);
-    
-    this.api.get<ShopProduct>(endpoint).subscribe({
-      next: (item) => {
-        this.shopProduct = item;
-        console.log(item)
-        
+    console.log('endpoint', endpoint);
+
+    this.shopProduct = this.api.get<ShopProduct>(endpoint).pipe(
+      tap((product) => {
+        console.log('Producto recibido:', product);
+        if (product) {
+          console.log('ID:', product.id);
+          console.log('Name:', product.name);
+        }
+      }),
+      catchError((err) => {
+        console.error(err);
+        return of(null);
+      })
+    );
+  }
+
+  buyItem(shopProductId: number) {
+    const quantity = 1;
+    const webUserId = this.session.getUserId();
+    const endpoint = `/shop-cart/web-user-id=${webUserId}/shop-product-id=${shopProductId}/quantity=${quantity}`;
+    this.api.post(endpoint).subscribe({
+      next: (answer) => {
+        console.log('agregado', answer);
       },
-      error: (err) => {
-        //TODO EN CASO DE QUE ME DEVUELVA ERROR HAY QUE HACER UNA PAGINA DE ERRORES
-        console.error("LOS PEPES ",err);
+      error: (error) => {
+        console.error(error);
       },
     });
-
-
   }
 }

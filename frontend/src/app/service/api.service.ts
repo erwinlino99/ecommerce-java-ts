@@ -1,14 +1,16 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../environment/environment';
+import { SessionService } from './session.service';
 
 type Path = string | number;
 
 export interface RequestOptions {
-  params?: Record<string, any> | HttpParams;      // objeto plano o HttpParams
-  headers?: Record<string, string> | HttpHeaders; // objeto plano o HttpHeaders
+  params?: Record<string, any> | HttpParams;
+  headers?: Record<string, string> | HttpHeaders;
   withCredentials?: boolean;
   responseType?: 'json' | 'blob' | 'text';
 }
@@ -17,35 +19,48 @@ export interface RequestOptions {
 export class ApiService {
   private readonly baseUrl = (environment.apiBase ?? '').replace(/\/+$/, '');
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private session: SessionService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
+
+  private isBrowser(): boolean {
+    return isPlatformBrowser(this.platformId);
+  }
 
   // ---------- MÉTODOS PÚBLICOS ----------
   get<T>(endpoint: string | Path[], options?: RequestOptions): Observable<T> {
+    if (!this.isBrowser()) return of(null as any);
     const { url, opts } = this.prepare(endpoint, undefined, options);
-    // console.log('calling -->',url);
     return this.http.get<T>(url, opts).pipe(catchError(this.handleError));
   }
-  getRootUrl():String{
+
+  getRootUrl(): string {
     return this.baseUrl;
   }
 
   post<T>(endpoint: string | Path[], body?: any, options?: RequestOptions): Observable<T> {
+    if (!this.isBrowser()) return of(null as any);
     const { url, opts } = this.prepare(endpoint, body, options);
     return this.http.post<T>(url, body, opts).pipe(catchError(this.handleError));
   }
 
   put<T>(endpoint: string | Path[], body?: any, options?: RequestOptions): Observable<T> {
+    if (!this.isBrowser()) return of(null as any);
     const { url, opts } = this.prepare(endpoint, body, options);
     return this.http.put<T>(url, body, opts).pipe(catchError(this.handleError));
   }
 
   patch<T>(endpoint: string | Path[], body?: any, options?: RequestOptions): Observable<T> {
+    if (!this.isBrowser()) return of(null as any);
     const { url, opts } = this.prepare(endpoint, body, options);
     return this.http.patch<T>(url, body, opts).pipe(catchError(this.handleError));
   }
 
   // DELETE soportando body opcional (usa request() para permitir body)
   delete<T>(endpoint: string | Path[], body?: any, options?: RequestOptions): Observable<T> {
+    if (!this.isBrowser()) return of(null as any);
     const { url, opts } = this.prepare(endpoint, body, options);
     return this.http.request<T>('DELETE', url, { ...opts, body }).pipe(catchError(this.handleError));
   }
@@ -60,18 +75,29 @@ export class ApiService {
   private buildUrl(endpoint: string | Path[]): string {
     const path = Array.isArray(endpoint)
       ? endpoint
-          .filter(v => v !== null && v !== undefined && `${v}`.trim().length > 0)
-          .map(seg => encodeURIComponent(String(seg)))
+          .filter((v) => v !== null && v !== undefined && `${v}`.trim().length > 0)
+          .map((seg) => encodeURIComponent(String(seg)))
           .join('/')
       : endpoint.replace(/^\/+/, '');
+
     return `${this.baseUrl}/${path}`;
   }
 
   private buildOptions(options?: RequestOptions) {
     const params = this.toHttpParams(options?.params);
-    const headers = this.toHttpHeaders(options?.headers);
+
+    // 1) headers que vengan desde options
+    let headers = this.toHttpHeaders(options?.headers) ?? new HttpHeaders();
+
+    // 2) añade token si existe (sesión)
+    const token = this.session.getToken();
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
+
     const responseType = (options?.responseType ?? 'json') as 'json';
     const withCredentials = options?.withCredentials ?? false;
+
     return { params, headers, responseType, withCredentials };
   }
 
@@ -80,11 +106,12 @@ export class ApiService {
     if (source instanceof HttpParams) return source;
 
     let params = new HttpParams();
+
     Object.entries(source).forEach(([key, value]) => {
       if (value === null || value === undefined || value === '') return;
 
       if (Array.isArray(value)) {
-        value.forEach(v => {
+        value.forEach((v) => {
           if (v !== null && v !== undefined && v !== '') {
             params = params.append(key, String(v));
           }
@@ -95,6 +122,7 @@ export class ApiService {
         params = params.set(key, String(value));
       }
     });
+
     return params;
   }
 
@@ -103,7 +131,10 @@ export class ApiService {
     if (source instanceof HttpHeaders) return source;
 
     let headers = new HttpHeaders();
-    Object.entries(source).forEach(([k, v]) => { headers = headers.set(k, v); });
+    Object.entries(source).forEach(([k, v]) => {
+      headers = headers.set(k, v);
+    });
+
     return headers;
   }
 

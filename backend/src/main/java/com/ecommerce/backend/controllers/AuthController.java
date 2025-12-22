@@ -62,7 +62,7 @@ public class AuthController {
 
         String token = jwtService.generateToken(user);
 
-        return ResponseEntity.ok(new LoginResponse(token));
+        return ResponseEntity.ok(new LoginResponse(token, user.getId()));
     }
 
     // -------------------------------
@@ -72,7 +72,7 @@ public class AuthController {
     public ResponseEntity<LoginResponse> register(@RequestBody WebUser user) {
 
         if (webUserRepo.findByEmail(user.getEmail()).isPresent()) {
-            return ResponseEntity.badRequest().build(); 
+            return ResponseEntity.badRequest().build();
         }
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -80,6 +80,6 @@ public class AuthController {
 
         String token = jwtService.generateToken(saved);
 
-        return ResponseEntity.ok(new LoginResponse(token));
+        return ResponseEntity.ok(new LoginResponse(token, user.getId()));
     }
 }

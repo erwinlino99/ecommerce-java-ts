@@ -27,7 +27,7 @@ export class ProductsPage implements OnInit {
     const endoint = '/all-shop-products';
     this.shopProduct$ = this.api.get<ShopProduct[]>(endoint).pipe(
       tap((items) => {
-        console.log('Products BACKEND', items);
+        // console.log('Products BACKEND', items);
       }),
       catchError((error) => {
         console.log('ERROR', error);
