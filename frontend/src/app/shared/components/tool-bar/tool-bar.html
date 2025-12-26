@@ -1,16 +1,32 @@
 <mat-card class="home-card">
-    <h3>
-        Bienvenido
-        {{ (webUser | async)?.name }}
-        {{ (webUser | async)?.lastName }}
-    </h3>
+    <header class="user-welcome" *ngIf="webUser | async as user">
+        <div class="welcome-text">
+            <mat-icon color="primary">account_circle</mat-icon>
+            <h1>Bienvenido, <span>{{ user.name }} {{ user.lastName }}</span></h1>
+        </div>
+    </header>
 
-    <div class="header-menu">
-        <button mat-button *ngFor="let item of (shopIndex | async)" [routerLink]="[item.path]">
-            {{ item.name }}
-        </button>
+    <mat-divider></mat-divider>
+
+    <nav class="header-menu">
+        <div class="nav-links" *ngIf="shopIndex | async as items; else loading">
+            <button mat-flat-button color="accent" *ngFor="let item of items" [routerLink]="[item.path]"
+                class="nav-btn">
+
+                {{ item.name }}
+            </button>
+        </div>
+    </nav>
+
+    <ng-template #loading>
+        <div class="status-container" *ngIf="!errorMsg">
+
+            <p>Cargando opciones...</p>
+        </div>
+    </ng-template>
+
+    <div class="error-container" *ngIf="errorMsg">
+        <mat-icon color="warn">error</mat-icon>
+        <p>{{ errorMsg }}</p>
     </div>
-
-    <p *ngIf="loading">Loading...</p>
-    <p *ngIf="errorMsg">{{ errorMsg }}</p>
 </mat-card>

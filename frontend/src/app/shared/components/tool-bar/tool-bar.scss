@@ -1,0 +1,75 @@
+.home-card {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05) !important;
+}
+
+.user-welcome {
+  padding-bottom: 1.5rem;
+}
+
+.welcome-text {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.welcome-text mat-icon {
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+}
+
+.welcome-text h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  color: #1e293b;
+  font-weight: 400;
+}
+
+.welcome-text h1 span {
+  font-weight: 700;
+  color: #2563eb;
+}
+
+.subtitle {
+  color: #64748b;
+  margin-top: 5px;
+  margin-left: 52px;
+}
+
+.header-menu {
+  margin-top: 2rem;
+}
+
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.nav-btn {
+  border-radius: 25px !important; /* Estilo píldora */
+  padding: 0 20px !important;
+  transition: transform 0.2s ease !important;
+}
+
+.nav-btn:hover {
+  transform: translateY(-3px);
+}
+
+.status-container, .error-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 1rem;
+  padding: 10px;
+}
+
+.error-container {
+  background: #fff1f2;
+  border-radius: 8px;
+  color: #e11d48;
+}

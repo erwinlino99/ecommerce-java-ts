@@ -5,7 +5,7 @@
       <h2>Resumen de Compra</h2>
       <div class="header-actions">
         <span class="item-count">{{ cart.totalItems }} artículos</span>
-        <button class="btn-clear">Vaciar carrito</button>
+        <button class="btn-clear" >Vaciar carrito</button>
       </div>
     </div>
 
@@ -54,11 +54,24 @@
   </div>
 
   <ng-template #emptyCart>
-    <div class="empty-state">
-      <div class="icon">🛒</div>
-      <h3>Tu carrito está vacío</h3>
-      <p>Añade algunos productos para comenzar tu compra.</p>
-      <button class="btn-return">Volver a la tienda</button>
+    <div class="empty-state-container">
+      <div class="empty-state-content">
+        <div class="illustration-wrapper">
+        </div>
+        <h3 class="empty-title">¡Vaya! Tu carrito está vacío</h3>
+        <p class="empty-description">
+          Parece que aún no has encontrado el producto perfecto para tu mascota. 
+          ¡Tenemos cientos de opciones esperándote!
+        </p>
+        <div class="empty-actions">
+          <button class="btn-primary-gradient" routerLink="/shop">
+            <i class="fas fa-search"></i> Explorar productos
+          </button>
+          <button class="btn-ghost" routerLink="/home">
+            Ir al inicio
+          </button>
+        </div>
+      </div>
     </div>
   </ng-template>
 </div>

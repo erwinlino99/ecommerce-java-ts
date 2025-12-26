@@ -1,0 +1,8 @@
+.contenedor-productos {
+    display: flex;          /* Alineación horizontal */
+    flex-wrap: wrap;       /* Salto de línea automático */
+    gap: 20px;             /* Espacio entre tarjetas */
+    justify-content: flex-start; /* Alinea al principio */
+    padding: 20px;
+    width: 100%;
+}
