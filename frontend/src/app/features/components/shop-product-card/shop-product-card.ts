@@ -26,8 +26,7 @@ export class ShopProductCard {
   ) {}
 
   buyItem(shopProductId: number) {
-    console.log('EN CARD', this.session.getToken());
-    const endpoint = `shop-cart/addOrReduceShopProduct`;
+    const endpoint = `shop-cart/add`;
     const body = {
       shopProductId: shopProductId,
       quantity: 1,

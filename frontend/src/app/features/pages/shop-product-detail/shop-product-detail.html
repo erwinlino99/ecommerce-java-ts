@@ -1,18 +1,49 @@
 <ng-container *ngIf="shopProduct | async as product; else loading">
-  <p><strong>ID:</strong> {{ product.id }}</p>
-  <p><strong>Name:</strong> {{ product.name }}</p>
-  <p><strong>Description:</strong> {{ product.description }}</p>
-  <p><strong>Short description:</strong> {{ product.shortDescription }}</p>
-  <p><strong>Price:</strong> {{ product.price }} €</p>
-  <p><strong>Stock:</strong> {{ product.currentStock }}</p>
-  <p><strong>Brand:</strong> {{ product.brandName }}</p>
+  <div class="product-detail-container">
+    
+    <div class="product-main-info">
+      <span class="brand-tag">{{ product.brandName }}</span>
+      <h1 class="product-name">{{ product.name }}</h1>
+      <p class="product-short-desc">{{ product.shortDescription }}</p>
+      
+      <div class="price-tag">
+        <span class="amount">{{ product.price | currency:'EUR' }}</span>
+      </div>
 
-  <button (click)="buyItem(product.id)">Agregar al carrito</button>
+      <div class="stock-info" [ngClass]="{'no-stock': product.currentStock <= 0}">
+        <i class="fas fa-boxes"></i> 
+        {{ product.currentStock > 0 ? 'Stock disponible: ' + product.currentStock : 'Sin existencias' }}
+      </div>
 
+      <button class="buy-button" 
+              [disabled]="product.currentStock <= 0"
+              (click)="buyItem(product.id)">
+        <i class="fas fa-cart-plus"></i> Agregar al carrito
+      </button>
+    </div>
+
+    <div class="product-specs">
+      <h2>Descripción detallada</h2>
+      <p class="full-description">{{ product.description }}</p>
+      
+      <div class="specs-grid">
+        <div class="spec-item">
+          <span class="label">Referencia:</span>
+          <span class="value">#{{ product.id }}</span>
+        </div>
+        <div class="spec-item">
+          <span class="label">Garantía:</span>
+          <span class="value">2 años oficial</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </ng-container>
 
 <ng-template #loading>
-  <p>Loading product...</p>
+  <div class="loading-state">
+    <div class="spinner"></div>
+    <p>Cargando información del producto...</p>
+  </div>
 </ng-template>
-
-

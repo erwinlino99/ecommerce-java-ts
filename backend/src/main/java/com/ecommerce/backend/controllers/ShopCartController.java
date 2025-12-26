@@ -41,18 +41,6 @@ public class ShopCartController {
         return ShopCartMapper.toDto(currentCart);
     }
 
-    // @PostMapping("/web-user-id={webUserId}")
-    // public boolean purcharseCart(@PathVariable Integer webUserId) {
-    //     ShopCart currentCart = this.cartService.getOrCreateCart(webUserId);
-    //     if (this.cartService.tryToBuyItems(currentCart)) {
-    //         if (this.cartService.prepareOrder(currentCart)) {
-    //             this.cartService.emptyCurrentCart(currentCart);
-    //             return true;
-    //         }
-    //         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Fallo al realizar el pedido");
-    //     }
-    //     throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Sin stock para algunos productos");
-    // }
     @PostMapping("/add")
     public ResponseEntity<ShopCart> addProductToCart(Authentication auth, @RequestBody AddOrReduceToCartDto body) {
 
@@ -61,19 +49,22 @@ public class ShopCartController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not found"))
                 .getId();
 
-        ShopCart cart = cartService.addOrReduceShopProduct(webUserId, body.getShopProductId(), body.getQuantity(), body.getAction());
+        ShopCart cart = cartService.addOrReduceShopProduct(webUserId, body.getShopProductId(), body.getQuantity(),
+                body.getAction());
         return ResponseEntity.ok(cart);
     }
 
     @PostMapping("/decrease")
-    public ResponseEntity<ShopCart> decreateShopProductToCart(Authentication auth, @RequestBody AddOrReduceToCartDto body) {
+    public ResponseEntity<ShopCart> decreateShopProductToCart(Authentication auth,
+            @RequestBody AddOrReduceToCartDto body) {
 
         String email = auth.getName();
         Integer webUserId = (int) webUserRepo.findByEmail(email)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not found"))
                 .getId();
 
-        ShopCart cart = cartService.addOrReduceShopProduct(webUserId, body.getShopProductId(), body.getQuantity(), body.getAction());
+        ShopCart cart = cartService.addOrReduceShopProduct(webUserId, body.getShopProductId(), body.getQuantity(),
+                body.getAction());
         return ResponseEntity.ok(cart);
     }
 
@@ -87,6 +78,23 @@ public class ShopCartController {
         ShopCart cart = cartService.emptyShopCartItem(webUserId, body.getShopProductId());
 
         return ResponseEntity.ok(cart);
+    }
+
+    @PostMapping("/purcharse")
+    public boolean purcharseCart(Authentication auth) {
+        String email = auth.getName();
+        Integer webUserId = (int) webUserRepo.findByEmail(email)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not found"))
+                .getId();
+        ShopCart currentCart = this.cartService.getOrCreateCart(webUserId);
+        if (this.cartService.tryToBuyItems(currentCart)) {
+            if (this.cartService.prepareOrder(currentCart)) {
+                this.cartService.emptyCurrentCart(currentCart);
+                return true;
+            }
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Fallo al realizar el pedido");
+        }
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Sin stock para algunos productos");
     }
 
 }

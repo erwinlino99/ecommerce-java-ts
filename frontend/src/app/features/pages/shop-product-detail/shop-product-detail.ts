@@ -5,6 +5,7 @@ import { Observable, of, catchError, tap } from 'rxjs';
 import { ApiService } from '../../../service/api.service';
 import { ShopProduct } from '../../../shared/model-interface/ShopProduct';
 import { SessionService } from '../../../service/session.service';
+import { PopupService } from '../../../service/pop.up.data.service';
 
 @Component({
   selector: 'app-shop-product-detail',
@@ -16,7 +17,7 @@ import { SessionService } from '../../../service/session.service';
 export class ShopProductDetail implements OnInit {
   shopProduct!: Observable<ShopProduct | null>;
 
-  constructor(private api: ApiService, private route: ActivatedRoute, private session:SessionService) {
+  constructor(private api: ApiService, private route: ActivatedRoute, private session:SessionService,private popup:PopupService) {
 
   }
 
@@ -43,10 +44,15 @@ export class ShopProductDetail implements OnInit {
   buyItem(shopProductId: number) {
     const quantity = 1;
     const webUserId = this.session.getUserId();
-    const endpoint = `/shop-cart/web-user-id=${webUserId}/shop-product-id=${shopProductId}/quantity=${quantity}`;
-    this.api.post(endpoint).subscribe({
+    const endpoint = "/shop-cart/add";
+    const body={
+      shopProductId:shopProductId,
+      quantity:1,
+      action:true
+    }
+    this.api.post(endpoint,body).subscribe({
       next: (answer) => {
-        console.log('agregado', answer);
+        this.popup.success("PRODUCTO AGREGADO");
       },
       error: (error) => {
         console.error(error);

@@ -56,10 +56,21 @@ export class CartPage implements OnInit {
   }
 
   emptyShopCartItem(shopProductId: number) {
-    const endpoint='/shop-cart/empty-shop-cart-item';
+    const endpoint = '/shop-cart/empty-shop-cart-item';
     this.api.post(endpoint, this.getBaseBody(shopProductId)).subscribe({
       next: () => {
         this.popup.error('PRODUCTO ELIMINADO');
+        this.fetchWebUserCart();
+      },
+    });
+  }
+
+  purcharseCart() {
+    console.log('Vamos a comprar el carro');
+    const endpoint = '/shop-cart/purcharse';
+    this.api.post(endpoint).subscribe({
+      next: () => {
+        this.popup.success('CARRITO COMPRADO');
         this.fetchWebUserCart();
       },
     });

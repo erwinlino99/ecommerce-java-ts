@@ -47,7 +47,7 @@
         <span class="total-label">Total a pagar:</span>
         <span class="total-value">{{ cart.totalAmount | currency:'EUR' }}</span>
       </div>
-      <button class="checkout-btn">
+      <button class="checkout-btn" (click)="purcharseCart()">
         Procesar Pedido
       </button>
     </div>
