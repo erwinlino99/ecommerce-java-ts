@@ -17,6 +17,7 @@ import com.ecommerce.backend.dto.mapper.ShopCartMapper;
 import com.ecommerce.backend.models.ShopCart;
 import com.ecommerce.backend.repositories.WebUserRepository;
 import com.ecommerce.backend.services.ShopCartService;
+import com.ecommerce.backend.util.UseLogger;
 
 @RestController
 @CrossOrigin
@@ -45,6 +46,7 @@ public class ShopCartController {
     public ResponseEntity<ShopCart> addProductToCart(Authentication auth, @RequestBody AddOrReduceToCartDto body) {
 
         String email = auth.getName();
+        UseLogger.info("LOS PEPES", email);
         Integer webUserId = (int) webUserRepo.findByEmail(email)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not found"))
                 .getId();

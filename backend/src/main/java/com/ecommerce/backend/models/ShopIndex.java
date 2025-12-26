@@ -10,8 +10,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "shop_index")
 public class ShopIndex {
 
@@ -46,24 +50,13 @@ public class ShopIndex {
     }
 
     // getters & setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public void setPath(String path){
-        this.path=path;
-    }
-    public String getPath(){
-        return this.path;
+    public Long getId() {
+        return id;
     }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
 
-    public LocalDateTime getCreated() { return created; }
-    public void setCreated(LocalDateTime created) { this.created = created; }
-
-    public LocalDateTime getModified() { return modified; }
-    public void setModified(LocalDateTime modified) { this.modified = modified; }
 }
