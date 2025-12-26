@@ -1,5 +1,71 @@
-<p>cart-page works!</p>
+<div class="cart-container" *ngIf="shopCart$ | async as cart; else loading">
 
-<div *ngIf="shopCart$ | async as cart">
-  <p>Total amount: {{ cart.totalAmount }}</p>
+  <div class="cart-card" *ngIf="cart.items.length > 0; else emptyCart">
+    <div class="cart-header">
+      <h2>Resumen de Compra</h2>
+      <div class="header-actions">
+        <span class="item-count">{{ cart.totalItems }} artículos</span>
+        <button class="btn-clear">Vaciar carrito</button>
+      </div>
+    </div>
+
+    <table class="modern-table">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th class="text-center">Precio</th>
+          <th class="text-center">Cantidad</th>
+          <th class="text-right">Subtotal</th>
+          <th class="text-right">Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of cart.items">
+          <td>
+            <div class="product-info">
+              <span class="product-name">{{ item.shopProductName }}</span>
+            </div>
+          </td>
+          <td class="text-center">{{ item.unitPrice | currency:'EUR' }}</td>
+          <td class="text-center">
+            <div class="quantity-group">
+              <button *ngIf="item.quantity > 1" class="btn-sm" (click)="decreaseQuantity(item.shopProductId)">-</button>
+              <span class="qty-text">{{ item.quantity }}</span>
+              <button class="btn-sm" (click)="increaseQuantity(item.shopProductId)">+</button>
+            </div>
+          </td>
+          <td class="text-right font-bold">{{ item.subtotal | currency:'EUR' }}</td>
+          <td class="text-right">
+            <button class="btn-delete" (click)="emptyShopCartItem(item.shopProductId)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="cart-footer">
+      <div class="total-section">
+        <span class="total-label">Total a pagar:</span>
+        <span class="total-value">{{ cart.totalAmount | currency:'EUR' }}</span>
+      </div>
+      <button class="checkout-btn">
+        Procesar Pedido
+      </button>
+    </div>
+  </div>
+
+  <ng-template #emptyCart>
+    <div class="empty-state">
+      <div class="icon">🛒</div>
+      <h3>Tu carrito está vacío</h3>
+      <p>Añade algunos productos para comenzar tu compra.</p>
+      <button class="btn-return">Volver a la tienda</button>
+    </div>
+  </ng-template>
 </div>
+
+<ng-template #loading>
+  <div class="loading-spinner">
+    <div class="spinner"></div>
+    <p>Cargando productos...</p>
+  </div>
+</ng-template>

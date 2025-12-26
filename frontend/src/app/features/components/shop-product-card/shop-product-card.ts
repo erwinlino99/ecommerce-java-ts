@@ -27,11 +27,11 @@ export class ShopProductCard {
 
   buyItem(shopProductId: number) {
     console.log('EN CARD', this.session.getToken());
-    const endpoint = `shop-cart/add`;
-
+    const endpoint = `shop-cart/addOrReduceShopProduct`;
     const body = {
       shopProductId: shopProductId,
       quantity: 1,
+      action:true
     };
 
     this.api.post(endpoint, body).subscribe({

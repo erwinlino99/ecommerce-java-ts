@@ -14,5 +14,8 @@ import { PopupService } from '../../../service/pop.up.data.service';
   styleUrls: ['./pop-up-component.scss'],
 })
 export class PopUpComponent {
+  success(arg0: string) {
+    throw new Error('Method not implemented.');
+  }
   constructor(public popupService: PopupService) {}
 }

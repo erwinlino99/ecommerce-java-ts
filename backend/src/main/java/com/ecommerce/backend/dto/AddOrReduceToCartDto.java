@@ -1,11 +1,12 @@
 package com.ecommerce.backend.dto;
 
-public class AddToCartDto {
+public class AddOrReduceToCartDto {
 
     private Integer shopProductId;
     private Integer quantity;
+    private Boolean action;
 
-    public AddToCartDto() {
+    public AddOrReduceToCartDto() {
 
     }
 
@@ -23,5 +24,8 @@ public class AddToCartDto {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+    public boolean getAction(){
+        return this.action;
     }
 }

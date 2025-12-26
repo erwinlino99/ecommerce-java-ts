@@ -31,9 +31,9 @@ public class ShopCartService {
     private final ShopOrderRepository orderRepo;
     private final ShopOrderItemRepository orderItemRepo;
 
-    public ShopCartService(ShopCartRepository cartRepo, ShopCartItemRepository cartItemRepo, ShopProductRepository shopProductRepo, WebUserRepository webUserRepo,
-            ShopOrderRepository orderRepo, ShopOrderItemRepository orderItemRepo
-    ) {
+    public ShopCartService(ShopCartRepository cartRepo, ShopCartItemRepository cartItemRepo,
+            ShopProductRepository shopProductRepo, WebUserRepository webUserRepo,
+            ShopOrderRepository orderRepo, ShopOrderItemRepository orderItemRepo) {
         this.cartRepo = cartRepo;
         this.cartItemRepo = cartItemRepo;
         this.shopProductRepo = shopProductRepo;
@@ -63,8 +63,7 @@ public class ShopCartService {
     }
 
     @Transactional
-    public ShopCart addProduct(Integer webUserId, Integer shopProductId, int quantity) {
-
+    public ShopCart addOrReduceShopProduct(Integer webUserId, Integer shopProductId, int quantity, boolean action) {
         ShopCart currentCart = getOrCreateCart(webUserId);
         ShopProduct product = shopProductRepo.findById(shopProductId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
@@ -80,12 +79,33 @@ public class ShopCartService {
                     currentCart.getItems().add(shopCartItem);
                     return shopCartItem;
                 });
-        item.setQuantity(item.getQuantity() + quantity);
-        item.setSubtotal(item.getQuantity() * product.getPrice());
-        //VOLVEMOS A RECALCULAR EL CARRO
+        if (action) {
+            item.setQuantity(item.getQuantity() + quantity);
+            item.setSubtotal(item.getQuantity() * product.getPrice());
+        } else {
+            if (item.getQuantity() > 1) {
+                item.setQuantity(item.getQuantity() - quantity);
+                item.setSubtotal(item.getQuantity() * product.getPrice());
+            }
+        }
         this.recalculateShopCart(currentCart);
         cartItemRepo.save(item);
         return currentCart;
+    }
+
+    @Transactional
+    public ShopCart emptyShopCartItem(Integer webUserId, Integer shopProductId) {
+        ShopCart currentCart = getOrCreateCart(webUserId);
+        ShopCartItem itemToDelete = currentCart.getItems().stream()
+                .filter(item -> item.getShopProduct().getId().equals(shopProductId))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("El producto no está en el carrito"));
+        currentCart.getItems().remove(itemToDelete);
+        // BORRADO DEL ARRAYLIST
+        // BORRADO FISICO DE LA BASE DE DATOS
+        cartItemRepo.delete(itemToDelete);
+        this.recalculateShopCart(currentCart);
+        return cartRepo.save(currentCart);
     }
 
     private void recalculateShopCart(ShopCart shopCart) {

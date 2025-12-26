@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../../service/api.service';
-import { Observable, tap } from 'rxjs';
-import { ShopCartItem } from '../../../shared/model-interface/ShopCartItem';
+import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs'; // Importamos switchMap y BehaviorSubject
 import { ShopCart } from '../../../shared/model-interface/ShopCart';
 import { CommonModule } from '@angular/common';
+import { PopupService } from '../../../service/pop.up.data.service';
 
 @Component({
   selector: 'app-cart-page',
@@ -13,37 +13,55 @@ import { CommonModule } from '@angular/common';
   styleUrl: './cart-page.scss',
 })
 export class CartPage implements OnInit {
-  shopCart$!: Observable<ShopCart>;
-  constructor(private api: ApiService) {}
+  private refreshCart$ = new BehaviorSubject<void>(undefined);
 
+  shopCart$: Observable<ShopCart> = this.refreshCart$.pipe(
+    switchMap(() => this.api.get<ShopCart>('/shop-cart/cart')),
+    tap((cart) => console.log('📦 Carro actualizado:', cart))
+  );
+
+  constructor(private api: ApiService, private popup: PopupService) {}
+
+  private getBaseBody(productId: number) {
+    return { shopProductId: productId, quantity: 1 };
+  }
   ngOnInit(): void {
-    this.fetchWebUserCart();
+    // Ya no llamamos a una función que reasigna, el stream ya está configurado arriba
   }
 
   fetchWebUserCart() {
-    const endpoint = '/shop-cart/cart';
-    console.log('VER CARRO ->');
+    this.refreshCart$.next();
+  }
 
-    /**
-     *
-     * EN CASO DE QUE  HAGAMOS UN FETCH AL OBSERVABLE Y ESTO NO LO
-     * UTILICEMOS EN NINGUN LUGAR COMO POR EJEMPLO EL HTML NO SE MOSTRARÁ
-     * NI USANDO TAP CON EL CONSOLE.LOG
-     *
-     * SI SOLO QUEREMOS VER EL RESULTADO CON .SUSCRIBE DEBERIA DE VALE , PERO NO CON PIPE
-     *
-     */
+  decreaseQuantity(shopProductId: number) {
+    const endpoint = '/shop-cart/decrease';
+    const body = { ...this.getBaseBody(shopProductId), action: false };
+    this.api.post(endpoint, body).subscribe({
+      next: () => {
+        this.popup.error('Producto reducido');
+        this.fetchWebUserCart();
+      },
+    });
+  }
 
-    this.shopCart$ = this.api.get<ShopCart>(endpoint).pipe(
-      tap((items) => {
-        console.log('MI CARRO ->', items);
-      })
-    );
+  increaseQuantity(shopProductId: number) {
+    const endpoint = '/shop-cart/add';
+    const body = { ...this.getBaseBody(shopProductId), action: true };
+    this.api.post(endpoint, body).subscribe({
+      next: () => {
+        this.popup.success('Producto agregado');
+        this.fetchWebUserCart();
+      },
+    });
+  }
 
-    // this.api.get<ShopCart>(endpoint).subscribe({
-    //   next: (value) => {
-    //     console.log('MI CARRO ->', value);
-    //   },
-    // });
+  emptyShopCartItem(shopProductId: number) {
+    const endpoint='/shop-cart/empty-shop-cart-item';
+    this.api.post(endpoint, this.getBaseBody(shopProductId)).subscribe({
+      next: () => {
+        this.popup.error('PRODUCTO ELIMINADO');
+        this.fetchWebUserCart();
+      },
+    });
   }
 }
