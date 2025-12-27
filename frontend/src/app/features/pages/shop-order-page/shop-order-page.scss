@@ -1,160 +1,120 @@
-// Variables (Si tienes un archivo de variables global, úsalo)
-$primary-color: #3f51b5;
-$bg-color: #f5f7fa;
-$card-bg: #ffffff;
-$text-dark: #333;
-$text-light: #666;
-$border-color: #e0e0e0;
-$success-color: #2ecc71;
+// Variables de estilo
+$blue-dark: #2c3e50;
+$blue-main: #3498db;
+$blue-light: #ebf5fb;
+$blue-border: #d6eaf8;
+$text-gray: #7f8c8d;
 
 .orders-container {
   max-width: 900px;
   margin: 0 auto;
   padding: 2rem 1rem;
-  background-color: $bg-color;
-  min-height: 100vh;
 }
 
 .page-title {
+  color: $blue-dark;
+  font-size: 1.8rem;
   margin-bottom: 2rem;
-  color: $text-dark;
-  font-weight: 700;
-  border-bottom: 2px solid $primary-color;
+  border-bottom: 3px solid $blue-main;
   display: inline-block;
-  padding-bottom: 0.5rem;
 }
 
-// ESTILO DE LA TARJETA
 .order-card {
-  background: $card-bg;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  margin-bottom: 2rem; // Separación entre pedidos
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2.5rem;
   overflow: hidden;
-  border: 1px solid $border-color;
+  border: 1px solid $blue-border;
 
-  // CABECERA
   .order-header {
-    background-color: #f8f9fa;
+    background-color: $blue-dark;
+    color: white;
     padding: 1rem 1.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid $border-color;
-
-    .header-left {
-      display: flex;
-      flex-direction: column;
-      
-      .order-id {
-        font-weight: 800;
-        color: $text-dark;
-        font-size: 1.1rem;
-      }
-      .order-date {
-        font-size: 0.85rem;
-        color: $text-light;
-        margin-top: 0.25rem;
-      }
-    }
-
-    .status-badge {
-      background-color: $success-color; // Verde para "Ordenado"
-      color: white;
-      padding: 0.4rem 0.8rem;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
   }
 
-  // TABLA DE ITEMS
   .order-body {
     padding: 1.5rem;
-    
     .items-table {
       width: 100%;
       border-collapse: collapse;
+      th { text-align: left; color: $blue-dark; border-bottom: 2px solid $blue-light; padding-bottom: 10px; }
+      td { padding: 12px 0; border-bottom: 1px solid $blue-light; }
+      .product-name { color: $blue-dark; font-weight: 600; display: block; }
+      .product-meta { color: $text-gray; font-size: 0.8rem; }
+    }
+  }
 
-      th {
-        text-align: left;
-        color: $text-light;
-        font-size: 0.85rem;
-        text-transform: uppercase;
-        padding-bottom: 0.5rem;
-        border-bottom: 1px solid $border-color;
+  // --- SECCIÓN DE REGALOS CON ANIMACIÓN ---
+  .order-gifts {
+    background-color: $blue-light;
+    padding: 1.5rem;
+    border-top: 1px solid $blue-border;
+
+    .gifts-label {
+      color: $blue-main;
+      font-weight: bold;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    .sticker-album {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+    }
+
+    .sticker-item {
+      text-align: center;
+      width: 70px;
+
+      .sticker-wrapper {
+        background: white;
+        border: 3px solid white;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        
+        // LA ANIMACIÓN CLAVE AQUÍ:
+        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        cursor: pointer;
+
+        &:hover {
+          // Se hace un poco más grande y rota 15 grados
+          transform: scale(1.2) rotate(15deg);
+          box-shadow: 0 8px 15px rgba(52, 152, 219, 0.3);
+          border-color: $blue-main;
+        }
+        
+        .pokemon-img {
+          width: 100%;
+          image-rendering: pixelated;
+        }
       }
 
-      td {
-        padding: 1rem 0;
-        border-bottom: 1px solid;
-        vertical-align: top;
-      }
-
-      // Estilos específicos de celdas
-      .product-name {
+      .pokemon-name {
         display: block;
-        font-weight: 600;
-        color: $text-dark;
-      }
-      .product-meta {
-        color: $text-light;
-        font-size: 0.8rem;
-      }
-
-      // Alineaciones
-      .text-center { text-align: center; }
-      .text-right { text-align: right; }
-      
-      // La última fila no lleva borde
-      tr:last-child td {
-        border-bottom: none;
+        font-size: 0.7rem;
+        margin-top: 8px;
+        color: $blue-dark;
+        font-weight: 700;
+        text-transform: capitalize;
       }
     }
   }
 
-  // PIE DE TOTALES
   .order-footer {
-    background-color: #fafafa;
-    padding: 1rem 1.5rem;
-    border-top: 1px solid $border-color;
-    display: flex;
-    justify-content: flex-end;
-
-    .total-row {
-      font-size: 1.1rem;
-      color: $text-dark;
-      
-      span:first-child {
-        margin-right: 1rem;
-        font-weight: 500;
-      }
-      
-      .total-amount {
-        font-weight: 800;
-        color: $primary-color;
-        font-size: 1.3rem;
-      }
-    }
-  }
-}
-
-// ESTADOS VACIO Y CARGANDO
-.empty-state, .loading-state {
-  text-align: center;
-  padding: 4rem 1rem;
-  color: $text-light;
-  
-  p { margin-bottom: 1rem; font-size: 1.1rem; }
-  
-  .btn-primary {
-    background: $primary-color;
-    color: white;
-    border: none;
-    padding: 0.8rem 1.5rem;
-    border-radius: 4px;
-    cursor: pointer;
+    padding: 1.2rem 1.5rem;
+    text-align: right;
+    .total-amount { color: $blue-main; font-size: 1.4rem; font-weight: 800; }
   }
 }

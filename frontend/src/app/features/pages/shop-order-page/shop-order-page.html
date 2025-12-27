@@ -2,11 +2,10 @@
   <h2 class="page-title">Historial de Pedidos</h2>
 
   <div *ngIf="shopOrder$ | async as orders; else loadingTemplate">
-
     <ng-container *ngIf="orders.length > 0; else emptyTemplate">
-
+      
       <div *ngFor="let order of orders" class="order-card">
-
+        
         <div class="order-header">
           <div class="header-left">
             <span class="order-id">Pedido #{{ order.id }}</span>
@@ -43,6 +42,18 @@
           </table>
         </div>
 
+        <div class="order-gifts" *ngIf="order.pokeGift && order.pokeGift.length > 0">
+          <p class="gifts-label">🎁 ¡Pegatinas de regalo incluidas!</p>
+          <div class="sticker-album">
+            <div *ngFor="let pokemon of order.pokeGift" class="sticker-item">
+              <div class="sticker-wrapper">
+                <img [src]="pokemon.imageUrl" [alt]="pokemon.name" class="pokemon-img">
+              </div>
+              <span class="pokemon-name">{{ pokemon.name }}</span>
+            </div>
+          </div>
+        </div>
+
         <div class="order-footer">
           <div class="total-row">
             <span>Total del pedido:</span>
@@ -59,11 +70,11 @@
         <button class="btn-primary">Ir a la tienda</button>
       </div>
     </ng-template>
-
   </div>
 
   <ng-template #loadingTemplate>
     <div class="loading-state">
+      <div class="spinner"></div>
       <p>Cargando tu historial...</p>
     </div>
   </ng-template>

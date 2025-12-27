@@ -22,7 +22,7 @@ export class ShopOrderPage implements OnInit {
     this.shopOrder$ = this.api.get<ShopOrder[]>(endpoint).pipe(
       tap((data) => {
         // console.log('cantidad de pedidos', data.length);
-        console.log("VER ->",data);
+        console.log("VER ESTO DIDI ",data);
       }),
       catchError((error) => {
         console.error('Error al cargar los pedidos:', error);
