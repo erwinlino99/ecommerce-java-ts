@@ -1,12 +1,12 @@
-package com.ecommerce.backend.dto;
+package com.ecommerce.backend.dto.request;
 
-public class AddOrReduceToCartDto {
+public class AddOrReduceToCartRequest {
 
     private Integer shopProductId;
     private Integer quantity;
     private Boolean action;
 
-    public AddOrReduceToCartDto() {
+    public AddOrReduceToCartRequest() {
 
     }
 

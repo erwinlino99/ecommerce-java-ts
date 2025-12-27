@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.ecommerce.backend.dto.AddOrReduceToCartDto;
 import com.ecommerce.backend.dto.ShopCartDto;
 import com.ecommerce.backend.dto.mapper.ShopCartMapper;
+import com.ecommerce.backend.dto.request.AddOrReduceToCartRequest;
 import com.ecommerce.backend.models.ShopCart;
 import com.ecommerce.backend.repositories.WebUserRepository;
 import com.ecommerce.backend.services.ShopCartService;
@@ -42,7 +42,7 @@ public class ShopCartController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<ShopCart> addProductToCart(Authentication auth, @RequestBody AddOrReduceToCartDto body) {
+    public ResponseEntity<ShopCart> addProductToCart(Authentication auth, @RequestBody AddOrReduceToCartRequest body) {
 
         String email = auth.getName();
         Integer webUserId = (int) webUserRepo.findByEmail(email)
@@ -56,7 +56,7 @@ public class ShopCartController {
 
     @PostMapping("/decrease")
     public ResponseEntity<ShopCart> decreateShopProductToCart(Authentication auth,
-            @RequestBody AddOrReduceToCartDto body) {
+            @RequestBody AddOrReduceToCartRequest body) {
 
         String email = auth.getName();
         Integer webUserId = (int) webUserRepo.findByEmail(email)
@@ -69,7 +69,7 @@ public class ShopCartController {
     }
 
     @PostMapping("/empty-shop-cart-item")
-    public ResponseEntity<ShopCart> emptyShopCartItem(Authentication auth, @RequestBody AddOrReduceToCartDto body) {
+    public ResponseEntity<ShopCart> emptyShopCartItem(Authentication auth, @RequestBody AddOrReduceToCartRequest body) {
 
         String email = auth.getName();
         Integer webUserId = (int) webUserRepo.findByEmail(email)

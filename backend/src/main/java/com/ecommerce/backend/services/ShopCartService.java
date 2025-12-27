@@ -148,7 +148,7 @@ public class ShopCartService {
             List<ShopCartItem> cartItems = currentCart.getItems();
 
             var gifts = this.pokeApiService.getRandomPokemonGifts(10);
-            newShopOrder.setGift(gifts); 
+            newShopOrder.setGift(gifts);
 
             for (ShopCartItem cartItem : cartItems) {
                 ShopOrderItem orderItem = new ShopOrderItem();

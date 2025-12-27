@@ -1,18 +1,22 @@
 <div class="orders-container">
-  <h2 class="page-title">Historial de Pedidos</h2>
+  <h1 class="page-title">Historial de Pedidos</h1>
 
   <div *ngIf="shopOrder$ | async as orders; else loadingTemplate">
     <ng-container *ngIf="orders.length > 0; else emptyTemplate">
-      
+
       <div *ngFor="let order of orders" class="order-card">
-        
         <div class="order-header">
           <div class="header-left">
             <span class="order-id">Pedido #{{ order.id }}</span>
             <span class="order-date">{{ order.created | date:'medium' }}</span>
           </div>
           <div class="header-right">
-            <span class="status-badge">{{ order.shopOrderStatusName }}</span>
+            <button class="btn-repeat" (click)="repeatShopOrder(order.id)">
+              <i class="fas fa-redo"></i> Repetir Pedido
+            </button>
+            <span class="status-badge" [attr.data-status]="order.shopOrderStatusName">
+              {{ order.shopOrderStatusName }}
+            </span>
           </div>
         </div>
 
@@ -29,10 +33,12 @@
             <tbody>
               <tr *ngFor="let item of order.items">
                 <td>
-                  <span class="product-name">{{ item.product.name }}</span>
-                  <small class="product-meta">
-                    ({{ item.product.measurementUnit }} {{ item.product.measurementName }})
-                  </small>
+                  <div class="product-info">
+                    <span class="product-name">{{ item.product.name }}</span>
+                    <small class="product-meta">
+                      {{ item.product.measurementUnit }} {{ item.product.measurementName }}
+                    </small>
+                  </div>
                 </td>
                 <td class="text-center">{{ item.quantity }}</td>
                 <td class="text-right">{{ item.unitPrice | currency:'EUR' }}</td>
@@ -43,7 +49,7 @@
         </div>
 
         <div class="order-gifts" *ngIf="order.pokeGift && order.pokeGift.length > 0">
-          <p class="gifts-label">🎁 ¡Pegatinas de regalo incluidas!</p>
+          <p class="gifts-label"><i class="fas fa-gift"></i> ¡Pegatinas de regalo incluidas!</p>
           <div class="sticker-album">
             <div *ngFor="let pokemon of order.pokeGift" class="sticker-item">
               <div class="sticker-wrapper">
@@ -56,16 +62,16 @@
 
         <div class="order-footer">
           <div class="total-row">
-            <span>Total del pedido:</span>
+            <span class="total-label">Total del pedido:</span>
             <span class="total-amount">{{ order.totalAmount | currency:'EUR' }}</span>
           </div>
         </div>
-
       </div>
     </ng-container>
 
     <ng-template #emptyTemplate>
       <div class="empty-state">
+        <i class="fas fa-shopping-basket"></i>
         <p>No has realizado ningún pedido todavía.</p>
         <button class="btn-primary">Ir a la tienda</button>
       </div>

@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ecommerce.backend.dto.LoginRequest;
-import com.ecommerce.backend.dto.LoginResponse;
+import com.ecommerce.backend.dto.request.LoginRequest;
+import com.ecommerce.backend.dto.response.LoginResponse;
 import com.ecommerce.backend.models.WebUser;
 import com.ecommerce.backend.repositories.WebUserRepository;
 import com.ecommerce.backend.security.JwtService;

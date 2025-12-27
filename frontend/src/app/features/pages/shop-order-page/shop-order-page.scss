@@ -1,120 +1,203 @@
-// Variables de estilo
-$blue-dark: #2c3e50;
-$blue-main: #3498db;
-$blue-light: #ebf5fb;
-$blue-border: #d6eaf8;
-$text-gray: #7f8c8d;
+// Variables de estilo (Paleta Deep Blue)
+$blue-navy: #1a2a3a;      // Para cabeceras y textos fuertes
+$blue-main: #2980b9;      // Color de acción (Botones, bordes destacados)
+$blue-accent: #3498db;    // Color de realce
+$blue-light: #f4f8fb;     // Fondos suaves
+$blue-border: #d6eaf8;    // Bordes de tabla y tarjetas
+$white: #ffffff;
+$text-gray: #5d6d7e;
+$success-blue: #2471a3;
 
 .orders-container {
-  max-width: 900px;
+  max-width: 950px;
   margin: 0 auto;
-  padding: 2rem 1rem;
-}
+  padding: 2.5rem 1.5rem;
+  font-family: 'Segoe UI', system-ui, sans-serif;
 
-.page-title {
-  color: $blue-dark;
-  font-size: 1.8rem;
-  margin-bottom: 2rem;
-  border-bottom: 3px solid $blue-main;
-  display: inline-block;
+  .page-title {
+    color: $blue-navy;
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 2.5rem;
+    position: relative;
+    
+    &::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 4px;
+      background: $blue-main;
+      margin-top: 8px;
+      border-radius: 2px;
+    }
+  }
 }
 
 .order-card {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-  margin-bottom: 2.5rem;
+  background: $white;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(26, 42, 58, 0.08);
+  margin-bottom: 3rem;
   overflow: hidden;
   border: 1px solid $blue-border;
+  transition: transform 0.2s ease;
 
+  &:hover {
+    border-color: $blue-main;
+  }
+
+  // CABECERA: Fondo Navy para un look Premium
   .order-header {
-    background-color: $blue-dark;
-    color: white;
-    padding: 1rem 1.5rem;
+    background-color: $blue-navy;
+    color: $white;
+    padding: 1.25rem 1.75rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
 
-  .order-body {
-    padding: 1.5rem;
-    .items-table {
-      width: 100%;
-      border-collapse: collapse;
-      th { text-align: left; color: $blue-dark; border-bottom: 2px solid $blue-light; padding-bottom: 10px; }
-      td { padding: 12px 0; border-bottom: 1px solid $blue-light; }
-      .product-name { color: $blue-dark; font-weight: 600; display: block; }
-      .product-meta { color: $text-gray; font-size: 0.8rem; }
+    .header-left {
+      .order-id { font-weight: 700; font-size: 1.1rem; display: block; }
+      .order-date { font-size: 0.85rem; color: #aeb6bf; }
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
     }
   }
 
-  // --- SECCIÓN DE REGALOS CON ANIMACIÓN ---
+  // BOTÓN REPETIR: Contraste alto sobre el fondo oscuro
+  .btn-repeat {
+    background: $blue-main;
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &:hover {
+      background: lighten($blue-main, 10%);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    
+    i { font-size: 0.75rem; }
+  }
+
+  .status-badge {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+  .order-body {
+    padding: 1.5rem 2rem;
+
+    .items-table {
+      width: 100%;
+      border-collapse: collapse;
+
+      th { 
+        text-align: left; 
+        color: $blue-navy; 
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        border-bottom: 2px solid $blue-light; 
+        padding-bottom: 12px; 
+      }
+
+      td { padding: 15px 0; border-bottom: 1px solid $blue-light; }
+
+      .product-name { color: $blue-navy; font-weight: 700; }
+      .product-meta { color: $text-gray; font-size: 0.8rem; display: block; margin-top: 2px; }
+      
+      .text-right { text-align: right; }
+      .text-center { text-align: center; }
+    }
+  }
+
+  // SECCIÓN DE REGALOS (GIFTBOX)
   .order-gifts {
     background-color: $blue-light;
-    padding: 1.5rem;
-    border-top: 1px solid $blue-border;
+    padding: 1.5rem 2rem;
+    border-top: 1px dashed $blue-border;
 
     .gifts-label {
       color: $blue-main;
-      font-weight: bold;
+      font-weight: 800;
       font-size: 0.85rem;
-      margin-bottom: 1rem;
-      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      &::before { content: '🎁'; font-size: 1.1rem; }
     }
 
     .sticker-album {
       display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      justify-content: center;
+      gap: 20px;
     }
 
     .sticker-item {
-      text-align: center;
-      width: 70px;
-
       .sticker-wrapper {
-        background: white;
-        border: 3px solid white;
-        border-radius: 50%;
-        width: 60px;
-        height: 60px;
+        background: $white;
+        border: 2px solid $blue-border;
+        border-radius: 12px;
+        width: 65px;
+        height: 65px;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        
-        // LA ANIMACIÓN CLAVE AQUÍ:
-        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         cursor: pointer;
 
         &:hover {
-          // Se hace un poco más grande y rota 15 grados
-          transform: scale(1.2) rotate(15deg);
-          box-shadow: 0 8px 15px rgba(52, 152, 219, 0.3);
+          transform: scale(1.15) rotate(8deg);
           border-color: $blue-main;
+          box-shadow: 0 8px 20px rgba(52, 152, 219, 0.25);
         }
-        
+
         .pokemon-img {
-          width: 100%;
-          image-rendering: pixelated;
+          width: 80%;
+          height: 80%;
+          object-fit: contain;
         }
       }
 
       .pokemon-name {
         display: block;
         font-size: 0.7rem;
-        margin-top: 8px;
-        color: $blue-dark;
+        margin-top: 10px;
+        color: $blue-navy;
         font-weight: 700;
-        text-transform: capitalize;
+        text-align: center;
       }
     }
   }
 
   .order-footer {
-    padding: 1.2rem 1.5rem;
-    text-align: right;
-    .total-amount { color: $blue-main; font-size: 1.4rem; font-weight: 800; }
+    padding: 1.5rem 2rem;
+    background-color: #fafbfc;
+    border-top: 1px solid $blue-light;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
+
+    .total-label { color: $text-gray; font-weight: 600; }
+    .total-amount { color: $blue-main; font-size: 1.6rem; font-weight: 900; }
   }
 }
