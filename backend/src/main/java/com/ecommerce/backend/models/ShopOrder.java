@@ -4,8 +4,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ecommerce.backend.dto.PokemonGiftDto;
+import com.ecommerce.backend.dto.mapper.PokemonGiftConverter;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,7 +35,7 @@ public class ShopOrder {
 
     @ManyToOne
     @JoinColumn(name = "shop_order_status_id", nullable = false)
-    private ShopOrderStatus shopOrderStatus=new ShopOrderStatus();
+    private ShopOrderStatus shopOrderStatus = new ShopOrderStatus();
 
     @Column(name = "total_amount", nullable = false)
     private Double totalAmount;
@@ -51,6 +55,10 @@ public class ShopOrder {
     @Column
     private LocalDateTime modified;
 
+    @Column(name = "poke_gift", columnDefinition = "JSON")
+    @Convert(converter = PokemonGiftConverter.class)
+    private List<PokemonGiftDto> pokeGift;
+
     public ShopOrder() {
 
     }
@@ -67,9 +75,10 @@ public class ShopOrder {
         this.modified = LocalDateTime.now();
     }
 
-    public Integer getId(){
+    public Integer getId() {
         return this.id;
     }
+
     public void setWebUser(WebUser webUser) {
         this.webUser = webUser;
     }
@@ -105,7 +114,16 @@ public class ShopOrder {
     public Double getTotalAmount() {
         return this.totalAmount;
     }
-    public LocalDateTime getCreated(){
+
+    public LocalDateTime getCreated() {
         return this.created;
+    }
+
+    public List<PokemonGiftDto> getGift() {
+        return this.pokeGift;
+    }
+
+    public void setGift(List<PokemonGiftDto> pokeGift) {
+        this.pokeGift = pokeGift;
     }
 }

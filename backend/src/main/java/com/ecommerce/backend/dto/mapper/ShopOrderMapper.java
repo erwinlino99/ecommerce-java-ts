@@ -15,6 +15,6 @@ public class ShopOrderMapper {
 
         return new ShopOrderDto(shopOrder.getId(), shopOrder.getTotalAmount(), itemsDto,
                 shopOrder.getShopOrderStatus().getName(),
-                shopOrder.getCreated());
+                shopOrder.getCreated(),shopOrder.getGift());
     }
 }

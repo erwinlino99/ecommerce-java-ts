@@ -21,7 +21,8 @@ export class ShopOrderPage implements OnInit {
     const endpoint = '/shop-order/summary';
     this.shopOrder$ = this.api.get<ShopOrder[]>(endpoint).pipe(
       tap((data) => {
-        console.log('cantidad de pedidos', data.length);
+        // console.log('cantidad de pedidos', data.length);
+        console.log("VER ->",data);
       }),
       catchError((error) => {
         console.error('Error al cargar los pedidos:', error);

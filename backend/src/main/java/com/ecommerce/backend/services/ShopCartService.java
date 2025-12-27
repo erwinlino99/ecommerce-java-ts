@@ -30,16 +30,19 @@ public class ShopCartService {
     private final WebUserRepository webUserRepo;
     private final ShopOrderRepository orderRepo;
     private final ShopOrderItemRepository orderItemRepo;
+    private final PokeApiService pokeApiService;
 
     public ShopCartService(ShopCartRepository cartRepo, ShopCartItemRepository cartItemRepo,
             ShopProductRepository shopProductRepo, WebUserRepository webUserRepo,
-            ShopOrderRepository orderRepo, ShopOrderItemRepository orderItemRepo) {
+            ShopOrderRepository orderRepo, ShopOrderItemRepository orderItemRepo,
+            PokeApiService pokeApiService) {
         this.cartRepo = cartRepo;
         this.cartItemRepo = cartItemRepo;
         this.shopProductRepo = shopProductRepo;
         this.webUserRepo = webUserRepo;
         this.orderRepo = orderRepo;
         this.orderItemRepo = orderItemRepo;
+        this.pokeApiService = pokeApiService;
     }
 
     @Transactional
@@ -143,6 +146,9 @@ public class ShopCartService {
 
             List<ShopOrderItem> orderItems = new ArrayList<>();
             List<ShopCartItem> cartItems = currentCart.getItems();
+
+            var gifts = this.pokeApiService.getRandomPokemonGifts(10);
+            newShopOrder.setGift(gifts); 
 
             for (ShopCartItem cartItem : cartItems) {
                 ShopOrderItem orderItem = new ShopOrderItem();
