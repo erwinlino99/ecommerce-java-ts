@@ -25,12 +25,12 @@ public class ShopOrderController {
         this.webUserRepo=webUserRepo;
     }
 
-    @GetMapping("/from-all-web-users")
+    @GetMapping("/summary-from-all-web-users")
     public List<ShopOrderDto> getAllShopOrders() {
         return this.orderService.getAllShopOrdersDto();
     }
 
-    @GetMapping("/shop-orders")
+    @GetMapping("/summary")
     public List<ShopOrderDto> getAllShopOrdersbyWebUser(Authentication auth) {
         String email=auth.getName();
               Integer webUserId = (int) webUserRepo.findByEmail(email)

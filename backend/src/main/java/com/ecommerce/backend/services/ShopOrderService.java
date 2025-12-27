@@ -17,7 +17,7 @@ public class ShopOrderService {
     public ShopOrderService(ShopOrderRepository repo) {
         this.repo = repo;
     }
-
+    //FROM ALL WEB USERS
    @Transactional(readOnly = true)
     public List<ShopOrderDto> getAllShopOrdersDto() {
         return repo.findAll().stream().map(ShopOrderMapper::toDto).toList();

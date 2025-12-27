@@ -12,9 +12,9 @@ public class ShopOrderMapper {
         // PRIMERO DEVOLVEMOS TODOS LOS ITEMS EN FORMATO DE DTO
         List<ShopOrderItemDto> itemsDto = shopOrder.getItems().stream()
                 .map(ShopOrderItemMapper::toDto).toList();
-                
+
         return new ShopOrderDto(shopOrder.getId(), shopOrder.getTotalAmount(), itemsDto,
-                ShopOrderStatusMapper.toDto(shopOrder.getShopOrderStatus()),
+                shopOrder.getShopOrderStatus().getName(),
                 shopOrder.getCreated());
     }
 }
