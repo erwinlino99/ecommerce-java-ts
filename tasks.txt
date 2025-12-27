@@ -1,5 +1,12 @@
 TAREAS -----------
 
+COGER LOG GIFT
+https://giphy.com/gifs/reactionseditor-reaction-26u4lOMA8JKSnL9Uk
+
+//PARA LOS POKEMOS
+Spring moderno → WebClient
+
+
 -- HACER UNA CLASE BASEMODEL , DONDE TENGA TODA LA FUNCIONALIDAD , Y UNA VEZ TERMINADA QUE HEREDEN LAS CLASES NORMALES
 -- UNA VEZ EL USUARIO SE DE DE ALTA , QUE le ha redirecion a '/home' . Y hacer el header de redireccion en front para que renderizce
 una cosa u otra :

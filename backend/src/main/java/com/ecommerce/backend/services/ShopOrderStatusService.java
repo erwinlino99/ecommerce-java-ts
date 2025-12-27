@@ -4,7 +4,7 @@ import com.ecommerce.backend.repositories.ShopOrderStatusRepository;
 
 public class ShopOrderStatusService {
 
-    private ShopOrderStatusRepository repo;
+    private final ShopOrderStatusRepository repo;
 
     public ShopOrderStatusService(ShopOrderStatusRepository repo) {
         this.repo = repo;

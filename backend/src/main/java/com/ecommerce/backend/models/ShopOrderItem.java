@@ -38,6 +38,9 @@ public class ShopOrderItem {
 
     }
 
+    public Integer getId(){
+        return this.id;
+    }
     public void setShopOrder(ShopOrder shopOrder) {
         this.shopOrder = shopOrder;
     }
