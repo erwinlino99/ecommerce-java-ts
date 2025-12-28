@@ -158,12 +158,22 @@ public class ShopCartService {
                 orderItem.setQuantity(cartItem.getQuantity());
                 orderItem.setSubtotal(cartItem.getSubtotal());
                 orderItems.add(orderItem);
+                this.updateCurrentStock(cartItem.getShopProduct(), cartItem.getQuantity());
             }
             newShopOrder.setItems(orderItems);
             orderRepo.save(newShopOrder);
             return true;
         }
         return false;
+    }
+
+    private void updateCurrentStock(ShopProduct product, Integer quantityOrdered) {
+        int newStock = product.getCurrentStock() - quantityOrdered;
+        if (newStock < 0) {
+            throw new RuntimeException("Stock insuficiente para el producto " + product.getName());
+        }
+        product.setCurrentStock(newStock);
+        this.shopProductRepo.save(product);
     }
 
     @Transactional
