@@ -4,9 +4,9 @@ import lombok.Getter;
 
 @Getter
 public class LoginResponse {
-    private String token;
-    private String roleName;
-    private Integer webUserId;
+    private final String token;
+    private final String roleName;
+    private final Integer webUserId;
 
     public LoginResponse(String token, Integer webUserId, String roleName) {
         this.token = token;

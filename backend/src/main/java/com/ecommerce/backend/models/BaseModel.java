@@ -2,7 +2,13 @@ package com.ecommerce.backend.models;
 
 import java.lang.reflect.Method;
 import java.sql.PreparedStatement;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -15,6 +21,7 @@ public class BaseModel {
     protected String alias;
     protected static JdbcTemplate jdbc;
 
+    @SuppressWarnings("static-access")
     public BaseModel(String tableName, String alias) {
         this.tableName = tableName;
         this.alias = alias;

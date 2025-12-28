@@ -14,7 +14,6 @@ import com.ecommerce.backend.models.ShopOrderItem;
 import com.ecommerce.backend.models.ShopProduct;
 import com.ecommerce.backend.repositories.ShopCartItemRepository;
 import com.ecommerce.backend.repositories.ShopCartRepository;
-import com.ecommerce.backend.repositories.ShopOrderItemRepository;
 import com.ecommerce.backend.repositories.ShopOrderRepository;
 import com.ecommerce.backend.repositories.ShopProductRepository;
 import com.ecommerce.backend.repositories.WebUserRepository;
@@ -29,19 +28,16 @@ public class ShopCartService {
     private final ShopProductRepository shopProductRepo;
     private final WebUserRepository webUserRepo;
     private final ShopOrderRepository orderRepo;
-    private final ShopOrderItemRepository orderItemRepo;
     private final PokeApiService pokeApiService;
 
     public ShopCartService(ShopCartRepository cartRepo, ShopCartItemRepository cartItemRepo,
             ShopProductRepository shopProductRepo, WebUserRepository webUserRepo,
-            ShopOrderRepository orderRepo, ShopOrderItemRepository orderItemRepo,
-            PokeApiService pokeApiService) {
+            ShopOrderRepository orderRepo,PokeApiService pokeApiService) {
         this.cartRepo = cartRepo;
         this.cartItemRepo = cartItemRepo;
         this.shopProductRepo = shopProductRepo;
         this.webUserRepo = webUserRepo;
         this.orderRepo = orderRepo;
-        this.orderItemRepo = orderItemRepo;
         this.pokeApiService = pokeApiService;
     }
 
