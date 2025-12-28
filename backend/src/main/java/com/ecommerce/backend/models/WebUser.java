@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -55,8 +57,12 @@ public class WebUser {
     @Column(columnDefinition = "TEXT")
     private String data;
 
+    @ManyToOne
+    @JoinColumn(name = "web_user_role_id")
+    private WebUserRole role;
+
     public WebUser() {
-       
+
     }
 
     @PrePersist
@@ -180,5 +186,9 @@ public class WebUser {
 
     public void setData(String data) {
         this.data = data;
+    }
+    
+    public WebUserRole getWebUserRole() {
+        return this.role;
     }
 }

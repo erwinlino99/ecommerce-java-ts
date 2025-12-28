@@ -3,8 +3,8 @@ import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({ providedIn: 'root' })
 export class SessionService {
-  private readonly TOKEN_KEY = 'auth_token';
-  private readonly USER_ID_KEY = 'user_id';
+  private readonly TOKEN_KEY = 'client_token';
+  private readonly SUPER_TOKEN_KEY = 'super_admin_token';
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
@@ -12,34 +12,31 @@ export class SessionService {
     return isPlatformBrowser(this.platformId);
   }
 
-  setToken(token: string): void {
+  setWebUserToken(token: string): void {
     if (!this.isBrowser()) return;
     sessionStorage.setItem(this.TOKEN_KEY, token);
   }
 
-  getToken(): string | null {
+  getClientToken(): string | null {
     if (!this.isBrowser()) return null;
     return sessionStorage.getItem(this.TOKEN_KEY);
   }
 
-  setUserId(id: number): void {
-    if (!this.isBrowser()) return;
-    sessionStorage.setItem(this.USER_ID_KEY, String(id));
+  setSuperAdminToken(token: string): void {
+    if (this.isBrowser()) sessionStorage.setItem(this.SUPER_TOKEN_KEY, token);
   }
 
-  getUserId(): number | null {
-    if (!this.isBrowser()) return null;
-    const v = sessionStorage.getItem(this.USER_ID_KEY);
-    return v ? Number(v) : null;
+  getSuperAdminToken(): string | null {
+    return this.isBrowser() ? sessionStorage.getItem(this.SUPER_TOKEN_KEY) : null;
   }
 
   clear(): void {
     if (!this.isBrowser()) return;
     sessionStorage.removeItem(this.TOKEN_KEY);
-    sessionStorage.removeItem(this.USER_ID_KEY);
+    sessionStorage.removeItem(this.SUPER_TOKEN_KEY);
   }
 
   hasSession(): boolean {
-    return !!this.getToken();
+    return !!this.getClientToken();
   }
 }

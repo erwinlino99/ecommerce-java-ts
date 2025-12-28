@@ -90,7 +90,7 @@ export class ApiService {
     let headers = this.toHttpHeaders(options?.headers) ?? new HttpHeaders();
 
     // 2) añade token si existe (sesión)
-    const token = this.session.getToken();
+    const token = this.session.getClientToken();
     if (token) {
       headers = headers.set('Authorization', `Bearer ${token}`);
     }

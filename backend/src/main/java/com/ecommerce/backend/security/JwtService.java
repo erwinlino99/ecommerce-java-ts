@@ -22,9 +22,11 @@ public class JwtService {
     private long jwtExpirationMs;
 
     public String generateToken(WebUser user) {
+        String roleName=user.getWebUserRole().getName();
         return Jwts.builder()
                 .setSubject(user.getEmail()) // identificador principal → email
-                .claim("userId", user.getId()) // extra claim opcional
+                .claim("userId", user.getId())
+                .claim("role", roleName) // extra claim opcional
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
                 .signWith(SignatureAlgorithm.HS256, secret)

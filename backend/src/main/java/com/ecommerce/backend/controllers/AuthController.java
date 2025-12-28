@@ -61,8 +61,9 @@ public class AuthController {
                 .orElseThrow(() -> new RuntimeException("User not found after authentication"));
 
         String token = jwtService.generateToken(user);
+        String roleName=user.getWebUserRole().getName();
 
-        return ResponseEntity.ok(new LoginResponse(token, user.getId()));
+        return ResponseEntity.ok(new LoginResponse(token, user.getId(),roleName));
     }
 
     // -------------------------------
@@ -77,9 +78,8 @@ public class AuthController {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         WebUser saved = webUserRepo.save(user);
-
         String token = jwtService.generateToken(saved);
 
-        return ResponseEntity.ok(new LoginResponse(token, user.getId()));
+        return ResponseEntity.ok(new LoginResponse(token, user.getId(),user.getWebUserRole().getName()));
     }
 }

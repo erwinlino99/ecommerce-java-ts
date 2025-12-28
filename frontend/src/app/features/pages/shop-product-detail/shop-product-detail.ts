@@ -43,7 +43,6 @@ export class ShopProductDetail implements OnInit {
 
   buyItem(shopProductId: number) {
     const quantity = 1;
-    const webUserId = this.session.getUserId();
     const endpoint = "/shop-cart/add";
     const body={
       shopProductId:shopProductId,

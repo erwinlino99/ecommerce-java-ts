@@ -4,7 +4,7 @@ import { SessionService } from './session.service';
 
 export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
   const session = inject(SessionService);
-  const token = session.getToken();
+  const token = session.getClientToken();
 
   if (!token) return next(req);
 

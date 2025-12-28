@@ -30,7 +30,7 @@ export class ToolBar implements OnInit {
   constructor(private api: ApiService, private session: SessionService, private router: Router) {}
 
   ngOnInit(): void {
-    this.userToken = this.session.getToken();
+    this.userToken = this.session.getClientToken();
     if (!this.userToken) {
       // this.router.navigate(['/']);
       return;

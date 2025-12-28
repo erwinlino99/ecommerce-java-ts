@@ -10,7 +10,11 @@ import { ApiService } from '../service/api.service';
 import { SessionService } from '../service/session.service';
 import { Router } from '@angular/router';
 
-type LoginResponse = { token: string,webUserId:number };
+type LoginResponse = {
+  roleName: string;
+  token: string;
+  webUserId: number;
+};
 
 @Component({
   selector: 'app-home',
@@ -38,7 +42,6 @@ export class Home {
   });
 
   goToHomeApp() {
-    
     const endpoint = 'auth/login';
     const email = this.webUserLoginForm.get('email')?.value ?? '';
     const password = this.webUserLoginForm.get('password')?.value ?? '';
@@ -50,10 +53,15 @@ export class Home {
     const body = { email, password };
 
     this.api.post<LoginResponse>(endpoint, body).subscribe({
-      next: (resp) => {
-        this.session.setToken(resp.token);
-        this.session.setUserId(resp.webUserId)
-        this.router.navigate(["/home"]);
+      next: (data) => {
+        console.log('VER ESTO ->', data);
+        if (data.roleName == 'SUPER_ADMIN') {
+          this.session.setSuperAdminToken(data.token);
+          this.router.navigate(['/control-panel']);
+        } else {
+          this.session.setWebUserToken(data.token);
+          this.router.navigate(['/home']);
+        }
       },
       error: (err) => {
         console.error('Error en login:', err);
