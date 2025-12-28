@@ -6,6 +6,7 @@ import java.util.function.Function;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.ecommerce.backend.models.CpUser;
 import com.ecommerce.backend.models.WebUser;
 
 import io.jsonwebtoken.Claims;
@@ -21,16 +22,24 @@ public class JwtService {
     @Value("${app.jwt.expiration-ms}")
     private long jwtExpirationMs;
 
-    public String generateToken(WebUser user) {
-        String roleName=user.getWebUserRole().getName();
+private String createToken(String email, Integer objectId, String objectRole) {
         return Jwts.builder()
-                .setSubject(user.getEmail()) // identificador principal → email
-                .claim("userId", user.getId())
-                .claim("role", roleName) // extra claim opcional
+                .setSubject(email)
+                .claim("userId", objectId)
+                // Usamos roleName para que coincida con tu DTO y tu interface de Angular
+                .claim("roleName", (objectRole != null && !objectRole.isEmpty()) ? objectRole : "ROLE_CLIENT") 
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
                 .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
+    }
+
+    public String generateToken(WebUser user) {
+        return this.createToken(user.getEmail(), user.getId(), "");
+    }
+
+    public String generateToken(CpUser user) {
+        return this.createToken(user.getEmail(), user.getId(), user.getRole().getName());
     }
 
     public String extractUsername(String token) {

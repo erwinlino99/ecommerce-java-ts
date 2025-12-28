@@ -59,6 +59,7 @@ public class BaseModel {
     // =====================================================
     // MÉTODO NUEVO → INSERCIÓN GENÉRICA
     // =====================================================
+    @SuppressWarnings("UseSpecificCatch")
     public boolean createNewRecord(Object payload) {
         if (payload == null) {
             return false;
@@ -140,7 +141,6 @@ public class BaseModel {
         });
         return affected > 0;
     }
-    // TODO : MADE GENERIC FUNCITON GETONEBY FILTER , GET EXISTS 
     public boolean getOneByFilter(Object payload) {
         return true;
     }

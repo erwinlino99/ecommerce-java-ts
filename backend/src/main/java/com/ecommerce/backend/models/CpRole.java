@@ -12,8 +12,8 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "web_user_role")
-public class WebUserRole {
+@Table(name = "cp_role")
+public class CpRole {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -36,38 +36,37 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            // CORS (necesario para Authorization header desde Angular)
-            .cors(withDefaults())
+                // CORS (necesario para Authorization header desde Angular)
+                .cors(withDefaults())
 
-            // JWT = stateless
-            .csrf(csrf -> csrf.disable())
-            .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                // JWT = stateless
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
-            // Permisos
-            .authorizeHttpRequests(auth -> auth
-                // Preflight del navegador
-                .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
+                // Permisos
+                .authorizeHttpRequests(auth -> auth
+                        // Preflight del navegador
+                        .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
 
-                // Públicos
-                .requestMatchers(
-                    "/",
-                    "/auth/**",
-                    "/shop-index",
-                    "/shop-product",
-                    "/shop-product/**",
-                    "/shop-category/**",
-                    "/shop-brand/**"
-                ).permitAll()
+                        // Públicos
+                        .requestMatchers(
+                                "/",
+                                "/auth/**",
+                                "/shop-index",
+                                "/shop-product",
+                                "/shop-product/**",
+                                "/shop-category/**",
+                                "/shop-brand/**")
+                        .permitAll()
 
-                // Todo lo demás, protegido
-                .anyRequest().authenticated()
-            )
+                        // Todo lo demás, protegido
+                        .anyRequest().authenticated())
 
-            // Provider de login (email/password)
-            .authenticationProvider(authenticationProvider())
+                // Provider de login (email/password)
+                .authenticationProvider(authenticationProvider())
 
-            // Filtro JWT antes del login de Spring
-            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                // Filtro JWT antes del login de Spring
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
@@ -81,9 +80,8 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowedOrigins(List.of(
-            "http://localhost:4200"
-            // añade aquí si usas otro: "http://localhost:5173"
-        ));
+                "http://localhost:4200"
+            ));
 
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
 
@@ -118,4 +116,5 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
+
 }

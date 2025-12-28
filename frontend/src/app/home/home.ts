@@ -55,7 +55,7 @@ export class Home {
     this.api.post<LoginResponse>(endpoint, body).subscribe({
       next: (data) => {
         console.log('VER ESTO ->', data);
-        if (data.roleName == 'SUPER_ADMIN') {
+        if (data.roleName && data.roleName!=="ROLE_CLIENT") {
           this.session.setSuperAdminToken(data.token);
           this.router.navigate(['/admin']);
         } else {
