@@ -12,21 +12,17 @@ import { PopupService } from '../../../service/pop.up.data.service';
   templateUrl: './cart-page.html',
   styleUrl: './cart-page.scss',
 })
-export class CartPage implements OnInit {
+export class CartPage {
   private refreshCart$ = new BehaviorSubject<void>(undefined);
 
   shopCart$: Observable<ShopCart> = this.refreshCart$.pipe(
-    switchMap(() => this.api.get<ShopCart>('/shop-cart/cart')),
-    tap((cart) => console.log('📦 Carro actualizado:', cart))
+    switchMap(() => this.api.get<ShopCart>('/shop-cart/cart'))
   );
 
   constructor(private api: ApiService, private popup: PopupService) {}
 
   private getBaseBody(productId: number) {
     return { shopProductId: productId, quantity: 1 };
-  }
-  ngOnInit(): void {
-    // Ya no llamamos a una función que reasigna, el stream ya está configurado arriba
   }
 
   fetchWebUserCart() {
@@ -66,11 +62,20 @@ export class CartPage implements OnInit {
   }
 
   purcharseCart() {
-    console.log('Vamos a comprar el carro');
     const endpoint = '/shop-cart/purcharse';
     this.api.post(endpoint).subscribe({
       next: () => {
         this.popup.success('CARRITO COMPRADO');
+        this.fetchWebUserCart();
+      },
+    });
+  }
+
+  emptyCurrentCart(): void {
+    const endpoint = '/shop-cart/empty';
+    this.api.post(endpoint).subscribe({
+      next: (data) => {
+        this.popup.success('EL CARRO HA SIDO VACIADO');
         this.fetchWebUserCart();
       },
     });
