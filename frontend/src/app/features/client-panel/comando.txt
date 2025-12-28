@@ -1,0 +1,3 @@
+ng g c features/client-panel/pages/new-page --standalone --skip-tests
+
+--------------------------------------------------

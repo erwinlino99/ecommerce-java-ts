@@ -1,5 +1,0 @@
-ng g c features/pages/new-page --standalone --skip-tests
-
---------------------------------------------------
-
-$ ng g c shared/components/app-shell --standalone --skip-tests
