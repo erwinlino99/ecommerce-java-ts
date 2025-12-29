@@ -1,0 +1,65 @@
+.cp-footer {
+  background: #1e293b; /* El gris oscuro casi negro de la cabecera de la tabla */
+  color: #94a3b8;      /* Gris acero suave para el texto */
+  padding: 12px 24px;
+  border-top: 1px solid #334155;
+  font-family: 'Inter', 'Monaco', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  .brand-name {
+    color: #f1f5f9;
+    font-weight: 700;
+  }
+
+  .divider {
+    color: #475569;
+  }
+}
+
+.footer-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  .dot {
+    width: 6px;
+    height: 6px;
+    background-color: #10b981; /* Verde esmeralda para el estado online */
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+  }
+  .status-text {
+    font-weight: 600;
+  }
+}
+
+.version-tag {
+  background: #334155;
+  color: #cbd5e1;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+}

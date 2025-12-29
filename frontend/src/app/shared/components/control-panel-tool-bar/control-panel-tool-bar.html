@@ -1,1 +1,43 @@
-<p>control-panel-tool-bar works!</p>
+<nav class="cp-nav">
+  <div class="nav-left">
+    <div class="brand" routerLink="/cp">
+      <mat-icon>shield</mat-icon>
+      <span>CONTROL PANEL</span>
+    </div>
+
+    <ul class="menu-list">
+      <ng-container *ngIf="cpMenu$ | async as menu; else loadingMenu">
+        <li *ngFor="let item of menu">
+          <a [routerLink]="item.path">{{ item.name }}</a>
+        </li>
+      </ng-container>
+      <ng-template #loadingMenu>
+        <li class="pending-text">Pendiente de tomar datos del menú...</li>
+      </ng-template>
+    </ul>
+  </div>
+
+  <div class="nav-right">
+    <div *ngIf="loading" class="spinner-mini"></div>
+
+    <div class="admin-info-container" *ngIf="adminUser$ | async as admin; else loadingUser">
+      <div class="admin-info">
+        <div class="text-group">
+          <span class="full-name">{{ admin.name }} {{ admin.surname }}</span>
+          <span class="status-badge" [ngClass]="{'active': admin.is_active === 1}">
+            {{ admin.is_active === 1 ? 'ONLINE' : 'OFFLINE' }}
+          </span>
+        </div>
+        <mat-icon class="avatar">account_circle</mat-icon>
+      </div>
+    </div>
+
+    <ng-template #loadingUser>
+      <span class="pending-text">Pendiente de tomar datos del usuario...</span>
+    </ng-template>
+
+    <button class="btn-exit" (click)="logout()">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </div>
+</nav>

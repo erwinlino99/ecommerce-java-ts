@@ -62,7 +62,9 @@ export class ApiService {
   delete<T>(endpoint: string | Path[], body?: any, options?: RequestOptions): Observable<T> {
     if (!this.isBrowser()) return of(null as any);
     const { url, opts } = this.prepare(endpoint, body, options);
-    return this.http.request<T>('DELETE', url, { ...opts, body }).pipe(catchError(this.handleError));
+    return this.http
+      .request<T>('DELETE', url, { ...opts, body })
+      .pipe(catchError(this.handleError));
   }
 
   // ---------- HELPERS PRIVADOS ----------
@@ -89,10 +91,16 @@ export class ApiService {
     // 1) headers que vengan desde options
     let headers = this.toHttpHeaders(options?.headers) ?? new HttpHeaders();
 
-    // 2) añade token si existe (sesión)
-    const token = this.session.getClientToken();
-    if (token) {
-      headers = headers.set('Authorization', `Bearer ${token}`);
+    // 2) Lógica de Token Inteligente
+    // Intentamos obtener primero el de Admin, si no existe, el de Cliente
+    const adminToken = this.session.getSuperAdminToken();
+    const clientToken = this.session.getClientToken();
+
+    // Prioridad al token de administrador
+    const activeToken = adminToken || clientToken;
+
+    if (activeToken) {
+      headers = headers.set('Authorization', `Bearer ${activeToken}`);
     }
 
     const responseType = (options?.responseType ?? 'json') as 'json';

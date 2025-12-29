@@ -9,6 +9,9 @@ import { CartPage } from './features/client-panel/pages/cart-page/cart-page';
 import { ShopOrderPage } from './features/client-panel/pages/shop-order-page/shop-order-page';
 import { ControlPanelAppShell } from './shared/components/control-panel-app-shell/control-panel-app-shell';
 import { ConfigurationPage } from './features/control-panel/pages/configuration-page/configuration-page';
+import { CpProductsPage } from './features/control-panel/pages/cp-products-page/cp-products-page';
+import { CpOrdersPage } from './features/control-panel/pages/cp-orders-page/cp-orders-page';
+import { CpUsersPage } from './features/control-panel/pages/cp-users-page/cp-users-page';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -31,6 +34,10 @@ export const routes: Routes = [
     component: ControlPanelAppShell,
     children: [
       { path: 'config', component: ConfigurationPage },
+      { path: 'orders', component: CpOrdersPage },
+      { path: 'products', component: CpProductsPage },
+      { path: 'users', component: CpUsersPage },
+      { path: 'imports', component: ConfigurationPage },
       { path: '', redirectTo: 'config', pathMatch: 'full' },
     ],
   },

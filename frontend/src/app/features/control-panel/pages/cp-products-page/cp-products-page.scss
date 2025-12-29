@@ -1,0 +1,114 @@
+/* Paleta de colores Graphite/Slate */
+$bg-main: #f8fafc;        /* Gris muy claro de fondo */
+$border-color: #e2e8f0;   /* Gris medio para bordes */
+$text-title: #0f172a;     /* Azul/Gris casi negro para títulos */
+$text-body: #475569;      /* Gris pizarra para textos */
+$accent-color: #64748b;   /* Gris azulado para botones/iconos */
+$white: #ffffff;
+
+.dashboard-header {
+  margin-bottom: 2rem;
+  border-bottom: 2px solid $border-color;
+  padding-bottom: 1rem;
+  
+  h1 { color: $text-title; font-size: 1.6rem; font-weight: 800; }
+  .subtitle { color: $text-body; font-size: 0.9rem; }
+}
+
+.panel-container {
+  background: $white;
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  overflow: hidden; /* Para que el header de la tabla respete el border-radius */
+}
+
+.table-header {
+  padding: 1.25rem;
+  background: #f1f5f9;
+  border-bottom: 1px solid $border-color;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h2 { font-size: 1rem; font-weight: 700; color: $text-title; margin: 0; }
+}
+
+.cp-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  thead {
+    background: #f8fafc;
+    th {
+      padding: 1rem;
+      text-align: left;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: $accent-color;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid $border-color;
+    }
+  }
+
+  tbody tr {
+    border-bottom: 1px solid $border-color;
+    transition: all 0.15s ease-in-out;
+
+    &:last-child { border-bottom: none; }
+    &:hover { background-color: #f1f5f9; }
+
+    td {
+      padding: 1rem;
+      color: $text-body;
+      font-size: 0.875rem;
+    }
+  }
+}
+
+/* Estilos específicos de celdas */
+.brand-badge {
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid $border-color;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.price-cell {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  color: $text-title;
+}
+
+.stock-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  
+  &.low { color: #dc2626; font-weight: 600; 
+    &::before { content: '●'; font-size: 10px; }
+  }
+  &.ok { color: #16a34a; font-weight: 500; }
+}
+
+.actions {
+  .btn-edit {
+    background: white;
+    border: 1px solid $border-color;
+    color: $text-body;
+    padding: 5px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: 0.2s;
+
+    &:hover {
+      background: $text-title;
+      color: white;
+      border-color: $text-title;
+    }
+  }
+}
