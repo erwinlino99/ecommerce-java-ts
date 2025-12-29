@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.ecommerce.backend.dto.CpShopOrderDto;
 import com.ecommerce.backend.dto.ShopOrderDto;
 import com.ecommerce.backend.dto.request.ShopOrderRequest;
 import com.ecommerce.backend.repositories.WebUserRepository;
@@ -29,8 +30,8 @@ public class ShopOrderController {
         this.webUserRepo = webUserRepo;
     }
 
-    @GetMapping("/summary-from-all-web-users")
-    public List<ShopOrderDto> getAllShopOrders() {
+    @GetMapping("/all-summary-shop-orders")
+    public List<CpShopOrderDto> getAllShopOrders() {
         return this.orderService.getAllShopOrdersDto();
     }
 

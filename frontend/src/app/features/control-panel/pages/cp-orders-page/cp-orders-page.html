@@ -1,1 +1,75 @@
-<p>orders-page works!</p>
+<header class="dashboard-header">
+  <h1>GESTIÓN DE PEDIDOS</h1>
+  <p>Monitoreo de transacciones y estados de envío</p>
+</header>
+
+<div class="panel-container">
+  <div class="table-header">
+    <h2>LISTADO GENERAL PEDIDOS</h2>
+    <div class="count-tag" *ngIf="data$ | async as pedidos">
+      TOTAL: {{ pedidos.length }}
+    </div>
+  </div>
+
+  <div *ngIf="data$ | async as pedidos; else loading">
+    <table class="cp-table">
+      <thead>
+        <tr>
+          <th>ID TRANSAC</th>
+          <th>CLIENTE / CONTACTO</th>
+          <th>FECHA CREACIÓN</th>
+          <th>ESTADO ORDEN</th>
+          <th>TOTAL IMPORTE</th>
+          <th style="text-align: center">GESTIÓN</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let o of pedidos">
+          <td class="id-cell">#ORD-{{ o.id }}</td>
+          
+          <td>
+            <div class="object-info">
+              <span class="object-main">{{ o.userName | uppercase }}</span>
+              <span class="object-sub">{{ o.userEmail }}</span>
+            </div>
+          </td>
+
+          <td>{{ o.created | date:'dd/MM/yyyy · HH:mm' }}</td>
+
+          <td>
+            <span class="status-badge" [ngClass]="o.shopOrderStatusName.toLowerCase()">
+              {{ o.shopOrderStatusName }}
+            </span>
+          </td>
+
+          <td class="price-cell">
+            {{ o.totalAmount | currency:'EUR' }}
+          </td>
+
+          <td style="text-align: center">
+            <div class="actions-wrapper">
+              <button class="btn-management btn-view" title="Ver Detalles de Compra">
+                <mat-icon>visibility</mat-icon>
+              </button>
+
+              <button class="btn-management btn-edit" title="Cambiar Estado">
+                <mat-icon>edit</mat-icon>
+              </button>
+
+              <button class="btn-management btn-delete" title="Anular Pedido">
+                <mat-icon>block</mat-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #loading>
+    <div class="pending-container">
+      <div class="spinner-mini"></div>
+      <p>Sincronizando órdenes con el servidor...</p>
+    </div>
+  </ng-template>
+</div>

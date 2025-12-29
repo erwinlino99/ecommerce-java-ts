@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ecommerce.backend.dto.CpShopOrderDto;
 import com.ecommerce.backend.dto.ShopOrderDto;
 import com.ecommerce.backend.dto.mapper.ShopOrderMapper;
 import com.ecommerce.backend.models.ShopOrder;
@@ -29,8 +30,8 @@ public class ShopOrderService {
 
     // FROM ALL WEB USERS
     @Transactional(readOnly = true)
-    public List<ShopOrderDto> getAllShopOrdersDto() {
-        return shopOrderRepo.findAll().stream().map(ShopOrderMapper::toDto).toList();
+    public List<CpShopOrderDto> getAllShopOrdersDto() {
+        return shopOrderRepo.findAll().stream().map(ShopOrderMapper::toCpDto).toList();
     }
 
     public List<ShopOrderDto> getAllShopOrdersbyWebUserId(Integer webUserId) {

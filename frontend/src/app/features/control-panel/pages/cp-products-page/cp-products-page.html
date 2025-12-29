@@ -1,58 +1,83 @@
-<div class="dashboard-header">
-    <h1>Gestión General de Productos y Existencias</h1>
-</div>
+<header class="dashboard-header">
+    <h1>GESTIÓN DE PRODUCTOS</h1>
+    <p>Control de inventario, existencias y catálogo maestro</p>
+</header>
+
 <div class="panel-container">
     <div class="table-header">
-        <h2><i class="fas fa-boxes"></i> Listado de Productos</h2>
-        <span class="count-tag" *ngIf="data$ | async as productos">{{ productos.length }} registros</span>
+        <h2>LISTADO GENERAL PRODUCTOS</h2>
+        <div class="count-tag" *ngIf="data$ | async as productos">
+            {{ productos.length }} REGISTROS
+        </div>
     </div>
 
-    <div *ngIf="data$ | async as productos; else loading" class="table-responsive">
+    <div *ngIf="data$ | async as productos; else loading">
         <table class="cp-table">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Producto</th>
-                    <th>Marca</th>
-                    <th>Precio</th>
-                    <th>Stock Actual</th>
-                    <th class="text-center">Acciones</th>
+                    <th>DETALLES PRODUCTO</th>
+                    <th>MARCA</th>
+                    <th>PRECIO ÚNICO</th>
+                    <th>STOCK</th>
+                    <th style="text-align: center">ACCIONES</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let p of productos">
-                    <td class="id-cell">{{ p.id }}</td>
+                    <td class="id-cell">#PRD-{{ p.id }}</td>
+
                     <td>
-                        <div class="product-info">
-                            <span class="main-name">{{ p.name }}</span>
-                            <span class="desc-short">{{ p.shortDescription }}</span>
+                        <div class="object-info">
+                            <span class="object-main">{{ p.name | uppercase }}</span>
+                            <span class="object-sub">{{ p.shortDescription }}</span>
                         </div>
                     </td>
-                    <td><span class="brand-badge">{{ p.brandName }}</span></td>
-                    <td class="price-cell">{{ p.price | currency:'EUR' }}</td>
+
                     <td>
-                        <div [class]="p.currentStock > 100 ? 'stock-ok' : 'stock-low'">
+                        <span class="object-sub" style="opacity: 1; font-weight: 600;">
+                            {{ p.brandName }}
+                        </span>
+                    </td>
+
+                    <td class="price-cell">{{ p.price}} €</td>
+
+                    <td>
+                        <span class="status-badge" [ngClass]="p.currentStock > 100 ? 'status-ok' : 'status-error'"
+                            style="font-size: 0.9rem; font-weight: 900; padding: 6px 14px; min-width: 70px; text-align: center; display: inline-block;">
                             {{ p.currentStock }}
-                        </div>
+                        </span>
                     </td>
-                    <td class="actions">
-                        <button class="btn-edit" title="Editar">
-                            <i class="fas fa-edit"></i> Editar
-                        </button>
+
+                    <td style="text-align: center">
+                        <div class="actions-wrapper">
+                            <button class="btn-management btn-view" title="Ver Detalles">
+                                <mat-icon>visibility</mat-icon>
+                            </button>
+
+                            <button class="btn-management btn-edit" title="Editar Producto">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+
+                            <button class="btn-management btn-delete" title="Eliminar Producto">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
                     </td>
                 </tr>
             </tbody>
         </table>
 
-        <div class="empty-state" *ngIf="productos.length === 0">
-            <p>No se encontraron productos en la base de datos.</p>
+        <div class="pending-container" *ngIf="productos.length === 0">
+            <mat-icon style="font-size: 48px; width: 48px; height: 48px; opacity: 0.2;">inventory</mat-icon>
+            <p>No se han encontrado productos registrados en el sistema.</p>
         </div>
     </div>
 
     <ng-template #loading>
-        <div class="loader-container">
-            <div class="spinner"></div>
-            <p>Sincronizando con el servidor...</p>
+        <div class="pending-container">
+            <div class="spinner-mini"></div>
+            <p>Sincronizando inventario...</p>
         </div>
     </ng-template>
 </div>

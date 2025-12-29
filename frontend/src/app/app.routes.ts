@@ -12,6 +12,7 @@ import { ConfigurationPage } from './features/control-panel/pages/configuration-
 import { CpProductsPage } from './features/control-panel/pages/cp-products-page/cp-products-page';
 import { CpOrdersPage } from './features/control-panel/pages/cp-orders-page/cp-orders-page';
 import { CpUsersPage } from './features/control-panel/pages/cp-users-page/cp-users-page';
+import { CpImportsPage } from './features/control-panel/pages/cp-imports-page/cp-imports-page';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -37,7 +38,7 @@ export const routes: Routes = [
       { path: 'orders', component: CpOrdersPage },
       { path: 'products', component: CpProductsPage },
       { path: 'users', component: CpUsersPage },
-      { path: 'imports', component: ConfigurationPage },
+      { path: 'imports', component: CpImportsPage },
       { path: '', redirectTo: 'config', pathMatch: 'full' },
     ],
   },

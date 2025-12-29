@@ -1,0 +1,250 @@
+/* INDUSTRIAL FUSION THEME 
+  Arquitectura basada en Variables CSS para escalabilidad total
+*/
+:host {
+  // Definición de la paleta de colores centralizada
+  --bg-app: #0f172a;               // Fondo profundo
+  --bg-panel: #1e293b;             // Fondo de tarjetas
+  --bg-header: #334155;            // Cabeceras
+  --border-ui: #475569;            // Bordes
+  --text-primary: #f8fafc;         // Texto principal
+  --text-secondary: #94a3b8;       // Texto de apoyo
+  --accent: #38bdf8;               // Color de marca (Cian)
+  --success: #4ade80;              // Verde Neón
+  --warning: #fbbf24;              // Ámbar
+  --danger: #f87171;               // Rojo Coral
+  --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+
+  display: block;
+  padding: 2rem;
+  background-color: var(--bg-app);
+  min-height: 100vh;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: var(--text-primary);
+}
+
+/* --- HEADER DE SECCIÓN --- */
+.dashboard-header {
+  margin-bottom: 2.5rem;
+  
+  h1 {
+    font-size: 1.8rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+    margin: 0;
+    background: linear-gradient(90deg, var(--text-primary), var(--accent));
+    -webkit-background-clip: text;
+  }
+  
+  p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-top: 0.5rem;
+  }
+}
+
+/* --- CONTENEDOR PRINCIPAL (EL PANEL) --- */
+.panel-container {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-ui);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.table-header {
+  padding: 1.5rem;
+  background: var(--bg-header);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-ui);
+
+  h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
+  }
+
+  .count-tag {
+    background: var(--accent);
+    color: var(--bg-app);
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    font-weight: 800;
+    font-size: 0.75rem;
+  }
+}
+
+/* --- TABLA DE DATOS --- */
+.cp-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  thead {
+    th {
+      background: rgba(15, 23, 42, 0.2);
+      padding: 1rem;
+      text-align: left;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border-ui);
+    }
+  }
+
+  tbody tr {
+    border-bottom: 1px solid var(--border-ui);
+    transition: background 0.2s;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    td {
+      padding: 1.2rem 1rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+  }
+}
+
+/* --- COMPONENTES GENÉRICOS --- */
+
+.object-info {
+  .object-main {
+    color: var(--text-primary);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+  .object-sub {
+    color: var(--accent);
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.75rem;
+    opacity: 0.8;
+  }
+}
+
+.id-cell {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text-primary);
+  font-weight: bold;
+  opacity: 0.6;
+}
+
+.status-badge {
+  padding: 0.3rem 0.8rem;
+  border-radius: 50px;
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  border: 1px solid currentColor;
+  background: rgba(255,255,255,0.05);
+
+  &.ordenado, &.status-ok { color: var(--success); }
+  &.cancelado, &.status-error { color: var(--danger); }
+  &.status-warn { color: var(--warning); }
+}
+
+.price-cell {
+  color: var(--text-primary);
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+.btn-action {
+  background: var(--bg-header);
+  color: var(--text-primary);
+  border: 1px solid var(--border-ui);
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    background: var(--accent);
+    color: var(--bg-app);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(56, 189, 248, 0.3);
+  }
+}
+
+/* --- ESTADO DE CARGA --- */
+.pending-container {
+  padding: 4rem;
+  text-align: center;
+  
+  .spinner-mini {
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--bg-header);
+    border-top: 4px solid var(--accent);
+    border-radius: 50%;
+    animation: spin 1s infinite cubic-bezier(0.5, 0.1, 0.4, 0.9);
+    margin: 0 auto 1.5rem;
+  }
+}
+
+/* --- BOTONES DE GESTIÓN (VER, EDITAR, ELIMINAR) --- */
+.actions-wrapper {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.btn-management {
+  background: var(--bg-header);
+  border: 1px solid var(--border-ui);
+  color: var(--text-primary);
+  width: 36px;  // Botones cuadrados para iconos
+  height: 36px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+
+  mat-icon, i {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+
+  // Tooltip simple (opcional)
+  &:hover {
+    transform: translateY(-2px);
+    color: var(--bg-app);
+  }
+
+  // Variante: VER (Cian/Accent)
+  &.btn-view:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.4);
+  }
+
+  // Variante: EDITAR (Ámbar/Warning)
+  &.btn-edit:hover {
+    background: var(--warning);
+    border-color: var(--warning);
+    box-shadow: 0 4px 12px rgba(251, 191, 36, 0.4);
+  }
+
+  // Variante: ELIMINAR (Rojo/Danger)
+  &.btn-delete:hover {
+    background: var(--danger);
+    border-color: var(--danger);
+    box-shadow: 0 4px 12px rgba(248, 113, 113, 0.4);
+  }
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
