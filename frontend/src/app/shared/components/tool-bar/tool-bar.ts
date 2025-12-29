@@ -15,7 +15,7 @@ import { MatDivider } from '@angular/material/divider';
 @Component({
   selector: 'app-tool-bar',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule,RouterLink,MatIcon,MatDivider],
+  imports: [CommonModule, MatCardModule, MatButtonModule, RouterLink, MatIcon, MatDivider],
   templateUrl: './tool-bar.html',
   styleUrl: './tool-bar.scss',
 })
@@ -54,7 +54,7 @@ export class ToolBar implements OnInit {
   private fetchUser(): void {
     this.loading = true;
     this.errorMsg = '';
-    const endpoint="/web-user"
+    const endpoint = '/web-user';
     this.webUser = this.api.get<WebUser>(endpoint).pipe(
       catchError((err) => {
         console.error('Error loading user:', err);
@@ -66,5 +66,11 @@ export class ToolBar implements OnInit {
       }),
       shareReplay(1)
     );
+  }
+
+  logout(): void {
+    console.log("saliendo")
+    this.session.clear();
+    this.router.navigate(['/login']);
   }
 }

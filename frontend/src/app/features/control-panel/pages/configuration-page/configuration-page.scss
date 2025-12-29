@@ -1,0 +1,155 @@
+:host {
+  display: block;
+  background-color: #0f172a; // Azul Marino de tu lista
+  min-height: 100vh;
+  color: #f8fafc;
+  padding: 0;
+}
+
+.home-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+}
+
+/* --- HERO: LIMPIO Y MODERNO --- */
+.hero-layout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 50px;
+  margin-bottom: 100px;
+
+  .hero-text {
+    flex: 1;
+
+    .pill-badge {
+      background: rgba(56, 189, 248, 0.1);
+      color: #38bdf8;
+      padding: 6px 16px;
+      border-radius: 100px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin: 20px 0;
+      line-height: 1.1;
+      
+      span { color: #38bdf8; }
+    }
+
+    p {
+      color: #94a3b8;
+      font-size: 1.15rem;
+      line-height: 1.6;
+      margin-bottom: 40px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 15px;
+    }
+  }
+
+  .hero-visual {
+    flex: 1;
+    img {
+      width: 100%;
+      border-radius: 30px; // Bordes muy redondeados para suavizar
+      box-shadow: 0 50px 100px -20px rgba(0,0,0,0.5);
+    }
+  }
+}
+
+/* --- CARDS: ESTILO "WEB MASCOTAS" --- */
+.grid-sections {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+
+  .feature-item {
+    background: #1e293b; // Azul de panel un pelín más claro que el fondo
+    padding: 40px;
+    border-radius: 24px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 1px solid transparent;
+
+    &:hover {
+      transform: translateY(-10px);
+      background: #243146;
+      border-color: #38bdf8;
+    }
+
+    .icon-circle {
+      width: 60px;
+      height: 60px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 25px;
+
+      mat-icon { font-size: 30px; width: 30px; height: 30px; }
+
+      &.cian-glow { background: rgba(56, 189, 248, 0.15); color: #38bdf8; }
+      &.amber-glow { background: rgba(251, 191, 36, 0.15); color: #fbbf24; }
+      &.green-glow { background: rgba(74, 222, 128, 0.15); color: #4ade80; }
+    }
+
+    h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    p {
+      color: #94a3b8;
+      line-height: 1.5;
+    }
+  }
+}
+
+/* --- BOTONES DE LA WEB --- */
+.btn-primary {
+  background: #38bdf8;
+  color: #0f172a;
+  border: none;
+  padding: 15px 35px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+
+  &:hover {
+    box-shadow: 0 15px 30px rgba(56, 189, 248, 0.4);
+    transform: scale(1.05);
+  }
+}
+
+.btn-secondary {
+  background: transparent;
+  color: #fff;
+  border: 1px solid #475569;
+  padding: 15px 35px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+
+  &:hover {
+    background: #334155;
+  }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .hero-layout { flex-direction: column; text-align: center; }
+  .grid-sections { grid-template-columns: 1fr; }
+  .hero-actions { justify-content: center; }
+}

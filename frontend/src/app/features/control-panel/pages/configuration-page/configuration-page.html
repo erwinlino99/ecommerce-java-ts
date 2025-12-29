@@ -1,1 +1,46 @@
-<p>configuration-page works!</p>
+<div class="home-container">
+  
+  <section class="hero-layout">
+    <div class="hero-text">
+      <span class="pill-badge">Dashboard Administrativo</span>
+      <h1>Control total de tu <br><span>E-Commerce Manager</span></h1>
+      <p>Gestiona el inventario de productos, supervisa las órdenes de compra y administra la base de datos de usuarios desde una interfaz optimizada.</p>
+      
+      <div class="hero-actions">
+        <button class="btn-primary" routerLink="/control-panel/orders">Revisar Ventas</button>
+        <button class="btn-secondary" routerLink="/control-panel/products">Ver Inventario</button>
+      </div>
+    </div>
+    
+    <div class="hero-visual">
+      <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2026&auto=format&fit=crop" alt="Data Analytics">
+    </div>
+  </section>
+
+  <section class="grid-sections">
+    <div class="feature-item" routerLink="/control-panel/web-users">
+      <div class="icon-circle cian-glow">
+        <mat-icon>people</mat-icon>
+      </div>
+      <h3>Usuarios Web</h3>
+      <p>Control de perfiles, permisos y bloqueo de cuentas de clientes.</p>
+    </div>
+
+    <div class="feature-item" routerLink="/control-panel/orders">
+      <div class="icon-circle amber-glow">
+        <mat-icon>shopping_bag</mat-icon>
+      </div>
+      <h3>Ordenes</h3>
+      <p>Seguimiento de pedidos, estados de pago y logística de envío.</p>
+    </div>
+
+    <div class="feature-item" routerLink="/control-panel/products">
+      <div class="icon-circle green-glow">
+        <mat-icon>inventory_2</mat-icon>
+      </div>
+      <h3>Productos</h3>
+      <p>Edición de catálogo, control de stock y actualización de precios.</p>
+    </div>
+  </section>
+
+</div>

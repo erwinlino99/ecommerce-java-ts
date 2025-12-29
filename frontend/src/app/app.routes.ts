@@ -11,7 +11,7 @@ import { ControlPanelAppShell } from './shared/components/control-panel-app-shel
 import { ConfigurationPage } from './features/control-panel/pages/configuration-page/configuration-page';
 import { CpProductsPage } from './features/control-panel/pages/cp-products-page/cp-products-page';
 import { CpOrdersPage } from './features/control-panel/pages/cp-orders-page/cp-orders-page';
-import { CpUsersPage } from './features/control-panel/pages/cp-users-page/cp-users-page';
+import { CpUsersPage } from './features/control-panel/pages/cp-web-users-page/cp-web-users-page';
 import { CpImportsPage } from './features/control-panel/pages/cp-imports-page/cp-imports-page';
 
 export const routes: Routes = [

@@ -1,0 +1,86 @@
+<header class="dashboard-header">
+    <h1>GESTIÓN DE USUARIOS WEB</h1>
+    <p>Administración de cuentas de clientes y estados de acceso</p>
+</header>
+
+<div class="panel-container">
+    <div class="table-header">
+        <h2>LISTADO GENERAL DE CLIENTES</h2>
+        <div class="count-tag" *ngIf="data$ | async as usuarios">
+            TOTAL: {{ usuarios.length }}
+        </div>
+    </div>
+
+    <div *ngIf="data$ | async as usuarios; else loading">
+        <table class="cp-table">
+            <thead>
+                <tr>
+                    <th>ID REF</th>
+                    <th>USUARIO / CONTACTO</th>
+                    <th>FECHA REGISTRO</th>
+                    <th>ESTADO CUENTA</th>
+                    <th>ACCESO</th>
+                    <th style="text-align: center">GESTIÓN</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let u of usuarios">
+                    <td class="id-cell">#USR-{{ u.id }}</td>
+
+                    <td>
+                        <div class="object-info">
+                            <span class="object-main">{{ u.name }} {{ u.lastName }}</span>
+                            <span class="object-sub">{{ u.email }}</span>
+                        </div>
+                    </td>
+
+                    <td>
+                        <span style="font-size: 0.85rem; color: var(--text-secondary);">
+                            {{ u.created | date:'dd/MM/yyyy · HH:mm' }}
+                        </span>
+                    </td>
+
+                    <td>
+                        <span class="status-badge" [ngClass]="u.isActive ? 'status-ok' : 'status-error'">
+                            {{ u.isActive ? 'ACTIVO' : 'INACTIVO' }}
+                        </span>
+                    </td>
+
+                    <td>
+                        <span class="status-badge" [ngClass]="u.isBlocked ? 'status-error' : 'status-warn'">
+                            {{ u.isBlocked ? 'BLOQUEADO' : 'SIN RESTRICCIONES' }}
+                        </span>
+                    </td>
+
+                    <td style="text-align: center">
+                        <div class="actions-wrapper">
+                            <button class="btn-management btn-view" title="Ver Perfil">
+                                <mat-icon>person</mat-icon>
+                            </button>
+
+                            <button class="btn-management btn-edit" title="Editar Usuario">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+
+                            <button class="btn-management btn-delete" title="Bloquear Acceso">
+                                <mat-icon>lock</mat-icon>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="pending-container" *ngIf="usuarios.length === 0" style="padding: 3rem;">
+            <mat-icon style="font-size: 40px; width: 40px; height: 40px; opacity: 0.3">people_outline</mat-icon>
+            <p>No hay usuarios web registrados en el sistema.</p>
+        </div>
+    </div>
+
+    <ng-template #loading>
+        <div class="pending-container">
+            <div class="spinner-mini"></div>
+            <p>Sincronizando base de datos de clientes...</p>
+        </div>
+    </ng-template>
+</div>

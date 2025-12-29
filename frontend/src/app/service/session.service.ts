@@ -1,11 +1,10 @@
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { inject, Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({ providedIn: 'root' })
 export class SessionService {
   private readonly TOKEN_KEY = 'client_token';
   private readonly SUPER_TOKEN_KEY = 'super_admin_token';
-
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
   private isBrowser(): boolean {
@@ -34,6 +33,7 @@ export class SessionService {
     if (!this.isBrowser()) return;
     sessionStorage.removeItem(this.TOKEN_KEY);
     sessionStorage.removeItem(this.SUPER_TOKEN_KEY);
+    window.location.href = '/';
   }
 
   hasSession(): boolean {

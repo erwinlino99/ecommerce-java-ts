@@ -1,32 +1,33 @@
-<mat-card class="home-card">
-    <header class="user-welcome" *ngIf="webUser | async as user">
-        <div class="welcome-text">
-            <mat-icon color="primary">account_circle</mat-icon>
-            <h1>Bienvenido, <span>{{ user.name }} {{ user.lastName }}</span></h1>
+<mat-card class="home-card minimal-theme full-width-layout">
+    
+    <header class="minimal-header" *ngIf="webUser | async as user">
+        <div class="user-info">
+            <p class="system-label">CONTROL_PANEL / {{ user.name | uppercase }}</p>
+            <h1>Hola, {{ user.name }}.</h1>
         </div>
+        
+        <button class="btn-logout-minimal" (click)="logout()">
+            <mat-icon>north_east</mat-icon>
+            <span>Salir</span>
+        </button>
     </header>
 
-    <mat-divider></mat-divider>
-
-    <nav class="header-menu">
-        <div class="nav-links" *ngIf="shopIndex | async as items; else loading">
-            <button mat-flat-button color="accent" *ngFor="let item of items" [routerLink]="[item.path]"
-                class="nav-btn">
-
-                {{ item.name }}
+    <div class="minimal-nav">
+        <div class="nav-grid" *ngIf="shopIndex | async as items; else loading">
+            <button *ngFor="let item of items" 
+                    [routerLink]="[item.path]"
+                    class="nav-item-minimal">
+                <span class="item-name">{{ item.name }}</span>
+                <span class="item-sub">Acceder →</span>
+                <div class="hover-indicator"></div>
             </button>
         </div>
-    </nav>
+    </div>
 
     <ng-template #loading>
-        <div class="status-container" *ngIf="!errorMsg">
-
-            <p>Cargando opciones...</p>
+        <div class="minimal-loader">
+            <div class="line-loader"></div>
+            <p>Actualizando interfaz...</p>
         </div>
     </ng-template>
-
-    <div class="error-container" *ngIf="errorMsg">
-        <mat-icon color="warn">error</mat-icon>
-        <p>{{ errorMsg }}</p>
-    </div>
 </mat-card>

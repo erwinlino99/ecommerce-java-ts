@@ -1,75 +1,142 @@
-.home-card {
-  max-width: 800px;
-  margin: 2rem auto;
-  padding: 2rem;
-  border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.05) !important;
+.minimal-theme {
+  background: #ffffff;
+  border: 1px solid #f3f0ff;
+  border-radius: 12px;
+  padding: 3.5rem 0 0 0; // Quitamos padding lateral e inferior para que el nav toque los bordes
+  box-shadow: none;
+  overflow: hidden; // Importante para que los indicadores no se salgan
+
+  .minimal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 4rem;
+    padding: 0 3.5rem; // Mantenemos el padding solo en el header
+
+    .system-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #a78bfa; // Púrpura claro
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2.2rem;
+      font-weight: 500;
+      color: #2e1065; // Púrpura muy oscuro
+      letter-spacing: -0.02em;
+    }
+  }
 }
 
-.user-welcome {
-  padding-bottom: 1.5rem;
-}
-
-.welcome-text {
+/* LOGOUT VIOLETA */
+.btn-logout-minimal {
+  background: #f5f3ff;
+  border: 1px solid #ddd6fe;
+  padding: 8px 16px;
+  border-radius: 6px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
+  color: #7c3aed;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  mat-icon { font-size: 16px; width: 16px; height: 16px; }
+
+  &:hover {
+    background: #7c3aed;
+    color: #fff;
+  }
 }
 
-.welcome-text mat-icon {
-  font-size: 40px;
-  width: 40px;
-  height: 40px;
+/* NAVEGACIÓN AL 100% */
+.minimal-nav {
+  width: 100%; // Ocupa el 100% del card
 }
 
-.welcome-text h1 {
-  margin: 0;
-  font-size: 1.8rem;
-  color: #1e293b;
-  font-weight: 400;
+.nav-grid {
+  display: grid;
+  // auto-fit con 1fr hace que los botones crezcan hasta llenar todo el ancho
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+  gap: 1px; 
+  background: #f5f3ff; // Líneas divisorias en púrpura clarito
+  border-top: 1px solid #f5f3ff;
+  width: 100%;
+
+  .nav-item-minimal {
+    background: #ffffff;
+    border: none;
+    padding: 3rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.3s ease;
+    width: 100%; // Asegura que el botón ocupe su celda
+
+    .item-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #4c1d95;
+      margin-bottom: 0.5rem;
+    }
+
+    .item-sub {
+      font-size: 0.8rem;
+      color: #a78bfa;
+      opacity: 0.6;
+      transition: all 0.3s ease;
+    }
+
+    .hover-indicator {
+      position: absolute;
+      bottom: 0; // Ahora lo ponemos abajo para un look más moderno
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: #8b5cf6;
+      transition: width 0.4s ease;
+    }
+
+    &:hover {
+      background: #faf9ff;
+      .item-sub { opacity: 1; transform: translateX(5px); }
+      .hover-indicator { width: 100%; }
+    }
+  }
 }
 
-.welcome-text h1 span {
-  font-weight: 700;
-  color: #2563eb;
+/* LOADER PÚRPURA */
+.minimal-loader {
+  text-align: center;
+  padding: 4rem;
+  .line-loader {
+    width: 40px;
+    height: 2px;
+    background: #f5f3ff;
+    margin: 0 auto 1rem;
+    position: relative;
+    overflow: hidden;
+    &::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 100%;
+      background: #8b5cf6;
+      animation: slide-minimal 1.5s infinite linear;
+    }
+  }
+  p { font-size: 0.8rem; color: #a78bfa; }
 }
 
-.subtitle {
-  color: #64748b;
-  margin-top: 5px;
-  margin-left: 52px;
-}
-
-.header-menu {
-  margin-top: 2rem;
-}
-
-.nav-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.nav-btn {
-  border-radius: 25px !important; /* Estilo píldora */
-  padding: 0 20px !important;
-  transition: transform 0.2s ease !important;
-}
-
-.nav-btn:hover {
-  transform: translateY(-3px);
-}
-
-.status-container, .error-container {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 1rem;
-  padding: 10px;
-}
-
-.error-container {
-  background: #fff1f2;
-  border-radius: 8px;
-  color: #e11d48;
+@keyframes slide-minimal {
+  0% { left: -100%; }
+  100% { left: 150%; }
 }
