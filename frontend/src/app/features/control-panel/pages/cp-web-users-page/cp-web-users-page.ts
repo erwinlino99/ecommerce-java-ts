@@ -6,11 +6,12 @@ import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'cp-app-web-users-page',
-  imports: [DatePipe,CommonModule,MatIcon],
+  imports: [DatePipe, CommonModule, MatIcon],
   templateUrl: './cp-web-users-page.html',
-    styleUrl: './../list-page.scss',
+  styleUrl: './../list-page.scss',
 })
-export class CpUsersPage extends BaseListComponent<WebUser>{
- protected readonly endpoint = '/summary-web-users';
+export class CpUsersPage extends BaseListComponent<WebUser> {
+  protected readonly endpoint = '/summary-web-users';
   //  protected override forceSubscribe = true;
+  protected override detailRoutePath = 'web-user-detail';
 }

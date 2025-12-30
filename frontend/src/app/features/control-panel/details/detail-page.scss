@@ -1,0 +1,169 @@
+/* INDUSTRIAL FUSION THEME - DETAIL VIEW ADJUSTMENTS */
+:host {
+  // Reutilizamos las mismas variables definidas en tu :host de los listados
+  --bg-app: #0f172a;
+  --bg-panel: #1e293b;
+  --bg-header: #334155;
+  --border-ui: #475569;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --accent: #38bdf8;
+  --success: #4ade80;
+  --warning: #fbbf24;
+  --danger: #f87171;
+  --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+
+  display: block;
+  padding: 2rem;
+  background-color: var(--bg-app);
+  min-height: 100vh;
+  color: var(--text-primary);
+}
+
+/* --- ESTRUCTURA DEL PANEL DE DETALLE --- */
+.detail-panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-ui);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.detail-header {
+  padding: 1.5rem;
+  background: var(--bg-header);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--accent); // Línea de acento temática
+
+  .title-group {
+    h2 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 0;
+      color: var(--text-primary);
+    }
+    .subtitle {
+      font-size: 0.75rem;
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+    }
+  }
+}
+
+/* --- FORMULARIO INDUSTRIAL --- */
+.industrial-form {
+  padding: 2rem;
+  
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+
+    .full-width {
+      grid-column: span 2;
+    }
+  }
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--accent);
+    letter-spacing: 0.5px;
+  }
+
+  input, textarea, select {
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid var(--border-ui);
+    border-radius: 6px;
+    padding: 0.8rem;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    transition: all 0.2s;
+
+    &:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: rgba(15, 23, 42, 0.8);
+      box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+    }
+
+    &[readonly] {
+      background: transparent;
+      border-color: transparent;
+      border-bottom: 1px solid var(--border-ui);
+      padding-left: 0;
+      cursor: default;
+    }
+  }
+
+  textarea {
+    min-height: 100px;
+    resize: vertical;
+  }
+}
+
+/* --- BOTONERA DE ACCIÓN --- */
+.detail-footer {
+  padding: 1.5rem 2rem;
+  background: rgba(15, 23, 42, 0.3);
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  border-top: 1px solid var(--border-ui);
+}
+
+/* Reutilizamos y adaptamos tus clases de botones */
+.btn-industrial {
+  padding: 0.7rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid var(--border-ui);
+  background: var(--bg-header);
+  color: var(--text-primary);
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  &.btn-save {
+    background: var(--success);
+    color: var(--bg-app);
+    border: none;
+    &:hover { box-shadow: 0 5px 15px rgba(74, 222, 128, 0.4); }
+    &:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  }
+
+  &.btn-edit {
+    border-color: var(--warning);
+    color: var(--warning);
+    background: transparent;
+    &:hover { background: var(--warning); color: var(--bg-app); }
+  }
+
+  &.btn-cancel {
+    border-color: var(--danger);
+    color: var(--danger);
+    background: transparent;
+    &:hover { background: var(--danger); color: var(--bg-app); }
+  }
+}

@@ -1,0 +1,86 @@
+<div class="dashboard-header">
+  <h1>GESTIÓN DE ACTIVOS</h1>
+  <p>Control centralizado de especificaciones y disponibilidad</p>
+</div>
+
+<div class="pending-container" *ngIf="loading()">
+  <div class="spinner-mini"></div>
+  <p>Sincronizando con la unidad central...</p>
+</div>
+
+<div class="detail-panel" *ngIf="!loading() && item()">
+  
+  <div class="detail-header">
+    <div class="title-group">
+      <h2>{{ form.get('name')?.value }}</h2>
+      <span class="subtitle">SISTEMA_ID: {{ item()?.id }} | {{ form.get('brandName')?.value }}</span>
+    </div>
+    <button class="btn-industrial" (click)="goBack()">
+      <span>SALIR</span>
+    </button>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="save()" class="industrial-form">
+    
+    <div class="form-grid">
+      
+      <div class="form-field full-width">
+        <label>Denominación del Producto</label>
+        <input type="text" formControlName="name" [readonly]="!isEditing()" 
+               [style.font-size]="'1.2rem'" [style.color]="'var(--accent)'">
+      </div>
+
+      <div class="form-field">
+        <label>Proveedor / Marca</label>
+        <input type="text" formControlName="brandName" [readonly]="!isEditing()">
+      </div>
+
+      <div class="form-field">
+        <label>Valor Unitario (EUR)</label>
+        <input type="number" formControlName="price" [readonly]="!isEditing()"
+               [style.font-weight]="'800'">
+      </div>
+
+      <div class="form-field">
+        <label>Inventario Actual</label>
+        <input type="number" formControlName="currentStock" [readonly]="!isEditing()"
+               [style.color]="form.get('currentStock')?.value > 0 ? 'var(--success)' : 'var(--danger)'">
+      </div>
+
+      <div class="form-field">
+        <label>Unidad de Medida</label>
+        <input type="text" formControlName="shopProductMeasurement" [readonly]="!isEditing()">
+      </div>
+
+      <div class="form-field full-width">
+        <label>Resumen Operativo</label>
+        <input type="text" formControlName="shortDescription" [readonly]="!isEditing()">
+      </div>
+
+      <div class="form-field full-width">
+        <label>Documentación y Detalles Técnicos</label>
+        <textarea formControlName="description" [readonly]="!isEditing()"></textarea>
+      </div>
+
+    </div>
+
+    <div class="detail-footer">
+      
+      <ng-container *ngIf="!isEditing(); else actionButtons">
+        <button type="button" (click)="toggleEdit()" class="btn-industrial btn-edit">
+          Editar Producto
+        </button>
+      </ng-container>
+
+      <ng-template #actionButtons>
+        <button type="button" (click)="toggleEdit()" class="btn-industrial btn-cancel">
+          CANCELAR
+        </button>
+        <button type="submit" [disabled]="form.invalid" class="btn-industrial btn-save">
+          PERSISTIR CAMBIOS
+        </button>
+      </ng-template>
+
+    </div>
+  </form>
+</div>

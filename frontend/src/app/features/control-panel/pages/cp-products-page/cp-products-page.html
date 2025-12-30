@@ -51,11 +51,11 @@
 
                     <td style="text-align: center">
                         <div class="actions-wrapper">
-                            <button class="btn-management btn-view" title="Ver Detalles">
+                            <button class="btn-management btn-view" title="Ver Detalles" (click)="goToDetail(p.id)">
                                 <mat-icon>visibility</mat-icon>
                             </button>
 
-                            <button class="btn-management btn-edit" title="Editar Producto">
+                            <button class="btn-management btn-edit" title="Editar Producto" (click)="goToDetail(p.id)">
                                 <mat-icon>edit</mat-icon>
                             </button>
 

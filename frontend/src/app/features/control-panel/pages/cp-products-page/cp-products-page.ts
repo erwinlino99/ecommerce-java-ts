@@ -15,5 +15,6 @@ import { MatIcon } from '@angular/material/icon';
 export class CpProductsPage extends BaseListComponent<ShopProduct> {
   // 1. El endpoint que usará la clase padre
   protected readonly endpoint = '/all-shop-products';
+  protected override detailRoutePath = 'product-detail';
 
 }

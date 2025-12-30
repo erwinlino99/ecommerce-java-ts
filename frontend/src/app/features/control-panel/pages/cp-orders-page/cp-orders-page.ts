@@ -16,4 +16,5 @@ import { CurrencyPipe } from '@angular/common';
 export class CpOrdersPage extends BaseListComponent<CpShopOrder> {
   protected readonly endpoint = '/shop-order/all-summary-shop-orders';
 // protected override forceSubscribe = true;
+  protected override detailRoutePath = 'order-detail';
 }

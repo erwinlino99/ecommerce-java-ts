@@ -7,10 +7,8 @@ import com.ecommerce.backend.models.ShopOrderItem;
 public class ShopOrderItemMapper {
 
     public static ShopOrderItemDto toDto(ShopOrderItem item) {
-        // FIRST MAKE A SHOPRODUCT LITE FOR PARAMETER
-        ShopProductLiteDto product = ShoProductMapper.toDto(item.getShopProduct());
+        ShopProductLiteDto product = ShopProductMapper.toDto(item.getShopProduct());
         return new ShopOrderItemDto(product, item.getQuantity(), item.getUnitPrice(), item.getSubtotal());
-
     }
 
 }
