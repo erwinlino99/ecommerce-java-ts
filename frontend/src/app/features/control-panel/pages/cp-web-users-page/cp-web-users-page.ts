@@ -3,6 +3,7 @@ import { BaseListComponent } from '../../../../shared/components/base-list-compo
 import { WebUser } from '../../../../shared/model-interface/WebUser';
 import { CommonModule, DatePipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
+import { CpUser } from '../../../../shared/model-interface/CpUser';
 
 @Component({
   selector: 'cp-app-web-users-page',
@@ -12,6 +13,5 @@ import { MatIcon } from '@angular/material/icon';
 })
 export class CpUsersPage extends BaseListComponent<WebUser> {
   protected readonly endpoint = '/summary-web-users';
-  //  protected override forceSubscribe = true;
   protected override detailRoutePath = 'web-user-detail';
 }

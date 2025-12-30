@@ -58,7 +58,7 @@ export const routes: Routes = [
         path: 'users',
         children: [
           { path: '', component: CpUsersPage },
-          { path: 'web-detail/:webUserIdDetail', component: CpWebUserDetailPage },
+          { path: 'web-user-detail/:webUserIdDetail', component: CpWebUserDetailPage },
         ],
       },
     ],

@@ -34,8 +34,7 @@ public class ShopProductController {
     }
 
     @PutMapping("/shop-product-id/{shopProductId}")
-    public ShopProductDto updateShopProduct(@PathVariable Integer shopProductId,
-            @RequestBody ShopProductRequest shopProductRequest) {
+    public ShopProductDto updateShopProduct(@PathVariable Integer shopProductId,@RequestBody ShopProductRequest shopProductRequest) {
         return this.service.updateShopProduct(shopProductId, shopProductRequest);
     }
 }

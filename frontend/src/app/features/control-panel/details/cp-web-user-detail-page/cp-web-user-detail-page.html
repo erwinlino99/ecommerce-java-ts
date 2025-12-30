@@ -1,1 +1,100 @@
-<p>cp-web-user-detail-page works!</p>
+<div class="dashboard-header">
+  <h1>EXPEDIENTE DE USUARIO</h1>
+  <p>Gestión de credenciales y trazabilidad de acceso</p>
+</div>
+
+<div class="pending-container" *ngIf="loading()">
+  <div class="spinner-mini"></div>
+  <p>Sincronizando base de datos...</p>
+</div>
+
+<div class="detail-panel" *ngIf="!loading() && item()">
+  
+  <div class="detail-header">
+    <div class="title-group">
+      <!-- <div class="id-badge">ID: {{ item()?.id }}</div> -->
+      <h2>{{ form.get('name')?.value }} {{ form.get('lastName')?.value }}</h2>
+      <span class="registration-date">MIEMBRO DESDE: {{ item()?.created | date:'dd/MM/yyyy HH:mm' }}</span>
+    </div>
+    <button class="btn-industrial" (click)="goBack()">
+      <span>VOLVER AL LISTADO</span>
+    </button>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="save()" class="industrial-form">
+    
+    <div class="form-sections-wrapper">
+      
+      <div class="form-section">
+        <h3 class="section-title">Información de Perfil</h3>
+        <div class="form-grid">
+          <div class="form-field">
+            <label>Nombre</label>
+            <input type="text" formControlName="name" [readonly]="!isEditing()">
+          </div>
+          <div class="form-field">
+            <label>Apellidos</label>
+            <input type="text" formControlName="lastName" [readonly]="!isEditing()">
+          </div>
+          <div class="form-field">
+            <label>Identificación Fiscal (CIF/NIF)</label>
+            <input type="text" formControlName="cif" [readonly]="!isEditing()" placeholder="---">
+          </div>
+          <div class="form-field">
+            <label>Correo Electrónico</label>
+            <input type="email" formControlName="email" [readonly]="!isEditing()">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section highlight">
+        <h3 class="section-title">Estatus Operativo</h3>
+        <div class="form-grid">
+          <div class="form-field">
+            <label>Cuenta Activa</label>
+            <div class="status-indicator" [class.active]="form.get('isActive')?.value == 1">
+              {{ form.get('isActive')?.value == 1 ? 'SISTEMA OPERATIVO' : 'SISTEMA SUSPENDIDO' }}
+            </div>
+          </div>
+          <div class="form-field">
+            <label>Restricción de Acceso</label>
+            <div class="status-indicator" [class.blocked]="form.get('isBlocked')?.value == 1">
+              {{ form.get('isBlocked')?.value == 1 ? 'BLOQUEADO' : 'ACCESO PERMITIDO' }}
+            </div>
+          </div>
+          <div class="form-field full-width">
+            <label>Trazabilidad: Última Sincronización</label>
+            <div class="readonly-text">
+              {{ (item()?.last_time_login | date:'fullDate') || 'No se han registrado accesos previos' }}
+              <small *ngIf="item()?.last_time_login">({{ item()?.last_time_login | date:'shortTime' }})</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="detail-footer">
+      <div class="modification-info" *ngIf="item()?.modified">
+        Última modificación: {{ item()?.modified | date:'short' }}
+      </div>
+      
+      <div class="buttons-group">
+        <ng-container *ngIf="!isEditing(); else actionButtons">
+          <button type="button" (click)="toggleEdit()" class="btn-industrial btn-edit">
+            MODIFICAR REGISTRO
+          </button>
+        </ng-container>
+
+        <ng-template #actionButtons>
+          <button type="button" (click)="toggleEdit()" class="btn-industrial btn-cancel">
+            DESCARTAR
+          </button>
+          <button type="submit" [disabled]="form.invalid" class="btn-industrial btn-save">
+            CONFIRMAR CAMBIOS
+          </button>
+        </ng-template>
+      </div>
+    </div>
+  </form>
+</div>

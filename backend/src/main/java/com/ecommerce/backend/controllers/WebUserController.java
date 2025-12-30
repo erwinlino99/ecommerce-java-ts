@@ -7,11 +7,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.ecommerce.backend.dto.WebUserDto;
 import com.ecommerce.backend.dto.mapper.WebUserMapper;
+import com.ecommerce.backend.dto.request.WebUserRequest;
 import com.ecommerce.backend.models.WebUser;
 import com.ecommerce.backend.services.WebUserService;
 
@@ -41,6 +45,22 @@ public class WebUserController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
         }
         return WebUserMapper.toDtoList(this.service.getAll());
+    }
+
+    @GetMapping("/web-user/{webUserId}")
+    public WebUserDto getWebUserById(Authentication auth, @PathVariable Integer webUserId) {
+        if (auth == null || !auth.isAuthenticated()) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+        }
+        return this.service.getWebUserByIdDTO(webUserId);
+    }
+
+    @PutMapping("/web-user/{webUserId}")
+    public WebUserDto updateWebUser(Authentication auth,@PathVariable Integer webUserId, @RequestBody WebUserRequest webUser) {
+        if (auth == null || !auth.isAuthenticated()) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+        }
+        return this.service.updateWebUser(webUserId, webUser);
     }
 
 }

@@ -54,11 +54,11 @@
 
                     <td style="text-align: center">
                         <div class="actions-wrapper">
-                            <button class="btn-management btn-view" title="Ver Perfil">
+                            <button class="btn-management btn-view" title="Ver Perfil" (click)="goToDetail(u.id)">
                                 <mat-icon>person</mat-icon>
                             </button>
 
-                            <button class="btn-management btn-edit" title="Editar Usuario">
+                            <button class="btn-management btn-edit" title="Editar Usuario" (click)="goToDetail(u.id)">
                                 <mat-icon>edit</mat-icon>
                             </button>
 

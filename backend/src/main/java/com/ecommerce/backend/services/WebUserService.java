@@ -8,6 +8,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.ecommerce.backend.dto.WebUserDto;
+import com.ecommerce.backend.dto.mapper.WebUserMapper;
+import com.ecommerce.backend.dto.request.WebUserRequest;
 import com.ecommerce.backend.models.WebUser;
 import com.ecommerce.backend.repositories.WebUserRepository;
 
@@ -58,6 +61,35 @@ public class WebUserService {
         String email = auth.getName();
         return repo.findByEmail(email).map(WebUser::getId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+    }
+
+    public WebUserDto getWebUserByIdDTO(Integer webUserId) {
+        return WebUserMapper.toDto(this.findById(webUserId));
+    }
+
+    public WebUserDto updateWebUser(Integer webUserId, WebUserRequest request) {
+
+        WebUser webUser = this.repo.findById(webUserId)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + webUserId));
+
+        webUser.setName(request.name());
+        webUser.setLastName(request.lastName());
+        webUser.setEmail(request.email());
+        webUser.setCif(request.cif());
+        webUser.setIsActive(request.isActive());
+        webUser.setIsBlocked(request.isBlocked());
+        webUser.setData(request.data());
+
+        if (request.password() != null && !request.password().isBlank()) {
+            webUser.setPassword(encoder.encode(request.password()));
+        }
+        if (request.deleted() != null && webUser.getDeleted() == null) {
+            webUser.setDeleted(java.time.LocalDateTime.now());
+        } else if (request.deleted() == null && webUser.getDeleted() != null) {
+            webUser.setDeleted(null);
+        }
+        WebUser savedUser = this.repo.save(webUser);
+        return WebUserMapper.toDto(savedUser);
     }
 
 }
