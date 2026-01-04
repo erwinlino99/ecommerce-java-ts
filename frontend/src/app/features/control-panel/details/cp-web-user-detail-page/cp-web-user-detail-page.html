@@ -9,7 +9,7 @@
 </div>
 
 <div class="detail-panel" *ngIf="!loading() && item()">
-  
+
   <div class="detail-header">
     <div class="title-group">
       <!-- <div class="id-badge">ID: {{ item()?.id }}</div> -->
@@ -19,12 +19,15 @@
     <button class="btn-industrial" (click)="goBack()">
       <span>VOLVER AL LISTADO</span>
     </button>
+    <button class="btn-industrial" (click)="goImpersonate(item()?.id!)">
+      <span>Impersonar</span>
+    </button>
   </div>
 
   <form [formGroup]="form" (ngSubmit)="save()" class="industrial-form">
-    
+
     <div class="form-sections-wrapper">
-      
+
       <div class="form-section">
         <h3 class="section-title">Información de Perfil</h3>
         <div class="form-grid">
@@ -78,7 +81,7 @@
       <div class="modification-info" *ngIf="item()?.modified">
         Última modificación: {{ item()?.modified | date:'short' }}
       </div>
-      
+
       <div class="buttons-group">
         <ng-container *ngIf="!isEditing(); else actionButtons">
           <button type="button" (click)="toggleEdit()" class="btn-industrial btn-edit">

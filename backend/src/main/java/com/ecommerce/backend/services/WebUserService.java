@@ -92,4 +92,13 @@ public class WebUserService {
         return WebUserMapper.toDto(savedUser);
     }
 
+    public WebUserDto impersonate(Integer webUserId){
+
+    
+
+
+
+        return null;
+    }
+
 }
