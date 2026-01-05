@@ -1,1 +1,70 @@
-<p>imports-page works!</p>
+<section class="dashboard-header">
+    <h1>SISTEMA DE IMPORTACIÓN</h1>
+    <p>Administración de carga masiva y protocolos Excel (.xlsx)</p>
+</section>
+
+<div class="panel-container">
+    <div class="table-header">
+        <h1>Panel de Gestión de Ingesta</h1>
+
+        <div class="download-container">
+            <span class="accent-title">¿No tiene el formato oficial?</span>
+            <button class="btn-action download-btn" (click)="downloadTemplate()">
+                <i class="fas fa-file-download"></i>
+                DESCARGAR PLANTILLA AQUÍ
+            </button>
+        </div>
+    </div>
+
+    <div class="import-grid">
+        <div class="info-section">
+            <span class="accent-title">Guía de Procedimiento</span>
+
+            <ul class="instruction-list">
+                <li>
+                    <span class="id-cell">01</span>
+                    <p><strong>Descarga:</strong> Use la plantilla oficial para evitar conflictos de datos.</p>
+                </li>
+                <li>
+                    <span class="id-cell">02</span>
+                    <p><strong>Preparación:</strong> Complete los campos sin alterar los encabezados.</p>
+                </li>
+                <li>
+                    <span class="id-cell">03</span>
+                    <p><strong>Subida:</strong> El motor validará la integridad antes de la persistencia.</p>
+                </li>
+            </ul>
+        </div>
+
+        <div class="upload-section">
+            <div class="dropzone" [class.drag-over]="isDragging" (dragover)="onDragOver($event)"
+                (dragleave)="onDragLeave()" (drop)="onDrop($event)" (click)="fileInput.click()">
+
+                <input type="file" #fileInput (change)="onFileSelected($event)" accept=".xlsx" hidden>
+
+                <div class="dropzone-content" *ngIf="!selectedFile">
+                    <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                    <span class="object-main">Suelte el archivo maestro aquí</span>
+                    <span class="object-sub">o haga click para explorar</span>
+                </div>
+
+                <div class="selected-file-info" *ngIf="selectedFile">
+                    <i class="fas fa-file-excel status-ok" style="font-size: 3.5rem;"></i>
+                    <span class="object-main">{{ selectedFile.name }}</span>
+                    <span class="object-sub">{{ (selectedFile.size / 1024).toFixed(2) }} KB — LISTO</span>
+                </div>
+            </div>
+
+            <div class="actions-wrapper" *ngIf="selectedFile">
+                <button class="btn-action btn-view" (click)="uploadFile()" [disabled]="isUploading">
+                    <span *ngIf="!isUploading">PROCESAR IMPORTACIÓN</span>
+                    <div *ngIf="isUploading" class="spinner-mini"></div>
+                </button>
+
+                <button class="btn-management btn-delete" (click)="clearFile()" [disabled]="isUploading">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -23,7 +23,7 @@ export class ShopProductDetail implements OnInit {
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('shopProductId'));
-    const endpoint = `shop-product-id=${id}`;
+    const endpoint = `shop-product-id/${id}`;
     console.log('endpoint', endpoint);
 
     this.shopProduct = this.api.get<ShopProduct>(endpoint).pipe(

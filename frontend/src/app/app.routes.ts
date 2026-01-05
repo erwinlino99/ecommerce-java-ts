@@ -40,6 +40,7 @@ export const routes: Routes = [
     component: ControlPanelAppShell,
     children: [
       { path: 'config', component: ConfigurationPage },
+      { path: 'imports', component: CpImportsPage },
       {
         path: 'orders',
         children: [

@@ -103,7 +103,7 @@ export class ApiService {
       headers = headers.set('Authorization', `Bearer ${activeToken}`);
     }
 
-    const responseType = (options?.responseType ?? 'json') as 'json';
+    const responseType = (options?.responseType ?? 'json') as any;
     const withCredentials = options?.withCredentials ?? false;
 
     return { params, headers, responseType, withCredentials };
