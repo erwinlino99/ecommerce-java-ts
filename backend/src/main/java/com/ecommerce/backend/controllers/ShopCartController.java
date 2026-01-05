@@ -1,5 +1,6 @@
 package com.ecommerce.backend.controllers;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ecommerce.backend.dto.ShopCartDto;
 import com.ecommerce.backend.dto.mapper.ShopCartMapper;
 import com.ecommerce.backend.dto.request.AddOrReduceToCartRequest;
+import com.ecommerce.backend.dto.request.AdjustShopCartItemRequest;
 import com.ecommerce.backend.models.ShopCart;
 import com.ecommerce.backend.services.ShopCartService;
 import com.ecommerce.backend.services.WebUserService;
@@ -71,7 +73,7 @@ public class ShopCartController {
         return ResponseEntity.ok(Map.of(200, "PRODUCTOS ELIMINADOS"));
     }
 
-    @PostMapping("/purchase") 
+    @PostMapping("/purchase")
     public ResponseEntity purchaseCart(Authentication auth) {
         Integer webUserId = this.webUserService.getWebUserId(auth);
         ShopCart currentCart = this.cartService.getOrCreateCart(webUserId);
@@ -81,4 +83,11 @@ public class ShopCartController {
         return ResponseEntity.ok(Map.of("msm", "COMPRA REALIZADA"));
     }
 
+    @PostMapping("/adjusting")
+    public ResponseEntity adjustCart(Authentication auth, @RequestBody List<AdjustShopCartItemRequest> cartItems) {
+        Integer webUserId = this.webUserService.getWebUserId(auth);
+        ShopCart currentCart = this.cartService.getOrCreateCart(webUserId);
+        this.cartService.adjustCurrentCart(webUserId,currentCart, cartItems);
+        return ResponseEntity.ok(Map.of("msm", "CARRO AJUSTADO"));
+    }
 }

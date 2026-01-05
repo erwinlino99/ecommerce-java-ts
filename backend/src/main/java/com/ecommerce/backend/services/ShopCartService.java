@@ -4,9 +4,13 @@ import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.ecommerce.backend.dto.request.AdjustShopCartItemRequest;
 import com.ecommerce.backend.dto.response.OutOfStockProductResponse;
 import com.ecommerce.backend.exceptions.OutOfStockException;
 import com.ecommerce.backend.models.ShopCart;
@@ -20,6 +24,7 @@ import com.ecommerce.backend.repositories.ShopCartRepository;
 import com.ecommerce.backend.repositories.ShopOrderRepository;
 import com.ecommerce.backend.repositories.ShopProductRepository;
 import com.ecommerce.backend.repositories.WebUserRepository;
+import com.ecommerce.backend.util.UseLogger;
 
 import jakarta.transaction.Transactional;
 
@@ -123,7 +128,7 @@ public class ShopCartService {
 
     @Transactional
     public void tryToBuyItems(ShopCart cart) {
-        
+
         List<OutOfStockProductResponse> errors = new ArrayList();
 
         List<ShopCartItem> items = cart.getItems();
@@ -132,7 +137,7 @@ public class ShopCartService {
             Integer currentStock = product.getCurrentStock();
             Integer quantity = item.getQuantity();
             if (quantity > currentStock) {
-                errors.add(new OutOfStockProductResponse(item.getProductName(), quantity, currentStock));
+                errors.add(new OutOfStockProductResponse(product.getId(), item.getProductName(), quantity));
             }
         }
         if (!errors.isEmpty()) {
@@ -188,5 +193,66 @@ public class ShopCartService {
         currentCart.setTotalItems(0);
         cartRepo.save(currentCart);
         return true;
+    }
+
+    // @Transactional
+    // public void adjustCurrentCart(Integer webUserId, ShopCart currentCart,
+    // List<AdjustShopCartItemRequest> adjustItems) {
+    // List<ShopCartItem> cartItems = currentCart.getItems();
+    // // LISTA TEMPORTAL DE LOS ITEMS A BORRAR
+    // List<ShopCartItem> toDelete = new ArrayList<>();
+    // for (ShopCartItem item : cartItems) {
+    // Integer itemCartProductId = item.getShopProductId();
+    // for (AdjustShopCartItemRequest productToFix : adjustItems) {
+    // if (Objects.equals(itemCartProductId, productToFix.shopProductId())) {
+    // // UseLogger.info("MARCADO PARA ELIMINAR", itemCartProductId);
+    // toDelete.add(item);
+    // break;
+    // }
+    // }
+    // }
+    // if (!toDelete.isEmpty()) {
+    // cartItems.removeAll(toDelete);
+    // cartItemRepo.deleteAll(toDelete);
+    // }
+    // this.recalculateShopCart(currentCart);
+    // cartRepo.save(currentCart);
+
+    // for (AdjustShopCartItemRequest item : adjustItems) {
+    // // AGREGAMOS EL PRODUCTO CON EL MAXIMO DE STOCK
+    // ShopProduct product = this.shopProductRepo.getById(item.shopProductId());
+    // this.addOrReduceShopProduct(webUserId, product.getId(),
+    // product.getCurrentStock(), true);
+    // }
+    // }
+
+    @Transactional
+    public void adjustCurrentCart(Integer webUserId, ShopCart currentCart,
+            List<AdjustShopCartItemRequest> adjustItems) {
+
+        // 1. Obtener IDs únicos
+        Set<Integer> idsToAdjust = adjustItems.stream()
+                .map(AdjustShopCartItemRequest::shopProductId)
+                .collect(Collectors.toSet());
+
+        // 2. Eliminar los items actuales que fallaron del carrito
+        List<ShopCartItem> itemsToRemove = currentCart.getItems().stream()
+                .filter(item -> idsToAdjust.contains(item.getShopProductId()))
+                .collect(Collectors.toList());
+
+        if (!itemsToRemove.isEmpty()) {
+            currentCart.getItems().removeAll(itemsToRemove);
+            cartItemRepo.deleteAllInBatch(itemsToRemove);
+        }
+
+        List<ShopProduct> productsWithStock = shopProductRepo.findAllById(idsToAdjust).stream()
+                .filter(product -> product.getCurrentStock() > 0) // <--- CLAVE: Solo si hay stock
+                .toList();
+
+        for (ShopProduct product : productsWithStock) {
+            this.addOrReduceShopProduct(webUserId, product.getId(), product.getCurrentStock(), true);
+        }
+        this.recalculateShopCart(currentCart);
+        cartRepo.save(currentCart);
     }
 }

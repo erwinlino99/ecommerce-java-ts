@@ -4,6 +4,8 @@ import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs'; // Importamo
 import { ShopCart } from '../../../../shared/model-interface/ShopCart';
 import { CommonModule } from '@angular/common';
 import { PopupService } from '../../../../service/pop.up.data.service';
+import { ShopProductAdjustment } from '../../../../shared/model-interface/ShopProductAdjustment';
+import { error } from 'console';
 
 @Component({
   selector: 'app-cart-page',
@@ -69,9 +71,9 @@ export class CartPage {
         this.fetchWebUserCart();
       },
       error: (err) => {
-        const products = err.error?.details;
+        const products: ShopProductAdjustment = err.error?.details;
         if (Array.isArray(products) && products.length > 0) {
-          console.log(products);
+          this.adjustingCurrentCart(products);
         }
       },
     });
@@ -83,6 +85,20 @@ export class CartPage {
       next: (data) => {
         this.popup.success('EL CARRO HA SIDO VACIADO');
         this.fetchWebUserCart();
+      },
+    });
+  }
+
+  adjustingCurrentCart(products: ShopProductAdjustment) {
+    const endpoint = '/shop-cart/adjusting';
+    console.log('PRODUCTOS A CORREGIR', products);
+    this.api.post<ShopProductAdjustment>(endpoint, products).subscribe({
+      next: (data) => {
+        console.log('RESPUESTA AL AJUSTAR', data);
+        this.fetchWebUserCart();
+      },
+      error: (err) => {
+        console.log('ERROR-->', err);
       },
     });
   }
