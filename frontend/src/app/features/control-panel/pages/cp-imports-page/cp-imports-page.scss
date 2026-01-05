@@ -142,10 +142,28 @@
     background: rgba(248, 113, 113, 0.1);
     border: 1px solid var(--danger);
     color: var(--danger);
-    width: 45px;
-    height: 45px;
+    
+    padding: 0 1.5rem;      /* Quitamos el width fijo y damos espacio lateral */
+    height: 45px;           /* Mantenemos la altura para que iguale al botón de procesar */
+    display: flex;          /* Centramos el texto interior */
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;       /* Le damos peso a la fuente como al otro botón */
+    // -------------
+
     border-radius: 8px;
-    &:hover { background: var(--danger); color: white; }
+    transition: 0.2s;
+    cursor: pointer;
+
+    &:hover { 
+        background: var(--danger); 
+        color: white; 
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
 }
 
 .status-ok { color: var(--success); }

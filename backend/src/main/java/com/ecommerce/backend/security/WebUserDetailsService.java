@@ -28,7 +28,7 @@ public UserDetails loadUserByUsername(String email) throws UsernameNotFoundExcep
     var cpUserOpt = cpUserRepo.findByEmail(email);
     if (cpUserOpt.isPresent()) {
         var user = cpUserOpt.get();
-        UseLogger.info("CP User encontrado: ", user.getEmail());
+        // UseLogger.info("CP User encontrado: ", user.getEmail());
 
         String roleName = (user.getRole() != null) ? user.getRole().getName() : "ROLE_ADMIN";
 

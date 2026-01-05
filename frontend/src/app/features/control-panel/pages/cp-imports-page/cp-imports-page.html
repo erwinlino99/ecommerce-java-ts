@@ -56,14 +56,14 @@
             </div>
 
             <div class="actions-wrapper" *ngIf="selectedFile">
+                <button class="btn-management btn-delete" (click)="clearFile()" [disabled]="isUploading">
+                    <span *ngIf="!isUploading">Borrar</span>
+                </button>
                 <button class="btn-action btn-view" (click)="uploadFile()" [disabled]="isUploading">
                     <span *ngIf="!isUploading">PROCESAR IMPORTACIÓN</span>
                     <div *ngIf="isUploading" class="spinner-mini"></div>
                 </button>
 
-                <button class="btn-management btn-delete" (click)="clearFile()" [disabled]="isUploading">
-                    <i class="fas fa-trash"></i>
-                </button>
             </div>
         </div>
     </div>

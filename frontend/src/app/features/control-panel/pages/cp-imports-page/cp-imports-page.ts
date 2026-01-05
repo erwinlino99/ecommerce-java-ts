@@ -46,16 +46,27 @@ export class CpImportsPage {
     }
   }
 
-  uploadFile(): void {
-    if (!this.selectedFile) return;
+uploadFile(): void {
+  if (!this.selectedFile) return;
+  this.isUploading = true;
+  const formData = new FormData();
+  formData.append('file', this.selectedFile); // El nombre 'file' debe coincidir con el Backend
+  const endpoint = '/file/upload-template';
 
-    this.isUploading = true;
-    console.log('Subiendo archivo al backend...');
-
-    setTimeout(() => {
+  this.api.post(endpoint, formData).subscribe({
+    next: (res: any) => {
+      console.log('Archivo procesado con éxito:', res);
       this.isUploading = false;
-    }, 2000);
-  }
+      this.clearFile(); // Limpiamos la selección
+      alert('Productos importados correctamente');
+    },
+    error: (err) => {
+      console.error('Error al subir el archivo:', err);
+      this.isUploading = false;
+      alert('Error al procesar el Excel');
+    }
+  });
+}
 
   clearFile(): void {
     this.selectedFile = null;

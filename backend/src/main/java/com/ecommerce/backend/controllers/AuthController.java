@@ -50,9 +50,9 @@ public class AuthController {
     // -------------------------------
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
-        UseLogger.info("--- INICIO PROCESO LOGIN ---", "");
-        UseLogger.info("Email recibido: ", request.getEmail());
-        UseLogger.info("Password recibida (longitud): ", String.valueOf(request.getPassword().length()));
+        // UseLogger.info("--- INICIO PROCESO LOGIN ---", "");
+        // UseLogger.info("Email recibido: ", request.getEmail());
+        // UseLogger.info("Password recibida (longitud): ", String.valueOf(request.getPassword().length()));
 
         try {
             // --- BLOQUE DE DEBUG DE EMERGENCIA ---
@@ -61,13 +61,13 @@ public class AuthController {
                 String hashDB = debugUser.get().getPassword();
                 boolean matches = passwordEncoder.matches(request.getPassword(), hashDB);
 
-                UseLogger.info("¿COINCIDENCIA MANUAL BCrypt?: ", matches ? "SÍ (TRUE)" : "NO (FALSE)");
-                UseLogger.info("Hash actual en DB: ", hashDB);
+                // UseLogger.info("¿COINCIDENCIA MANUAL BCrypt?: ", matches ? "SÍ (TRUE)" : "NO (FALSE)");
+                // UseLogger.info("Hash actual en DB: ", hashDB);
 
                 // Generamos un hash fresco para que lo compares
                 String nuevoHashTest = passwordEncoder.encode(request.getPassword());
-                UseLogger.info("Si generamos un hash ahora para '" + request.getPassword() + "' sería: ",
-                        nuevoHashTest);
+                // UseLogger.info("Si generamos un hash ahora para '" + request.getPassword() + "' sería: ",
+                //         nuevoHashTest);
             }
             // ---------------------------------------
 
@@ -107,6 +107,7 @@ public class AuthController {
             return ResponseEntity.status(401).body("{\"error\": \"Email o contraseña incorrectos\"}");
         } catch (Exception e) {
             UseLogger.error("ERROR CRÍTICO: ", e.getMessage());
+            e.printStackTrace(); // Para ver el error completo en consola
             e.printStackTrace(); // Para ver el error completo en consola
             return ResponseEntity.status(500).body("{\"error\": \"Fallo interno: " + e.getMessage() + "\"}");
         }
