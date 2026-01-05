@@ -78,7 +78,7 @@ public class ShopCartController {
         this.cartService.tryToBuyItems(currentCart);
         this.cartService.prepareOrder(currentCart);
         this.cartService.emptyCurrentCart(currentCart);
-        return ResponseEntity.ok(Map.of("200", "COMPRA REALIZADA"));
+        return ResponseEntity.ok(Map.of("msm", "COMPRA REALIZADA"));
     }
 
 }
