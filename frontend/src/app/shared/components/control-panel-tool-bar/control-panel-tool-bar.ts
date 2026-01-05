@@ -65,7 +65,6 @@ export class ControlPanelToolBar implements OnInit {
   }
 
   logout(): void {
-    this.session.clear();
-    this.router.navigate(['/login']);
+    this.session.clear(true);
   }
 }

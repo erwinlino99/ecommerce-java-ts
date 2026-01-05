@@ -1,4 +1,4 @@
 export interface LoginResponse {
   token: string;
-  roleName:string
+  roleName:string | null
 }

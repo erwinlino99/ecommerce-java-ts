@@ -69,8 +69,14 @@ export class ToolBar implements OnInit {
   }
 
   logout(): void {
-    console.log("saliendo")
-    this.session.clear();
-    this.router.navigate(['/login']);
+    console.log('saliendo');
+    const isImpersonating = !!this.session.getSuperAdminToken();
+    if (isImpersonating) {
+      this.session.clear(false);
+      this.router.navigate(['/admin/users']);
+    } else {
+      this.session.clear(true);
+      this.router.navigate(['/']);
+    }
   }
 }

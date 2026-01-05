@@ -57,7 +57,7 @@ export class Home {
         console.log('VER ESTO ->', data);
         if (data.roleName && data.roleName!=="ROLE_CLIENT") {
           this.session.setSuperAdminToken(data.token);
-          this.router.navigate(['/admin']);
+          this.router.navigate(['/admin/config']);
         } else {
           this.session.setWebUserToken(data.token);
           this.router.navigate(['/home']);

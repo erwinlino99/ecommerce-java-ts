@@ -7,8 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.ecommerce.backend.dto.WebUserDto;
 import com.ecommerce.backend.dto.mapper.WebUserMapper;
-import com.ecommerce.backend.dto.request.WebUserIdDto;
+import com.ecommerce.backend.dto.request.WebUserIdRequest;
 import com.ecommerce.backend.dto.request.WebUserRequest;
 import com.ecommerce.backend.models.WebUser;
 import com.ecommerce.backend.services.WebUserService;
@@ -68,7 +68,7 @@ public class WebUserController {
     }
 
     @PostMapping("/web-user/impersonate")
-    public WebUserDto impersonate(Authentication auth, @RequestBody WebUserIdDto webuser) {
+    public ResponseEntity impersonate(Authentication auth, @RequestBody WebUserIdRequest webuser) {
         if (auth == null || !auth.isAuthenticated()) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
         }

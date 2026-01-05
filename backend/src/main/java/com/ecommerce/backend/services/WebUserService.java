@@ -3,6 +3,7 @@ package com.ecommerce.backend.services;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -11,17 +12,21 @@ import org.springframework.web.server.ResponseStatusException;
 import com.ecommerce.backend.dto.WebUserDto;
 import com.ecommerce.backend.dto.mapper.WebUserMapper;
 import com.ecommerce.backend.dto.request.WebUserRequest;
+import com.ecommerce.backend.dto.response.ImpersonateTokenResponse;
 import com.ecommerce.backend.models.WebUser;
 import com.ecommerce.backend.repositories.WebUserRepository;
+import com.ecommerce.backend.security.JwtService;
 
 @Service
 public class WebUserService {
 
     private final WebUserRepository repo;
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    private JwtService jwtService;
 
-    public WebUserService(WebUserRepository repo) {
+    public WebUserService(WebUserRepository repo, JwtService jwtService) {
         this.repo = repo;
+        this.jwtService = jwtService;
     }
 
     public List<WebUser> getAll() {
@@ -92,13 +97,10 @@ public class WebUserService {
         return WebUserMapper.toDto(savedUser);
     }
 
-    public WebUserDto impersonate(Integer webUserId){
-
-    
-
-
-
-        return null;
+    public ResponseEntity impersonate(Integer webUserId) {
+        WebUser webUser = this.repo.getById(webUserId);
+        String token = this.jwtService.generateToken(webUser);
+        return ResponseEntity.ok(new ImpersonateTokenResponse(token));
     }
 
 }
