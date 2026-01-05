@@ -1,11 +1,14 @@
 package com.ecommerce.backend.services;
 
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.ecommerce.backend.dto.response.OutOfStockProductResponse;
+import com.ecommerce.backend.exceptions.OutOfStockException;
 import com.ecommerce.backend.models.ShopCart;
 import com.ecommerce.backend.models.ShopCartItem;
 import com.ecommerce.backend.models.ShopCartStatus;
@@ -32,7 +35,7 @@ public class ShopCartService {
 
     public ShopCartService(ShopCartRepository cartRepo, ShopCartItemRepository cartItemRepo,
             ShopProductRepository shopProductRepo, WebUserRepository webUserRepo,
-            ShopOrderRepository orderRepo,PokeApiService pokeApiService) {
+            ShopOrderRepository orderRepo, PokeApiService pokeApiService) {
         this.cartRepo = cartRepo;
         this.cartItemRepo = cartItemRepo;
         this.shopProductRepo = shopProductRepo;
@@ -119,17 +122,22 @@ public class ShopCartService {
     }
 
     @Transactional
-    public boolean tryToBuyItems(ShopCart cart) {
+    public void tryToBuyItems(ShopCart cart) {
+        
+        List<OutOfStockProductResponse> errors = new ArrayList();
+
         List<ShopCartItem> items = cart.getItems();
         for (ShopCartItem item : items) {
             ShopProduct product = item.getShopProduct();
-            int currentStock = product.getCurrentStock();
-            int quantity = item.getQuantity();
+            Integer currentStock = product.getCurrentStock();
+            Integer quantity = item.getQuantity();
             if (quantity > currentStock) {
-                return false;
+                errors.add(new OutOfStockProductResponse(item.getProductName(), quantity, currentStock));
             }
         }
-        return true;
+        if (!errors.isEmpty()) {
+            throw new OutOfStockException(errors);
+        }
     }
 
     @Transactional

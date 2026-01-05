@@ -22,7 +22,7 @@ public class WebUserService {
 
     private final WebUserRepository repo;
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-    private JwtService jwtService;
+    private final JwtService jwtService;
 
     public WebUserService(WebUserRepository repo, JwtService jwtService) {
         this.repo = repo;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ApiService } from '../../../../service/api.service';
 import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs'; // Importamos switchMap y BehaviorSubject
 import { ShopCart } from '../../../../shared/model-interface/ShopCart';
@@ -62,11 +62,17 @@ export class CartPage {
   }
 
   purcharseCart() {
-    const endpoint = '/shop-cart/purcharse';
+    const endpoint = '/shop-cart/purchase';
     this.api.post(endpoint).subscribe({
       next: () => {
         this.popup.success('CARRITO COMPRADO');
         this.fetchWebUserCart();
+      },
+      error: (err) => {
+        const products = err.error?.details;
+        if (Array.isArray(products) && products.length > 0) {
+          console.log(products);
+        }
       },
     });
   }
