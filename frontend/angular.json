@@ -29,9 +29,8 @@
             "styles": [
               "src/styles.scss"
             ],
-            "server": null,
-            "outputMode": "static",
-            "ssr":false
+            "server": false,
+            "outputMode": "static"
           },
           "configurations": {
             "production": {
@@ -74,22 +73,22 @@
         },
         "test": {
           "builder": "@angular/build:karma",
-               "options": {
-         "browser": "src/main.ts",
-         "tsConfig": "tsconfig.app.json",
-         "inlineStyleLanguage": "scss",
-         "assets": [
-             {
-                 "glob": "**/*",
-                 "input": "public"
-             }
-         ],
-         "styles": [
-             "src/styles.scss"
-         ],
-         "outputMode": "static",
-         "ssr": false
-}
+          "options": {
+            "browser": "src/main.ts",
+            "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              }
+            ],
+            "styles": [
+              "src/styles.scss"
+            ],
+            "server": false,
+            "outputMode": "static"
+          }
         }
       }
     }
