@@ -1,84 +1,80 @@
-<div class="cart-container" *ngIf="shopCart$ | async as cart; else loading">
+<div class="micro-wrapper-cart" *ngIf="shopCart$ | async as cart; else loading">
 
-  <div class="cart-card" *ngIf="cart.items.length > 0; else emptyCart">
-    <div class="cart-header">
-      <h2>Resumen de Compra</h2>
-      <div class="header-actions">
-        <span class="item-count">{{ cart.totalItems }} artículos</span>
-        <button class="btn-clear" (click)="emptyCurrentCart()">Vaciar carrito</button>
+  <div class="cart-card-pro" *ngIf="cart.items.length > 0; else emptyCart">
+    <div class="cart-header-pro">
+      <div class="title-group">
+        <h2>Resumen de Compra</h2>
+        <span class="item-badge">{{ cart.totalItems }} artículos</span>
       </div>
+      <button class="btn-clear-pro" (click)="emptyCurrentCart()">
+        <mat-icon>delete_sweep</mat-icon> Vaciar carrito
+      </button>
     </div>
 
-    <table class="modern-table">
-      <thead>
-        <tr>
-          <th>Producto</th>
-          <th class="text-center">Precio</th>
-          <th class="text-center">Cantidad</th>
-          <th class="text-right">Subtotal</th>
-          <th class="text-right">Acción</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of cart.items">
-          <td>
-            <div class="product-info">
-              <span class="product-name">{{ item.shopProductName }}</span>
-            </div>
-          </td>
-          <td class="text-center">{{ item.unitPrice | currency:'EUR' }}</td>
-          <td class="text-center">
-            <div class="quantity-group">
-              <button *ngIf="item.quantity > 1" class="btn-sm" (click)="decreaseQuantity(item.shopProductId)">-</button>
-              <span class="qty-text">{{ item.quantity }}</span>
-              <button class="btn-sm" (click)="increaseQuantity(item.shopProductId)">+</button>
-            </div>
-          </td>
-          <td class="text-right font-bold">{{ item.subtotal | currency:'EUR' }}</td>
-          <td class="text-right">
-            <button class="btn-delete" (click)="emptyShopCartItem(item.shopProductId)">Eliminar</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="micro-table">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th class="text-center">Precio</th>
+            <th class="text-center">Cantidad</th>
+            <th class="text-right">Subtotal</th>
+            <th class="text-right">Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of cart.items">
+            <td>
+              <span class="product-name-micro">{{ item.shopProductName }}</span>
+            </td>
+            <td class="text-center">{{ item.unitPrice | currency:'EUR' }}</td>
+            <td class="text-center">
+              <div class="qty-control">
+                <button (click)="decreaseQuantity(item.shopProductId)" [disabled]="item.quantity <= 1">-</button>
+                <span class="qty-val">{{ item.quantity }}</span>
+                <button (click)="increaseQuantity(item.shopProductId)">+</button>
+              </div>
+            </td>
+            <td class="text-right font-bold-pro">{{ item.subtotal | currency:'EUR' }}</td>
+            <td class="text-right">
+              <button class="btn-icon-delete" (click)="emptyShopCartItem(item.shopProductId)" title="Eliminar">
+                <mat-icon>delete_outline</mat-icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-    <div class="cart-footer">
-      <div class="total-section">
-        <span class="total-label">Total a pagar:</span>
-        <span class="total-value">{{ cart.totalAmount | currency:'EUR' }}</span>
+    <div class="cart-footer-pro">
+      <div class="price-summary">
+        <span class="label">Total a pagar</span>
+        <span class="amount">{{ cart.totalAmount | currency:'EUR' }}</span>
       </div>
-      <button class="checkout-btn" (click)="purcharseCart()">
-        Procesar Pedido
+      <button class="btn-checkout-pro" (click)="purcharseCart()">
+        Procesar Pedido <mat-icon>arrow_forward</mat-icon>
       </button>
     </div>
   </div>
 
   <ng-template #emptyCart>
-    <div class="empty-state-container">
-      <div class="empty-state-content">
-        <div class="illustration-wrapper">
-        </div>
-        <h3 class="empty-title">¡Vaya! Tu carrito está vacío</h3>
-        <p class="empty-description">
-          Parece que aún no has encontrado el producto perfecto para tu mascota. 
-          ¡Tenemos cientos de opciones esperándote!
-        </p>
-        <div class="empty-actions">
-          <button class="btn-primary-gradient" routerLink="/shop">
-            <i class="fas fa-search"></i> Explorar productos
-          </button>
-          <button class="btn-ghost" routerLink="/home">
-            Ir al inicio
-          </button>
-        </div>
+    <div class="empty-state-micro">
+      <div class="icon-circle">
+        <mat-icon>shopping_basket</mat-icon>
+      </div>
+      <h3>Tu carrito está vacío</h3>
+      <p>Parece que aún no has añadido nada. ¡Tu mascota te está esperando!</p>
+      <div class="empty-btns">
+        <button class="btn-primary-micro" routerLink="/shop">Explorar Tienda</button>
+        <button class="btn-link-micro" routerLink="/home">Volver al inicio</button>
       </div>
     </div>
   </ng-template>
 </div>
 
 <ng-template #loading>
-  <div class="loading-spinner">
-    <div class="spinner"></div>
-    <p>Cargando productos...</p>
+  <div class="loading-micro">
+    <div class="spinner-micro"></div>
+    <p>Sincronizando carrito...</p>
   </div>
 </ng-template>

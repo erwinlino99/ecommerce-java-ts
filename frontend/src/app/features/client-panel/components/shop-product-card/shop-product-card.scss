@@ -1,77 +1,126 @@
-/* ESTO ES LO QUE HACE LA MAGIA */
-.contenedor-horizontal {
-    display: flex;          /* Pone los hijos en línea (horizontal) */
-    flex-wrap: wrap;       /* Si no caben, saltan a la siguiente línea */
-    gap: 20px;             /* Espacio entre las tarjetas */
-    justify-content: flex-start; /* Las alinea a la izquierda */
-    padding: 20px;
+// Variables globales de tu sistema
+$green-dark: #064e3b;
+$green-main: #00cf8d;
+$green-light: #f6fffa;
+$border-color: #eef2ef;
+$text-gray: #64748b;
+
+.shop-grid-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px; // Un poco más de aire entre productos
+  justify-content: center; // Centrado queda mejor en pantallas grandes
+  padding: 2rem;
+  max-width: 1300px;
+  margin: 0 auto;
 }
 
-/* TUS VARIABLES Y ESTILOS TAL CUAL */
-.product-card {
-    background: #ffffff;
-    border-radius: 12px;
-    padding: 1.5rem;
-    width: 280px;           /* Se mantiene el ancho que querías */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    border: 1px solid #f0f0f0;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
+.product-card-pro {
+  background: #ffffff;
+  border-radius: 20px; // Más redondeado como las cabeceras
+  padding: 1.75rem;
+  width: 280px;
+  min-height: 220px; // Para que todas midan lo mismo
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid $border-color;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
 
-.product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-}
+  &:hover {
+    transform: translateY(-8px);
+    border-color: $green-main;
+    box-shadow: 0 12px 30px rgba(6, 78, 59, 0.08);
 
-.product-title {
-    font-size: 1.25rem;
-    color: #1a1a1a;
-    margin: 0 0 0.5rem 0;
-    font-weight: 700;
-}
+    .brand-pill {
+      background: $green-main;
+      color: white;
+    }
+  }
 
-.product-brand {
-    font-size: 0.9rem;
-    color: #666;
+  .brand-pill {
+    display: inline-block;
+    background: $green-light;
+    color: $green-dark;
+    padding: 4px 12px;
+    border-radius: 8px;
+    font-size: 0.7rem;
+    font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 1px;
-    margin-bottom: 1.5rem;
-}
+    margin-bottom: 1rem;
+    transition: all 0.2s;
+  }
 
-.card-actions {
+  .product-title {
+    font-size: 1.35rem;
+    color: $green-dark;
+    margin: 0;
+    font-weight: 800;
+    line-height: 1.2;
+  }
+
+  .price-tag {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: $green-dark;
+    margin: 1rem 0;
+  }
+
+  .card-actions-pro {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-}
+    gap: 12px;
+    margin-top: 1.5rem;
+  }
 
-.btn-primary {
-    background-color: #2563eb;
+  // BOTÓN PRINCIPAL
+  .btn-buy {
+    background-color: $green-main;
     color: white;
     border: none;
-    padding: 10px;
-    border-radius: 6px;
-    font-weight: 600;
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.95rem;
     cursor: pointer;
-    transition: background 0.2s;
-}
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s;
 
-.btn-primary:hover {
-    background-color: #1d4ed8;
-}
+    &:hover {
+      background-color: $green-dark;
+      transform: scale(1.02);
+    }
 
-.btn-secondary {
+    mat-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  // BOTÓN SECUNDARIO
+  .btn-details {
     background-color: transparent;
-    color: #2563eb;
-    border: 1px solid #2563eb;
+    color: $text-gray;
+    border: 1px solid $border-color;
     padding: 10px;
-    border-radius: 6px;
+    border-radius: 12px;
     font-weight: 600;
+    font-size: 0.85rem;
     cursor: pointer;
-}
+    transition: all 0.2s;
 
-.btn-secondary:hover {
-    background-color: #eff6ff;
+    &:hover {
+      background-color: $green-light;
+      border-color: $green-main;
+      color: $green-dark;
+    }
+  }
 }

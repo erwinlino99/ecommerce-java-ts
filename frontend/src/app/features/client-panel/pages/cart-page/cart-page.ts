@@ -6,11 +6,11 @@ import { CommonModule } from '@angular/common';
 import { PopupService } from '../../../../service/pop.up.data.service';
 import { ShopProductAdjustment } from '../../../../shared/model-interface/ShopProductAdjustment';
 import { error } from 'console';
-
+import { MatIcon } from '@angular/material/icon';
 @Component({
   selector: 'app-cart-page',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,MatIcon],
   templateUrl: './cart-page.html',
   styleUrl: './cart-page.scss',
 })

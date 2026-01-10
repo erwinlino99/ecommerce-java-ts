@@ -1,29 +1,72 @@
-<mat-card class="form-card">
-  <h1>Regístrate ahora</h1>
+<div class="login-wrap">
+  <div class="login-container">
+    
+    <div class="side-branding">
+      <div>
+        <div class="brand-header">
+          <mat-icon class="brand-icon">terminal</mat-icon>
+          <span class="brand-text">ECOMMERCE<span class="accent-text">-CODE</span></span>
+        </div>
 
-  <form [formGroup]="registerForm" (ngSubmit)="TryToRegister()" class="form-container" novalidate>
-    <mat-form-field appearance="outline" class="full">
-      <mat-label>Nombre</mat-label>
-      <input matInput placeholder="Escribe tu nombre" formControlName="name" required/>
-    </mat-form-field>
+        <h2 class="hero-title">Únete a la <br> <span class="muted-text">comunidad.</span></h2>
 
-    <mat-form-field appearance="outline" class="full">
-      <mat-label>Apellidos</mat-label>
-      <input matInput placeholder="Escribe tus apellidos" formControlName="lastName" required />
-    </mat-form-field>
+        <div class="bio-section">
+          <p class="bio-intro">Estás a un paso, <strong>Developer</strong>.</p>
+          <p class="bio-desc">Crea tu cuenta para explorar la integración completa entre <strong>Spring Boot</strong> y <strong>Angular</strong>.</p>
+        </div>
+      </div>
 
-    <mat-form-field appearance="outline" class="full">
-      <mat-label>Email</mat-label>
-      <input matInput type="email" placeholder="Escribe tu correo" formControlName="email" required/>
-    </mat-form-field>
+      <div class="contact-section">
+        <a href="https://www.linkedin.com/in/erwin-david-lino-zabala-ab8598177/" target="_blank" class="contact-item">
+          <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" class="social-logo" alt="LinkedIn">
+          <div class="contact-info">
+            <span class="contact-label">LinkedIn</span>
+            <span class="contact-sub blue-text">Conectar con Erwin</span>
+          </div>
+        </a>
+      </div>
+    </div>
 
-    <mat-form-field appearance="outline" class="full">
-      <mat-label>Contraseña</mat-label>
-      <input matInput type="password" placeholder="Escribe tu contraseña" formControlName="password" required/>
-    </mat-form-field>
+    <div class="form-section">
+      <h3 class="form-title">Regístrate ahora</h3>
+      <p class="form-subtitle">Completa tus datos para crear tu perfil.</p>
 
-    <button mat-raised-button color="primary" class="full" type="submit">
-      <mat-icon>send</mat-icon>&nbsp;Registrarme
-    </button>
-  </form>
-</mat-card>
+      <form [formGroup]="registerForm" (ngSubmit)="TryToRegister()" class="form-container" novalidate>
+        
+        <div style="display: flex; gap: 10px;">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Nombre</mat-label>
+            <input matInput placeholder="Tu nombre" formControlName="name" required/>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Apellidos</mat-label>
+            <input matInput placeholder="Tus apellidos" formControlName="lastName" required />
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" placeholder="ejemplo@correo.com" formControlName="email" required/>
+          <mat-icon matSuffix class="orange-text">alternate_email</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Contraseña</mat-label>
+          <input matInput type="password" placeholder="••••••••" formControlName="password" required/>
+          <mat-icon matSuffix class="orange-text">lock_open</mat-icon>
+        </mat-form-field>
+
+        <button mat-flat-button class="btn-submit" type="submit" [disabled]="registerForm.invalid">
+          <mat-icon>send</mat-icon>&nbsp; REGISTRARME
+        </button>
+      </form>
+
+      <div class="register-footer">
+        <span class="muted-text">¿Ya tienes cuenta?</span>
+        <button mat-button class="orange-text bold" >Inicia sesión</button>
+      </div>
+    </div>
+
+  </div>
+</div>

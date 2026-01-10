@@ -4,10 +4,11 @@ import { catchError, Observable, of, tap } from 'rxjs';
 import { ShopOrder } from '../../../../shared/model-interface/ShopOrder';
 import { ApiService } from '../../../../service/api.service';
 import { PopupService } from '../../../../service/pop.up.data.service';
+import { MatIcon } from '@angular/material/icon';
 @Component({
   selector: 'app-shop-order-page',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,MatIcon],
   templateUrl: './shop-order-page.html',
   styleUrl: './shop-order-page.scss',
 })

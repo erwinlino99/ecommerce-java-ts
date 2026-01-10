@@ -1,20 +1,21 @@
-<div class="orders-container">
+<div class="orders-compact-container">
   <h1 class="page-title">Historial de Pedidos</h1>
 
   <div *ngIf="shopOrder$ | async as orders; else loadingTemplate">
-    <ng-container *ngIf="orders.length > 0; else emptyTemplate">
-
-      <div *ngFor="let order of orders" class="order-card">
+    
+    <div *ngIf="orders.length > 0; else emptyTemplate">
+      <div *ngFor="let order of orders" class="order-mini-card">
+        
         <div class="order-header">
           <div class="header-left">
             <span class="order-id">Pedido #{{ order.id }}</span>
-            <span class="order-date">{{ order.created | date:'medium' }}</span>
+            <span class="order-date">{{ order.created | date:'short' }}</span>
           </div>
           <div class="header-right">
             <button class="btn-repeat" (click)="repeatShopOrder(order.id)">
-              <i class="fas fa-redo"></i> Repetir Pedido
+              <mat-icon>refresh</mat-icon> Repetir
             </button>
-            <span class="status-badge" [attr.data-status]="order.shopOrderStatusName">
+            <span class="status-badge">
               {{ order.shopOrderStatusName }}
             </span>
           </div>
@@ -26,62 +27,53 @@
               <tr>
                 <th>Producto</th>
                 <th class="text-center">Cant.</th>
-                <th class="text-right">Precio Unit.</th>
-                <th class="text-right">Subtotal</th>
+                <th class="text-right">Total</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let item of order.items">
                 <td>
-                  <div class="product-info">
-                    <span class="product-name">{{ item.product.name }}</span>
-                    <small class="product-meta">
-                      {{ item.product.measurementUnit }} {{ item.product.measurementName }}
-                    </small>
-                  </div>
+                  <span class="product-name">{{ item.product.name }}</span>
+                  <small class="product-meta">{{ item.product.measurementUnit }} {{ item.product.measurementName }}</small>
                 </td>
                 <td class="text-center">{{ item.quantity }}</td>
-                <td class="text-right">{{ item.unitPrice | currency:'EUR' }}</td>
-                <td class="text-right font-weight-bold">{{ item.subtotal | currency:'EUR' }}</td>
+                <td class="text-right font-bold">{{ item.subtotal | currency:'EUR' }}</td>
               </tr>
             </tbody>
           </table>
         </div>
 
         <div class="order-gifts" *ngIf="order.pokeGift && order.pokeGift.length > 0">
-          <p class="gifts-label"><i class="fas fa-gift"></i> ¡Pegatinas de regalo incluidas!</p>
+          <p class="gifts-label">Regalos</p>
           <div class="sticker-album">
-            <div *ngFor="let pokemon of order.pokeGift" class="sticker-item">
+            <div *ngFor="let pokemon of order.pokeGift" class="sticker-item" [title]="pokemon.name">
               <div class="sticker-wrapper">
-                <img [src]="pokemon.imageUrl" [alt]="pokemon.name" class="pokemon-img">
+                <img [src]="pokemon.imageUrl" class="pokemon-img">
               </div>
-              <span class="pokemon-name">{{ pokemon.name }}</span>
             </div>
           </div>
         </div>
 
         <div class="order-footer">
-          <div class="total-row">
-            <span class="total-label">Total del pedido:</span>
-            <span class="total-amount">{{ order.totalAmount | currency:'EUR' }}</span>
-          </div>
+          <span class="total-label">Total:</span>
+          <span class="total-amount">{{ order.totalAmount | currency:'EUR' }}</span>
         </div>
       </div>
-    </ng-container>
-
-    <ng-template #emptyTemplate>
-      <div class="empty-state">
-        <i class="fas fa-shopping-basket"></i>
-        <p>No has realizado ningún pedido todavía.</p>
-        <button class="btn-primary">Ir a la tienda</button>
-      </div>
-    </ng-template>
+    </div>
   </div>
 
+  <ng-template #emptyTemplate>
+    <div class="empty-state-mini">
+      <mat-icon>history_ambiguous</mat-icon>
+      <p>No hay pedidos en tu historial.</p>
+      <button class="btn-primary-mini" routerLink="/shop">Ir a la tienda</button>
+    </div>
+  </ng-template>
+
   <ng-template #loadingTemplate>
-    <div class="loading-state">
-      <div class="spinner"></div>
-      <p>Cargando tu historial...</p>
+    <div class="loading-state-mini">
+      <div class="spinner-mini"></div>
+      <p>Cargando historial...</p>
     </div>
   </ng-template>
 </div>

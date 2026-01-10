@@ -1,19 +1,19 @@
-<div class="contenedor-horizontal">
+<div class="product-card-pro">
+    
+    <div class="card-top">
+      <div class="brand-pill">{{ shopProduct.brandName }}</div>
+      <h2 class="product-title">{{ shopProduct.name }}</h2>
+    </div>
 
-    <div class="product-card">
-        <div class="card-content">
-            <h1 class="product-title">{{ shopProduct.name }}</h1>
-            <h3 class="product-brand">{{ shopProduct.brandName }}</h3>
-        </div>
-
-        <div class="card-actions">
-            <button class="btn-primary" (click)="buyItem(shopProduct.id)">
-                Comprar
-            </button>
-            <button class="btn-secondary" (click)="goDetailPage(shopProduct.id)">
-                Ver detalle
-            </button>
-        </div>
+    <div class="card-bottom">
+      <div class="card-actions-pro">
+        <button class="btn-buy" (click)="buyItem(shopProduct.id)">
+          <mat-icon>shopping_cart</mat-icon> Comprar
+        </button>
+        <button class="btn-details" (click)="goDetailPage(shopProduct.id)">
+          Ver detalle
+        </button>
+      </div>
     </div>
     
-    </div>
+</div>

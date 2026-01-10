@@ -1,33 +1,31 @@
-<mat-card class="home-card minimal-theme full-width-layout">
-    
-    <header class="minimal-header" *ngIf="webUser | async as user">
-        <div class="user-info">
-            <p class="system-label">CONTROL_PANEL / {{ user.name | uppercase }}</p>
-            <h1>Hola, {{ user.name }}.</h1>
-        </div>
-        
-        <button class="btn-logout-minimal" (click)="logout()">
-            <mat-icon>north_east</mat-icon>
-            <span>Salir</span>
-        </button>
-    </header>
-
-    <div class="minimal-nav">
-        <div class="nav-grid" *ngIf="shopIndex | async as items; else loading">
-            <button *ngFor="let item of items" 
-                    [routerLink]="[item.path]"
-                    class="nav-item-minimal">
-                <span class="item-name">{{ item.name }}</span>
-                <span class="item-sub">Acceder →</span>
-                <div class="hover-indicator"></div>
-            </button>
-        </div>
+<div class="micro-wrapper">
+  
+  <nav class="micro-nav" *ngIf="webUser | async as user">
+    <div class="nav-left">
+      <div class="indicator"></div>
+      <span class="path">ECOMMERCE-CODE / <strong>WEB</strong></span>
     </div>
+    
+    <div class="nav-right">
+      <span class="user-welcome">Bienvenido, <strong>{{ user.name }}</strong></span>
+      
+      <div class="divider"></div>
 
-    <ng-template #loading>
-        <div class="minimal-loader">
-            <div class="line-loader"></div>
-            <p>Actualizando interfaz...</p>
+      <button class="exit-icon" (click)="logout()" title="Cerrar sesión">
+        <mat-icon>power_settings_new</mat-icon>
+      </button>
+    </div>
+  </nav>
+
+  <main class="micro-content">
+    <div class="compact-grid" *ngIf="shopIndex | async as items">
+      <div *ngFor="let item of items" [routerLink]="[item.path]" class="mini-card">
+        <div class="icon-bg"><mat-icon>apps</mat-icon></div>
+        <div class="info">
+          <h3>{{ item.name }}</h3>
         </div>
-    </ng-template>
-</mat-card>
+        <mat-icon class="go">chevron_right</mat-icon>
+      </div>
+    </div>
+  </main>
+</div>

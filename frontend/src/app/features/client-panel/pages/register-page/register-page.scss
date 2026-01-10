@@ -1,18 +1,167 @@
-.form-card {
-  max-width: 400px;
-  margin: 40px auto;
-  padding: 20px;
+$primary-dark: #1c1917;
+$accent-orange: #d97706;
+$linkedin-blue: #0077b5;
+
+.login-wrap {
+  min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  gap: 16px; // separación entre elementos
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  background: radial-gradient(circle at top right, #ffffff, #e7e5e4);
+  font-family: 'Inter', sans-serif;
 }
 
-form {
+.login-container {
   display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.full {
   width: 100%;
+  max-width: 950px;
+  min-height: 600px;
+  background: white;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 40px 80px -20px rgba(0,0,0,0.15);
+}
+
+.side-branding {
+  flex: 1;
+  background: $primary-dark;
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: white;
+
+  .brand-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 40px;
+    .brand-icon { transform: scale(1.6); color: $accent-orange; }
+    .brand-text { font-weight: 900; letter-spacing: 2px; font-size: 1.3rem; }
+    .accent-text { color: $accent-orange; }
+  }
+
+  .hero-title { font-size: 2.3rem; line-height: 1.1; font-weight: 800; margin-bottom: 24px; }
+  .muted-text { color: #a8a29e; }
+  
+  .bio-section {
+    border-left: 3px solid $accent-orange;
+    padding-left: 20px;
+    .bio-intro { font-size: 1.1rem; margin-bottom: 8px; }
+    .bio-desc { color: #a8a29e; font-size: 0.95rem; line-height: 1.5; }
+  }
+}
+
+.contact-section {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 16px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+
+    &:not(.no-pointer) {
+      cursor: pointer;
+      &:hover {
+        background: rgba(255,255,255,0.1);
+        transform: translateX(8px);
+        border-color: rgba(255, 255, 255, 0.2);
+      }
+    }
+  }
+
+  .social-logo {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    
+    &.github-icon {
+      filter: invert(1); // Hace el logo de GitHub blanco para que resalte
+    }
+  }
+
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    .contact-label { color: white; font-weight: 700; font-size: 0.9rem; }
+    .contact-sub { font-size: 0.75rem; font-weight: 600; }
+  }
+}
+
+.form-section {
+  flex: 1.2;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .status-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 11px;
+    margin-bottom: 24px;
+    width: fit-content;
+
+    &.local-mode { font-size: 13px; padding: 10px 20px; }
+    .chip-icon, .chip-icon-local { font-size: 18px; width: 18px; height: 18px; }
+  }
+
+  .form-title { font-size: 1.8rem; font-weight: 800; color: $primary-dark; margin: 0; }
+  .form-subtitle { color: #78716c; margin-bottom: 32px; }
+  .full-width { width: 100%; margin-bottom: 12px; }
+
+  .btn-submit {
+    width: 100%;
+    height: 56px;
+    background: $primary-dark !important;
+    color: white !important;
+    border-radius: 14px !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    margin-top: 20px;
+    transition: opacity 0.3s;
+    &:disabled { opacity: 0.6; }
+  }
+}
+
+.orange-text { color: $accent-orange !important; }
+.blue-text { color: $linkedin-blue !important; }
+.grey-text { color: #a8a29e !important; }
+.bold { font-weight: 700; }
+
+/* Reutiliza todo el CSS del Login anterior y añade estos ajustes específicos */
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Para que los campos de Nombre y Apellidos queden bien en una fila */
+div[style*="display: flex"] {
+  @media (max-width: 600px) {
+    flex-direction: column;
+    gap: 0 !important;
+  }
+}
+
+.btn-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #1c1917 !important; // Mismo color oscuro del branding
 }

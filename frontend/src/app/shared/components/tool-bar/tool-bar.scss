@@ -1,142 +1,125 @@
-.minimal-theme {
-  background: #ffffff;
-  border: 1px solid #f3f0ff;
-  border-radius: 12px;
-  padding: 3.5rem 0 0 0; // Quitamos padding lateral e inferior para que el nav toque los bordes
-  box-shadow: none;
-  overflow: hidden; // Importante para que los indicadores no se salgan
+$green: #00cf8d;
+$dark: #064e3b;
+$border: #eef2ef;
 
-  .minimal-header {
+.micro-wrapper {
+  background: white;
+  font-family: 'Inter', sans-serif;
+  border: 1px solid $border;
+  margin: 0 auto;
+}
+
+.micro-nav {
+  height: 65px; // Aumentamos la altura para acomodar el texto más grande
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid $border;
+  background: #fcfdfc;
+
+  .nav-left {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 4rem;
-    padding: 0 3.5rem; // Mantenemos el padding solo en el header
+    align-items: center;
+    .indicator { width: 10px; height: 10px; background: $green; border-radius: 3px; }
+    
+    // Texto de ECOMMERCE-CODE más grande
+    .path { 
+      font-size: 14px; // Aumentado
+      color: #64748b; 
+      margin-left: 12px;
+      letter-spacing: 0.5px;
+      strong { color: $dark; }
+    }
+  }
 
-    .system-label {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: #a78bfa; // Púrpura claro
-      letter-spacing: 0.1em;
-      margin-bottom: 0.5rem;
+  .nav-right {
+    display: flex;
+    align-items: center;
+
+    // Saludo MUCHO más grande
+    .user-welcome { 
+      font-size: 18px; // Tamaño destacado
+      color: #475569;
+      strong { 
+        color: $dark; 
+        font-weight: 800;
+        border-bottom: 2px solid rgba($green, 0.3); // Subrayado sutil decorativo
+      }
     }
 
-    h1 {
-      margin: 0;
-      font-size: 2.2rem;
-      font-weight: 500;
-      color: #2e1065; // Púrpura muy oscuro
-      letter-spacing: -0.02em;
+    .divider {
+      width: 1px;
+      height: 24px;
+      background: $border;
+      margin: 0 1.5rem;
+    }
+    
+    .exit-icon {
+      background: #fff1f0; 
+      border: 1px solid #ffa39e; 
+      color: #ff4d4f; 
+      padding: 8px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex; 
+      align-items: center;
+      transition: all 0.2s;
+      
+      mat-icon { font-size: 20px; width: 20px; height: 20px; }
+      &:hover { background: #ff4d4f; color: white; }
     }
   }
 }
 
-/* LOGOUT VIOLETA */
-.btn-logout-minimal {
-  background: #f5f3ff;
-  border: 1px solid #ddd6fe;
-  padding: 8px 16px;
-  border-radius: 6px;
+.micro-content {
+  padding: 3rem 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.compact-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1100px;
+}
+
+.mini-card {
+  flex: 0 1 280px; // Ligeramente más anchas para acompañar el header grande
+  border: 1px solid $border;
+  border-radius: 14px;
+  padding: 1.5rem;
   display: flex;
   align-items: center;
-  gap: 8px;
-  color: #7c3aed;
-  font-size: 0.85rem;
-  font-weight: 600;
+  gap: 1.2rem;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
+  background: white;
 
-  mat-icon { font-size: 16px; width: 16px; height: 16px; }
+  .icon-bg {
+    background: rgba($green, 0.1);
+    color: $green;
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    mat-icon { font-size: 24px; }
+  }
+
+  .info h3 { 
+    margin: 0; 
+    font-size: 1.1rem; 
+    font-weight: 700; 
+    color: $dark; 
+  }
+  
+  .go { font-size: 20px; color: #cbd5e1; margin-left: auto; }
 
   &:hover {
-    background: #7c3aed;
-    color: #fff;
+    border-color: $green;
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 207, 141, 0.08);
   }
-}
-
-/* NAVEGACIÓN AL 100% */
-.minimal-nav {
-  width: 100%; // Ocupa el 100% del card
-}
-
-.nav-grid {
-  display: grid;
-  // auto-fit con 1fr hace que los botones crezcan hasta llenar todo el ancho
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
-  gap: 1px; 
-  background: #f5f3ff; // Líneas divisorias en púrpura clarito
-  border-top: 1px solid #f5f3ff;
-  width: 100%;
-
-  .nav-item-minimal {
-    background: #ffffff;
-    border: none;
-    padding: 3rem 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    cursor: pointer;
-    position: relative;
-    transition: background 0.3s ease;
-    width: 100%; // Asegura que el botón ocupe su celda
-
-    .item-name {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: #4c1d95;
-      margin-bottom: 0.5rem;
-    }
-
-    .item-sub {
-      font-size: 0.8rem;
-      color: #a78bfa;
-      opacity: 0.6;
-      transition: all 0.3s ease;
-    }
-
-    .hover-indicator {
-      position: absolute;
-      bottom: 0; // Ahora lo ponemos abajo para un look más moderno
-      left: 0;
-      width: 0;
-      height: 3px;
-      background: #8b5cf6;
-      transition: width 0.4s ease;
-    }
-
-    &:hover {
-      background: #faf9ff;
-      .item-sub { opacity: 1; transform: translateX(5px); }
-      .hover-indicator { width: 100%; }
-    }
-  }
-}
-
-/* LOADER PÚRPURA */
-.minimal-loader {
-  text-align: center;
-  padding: 4rem;
-  .line-loader {
-    width: 40px;
-    height: 2px;
-    background: #f5f3ff;
-    margin: 0 auto 1rem;
-    position: relative;
-    overflow: hidden;
-    &::after {
-      content: '';
-      position: absolute;
-      width: 20px;
-      height: 100%;
-      background: #8b5cf6;
-      animation: slide-minimal 1.5s infinite linear;
-    }
-  }
-  p { font-size: 0.8rem; color: #a78bfa; }
-}
-
-@keyframes slide-minimal {
-  0% { left: -100%; }
-  100% { left: 150%; }
 }

@@ -1,63 +1,67 @@
-// Variables de estilo (Paleta Deep Blue)
-$blue-navy: #1a2a3a;      // Para cabeceras y textos fuertes
-$blue-main: #2980b9;      // Color de acción (Botones, bordes destacados)
-$blue-accent: #3498db;    // Color de realce
-$blue-light: #f4f8fb;     // Fondos suaves
-$blue-border: #d6eaf8;    // Bordes de tabla y tarjetas
-$white: #ffffff;
-$text-gray: #5d6d7e;
-$success-blue: #2471a3;
+// Paleta Verde Micro (Consistente)
+$green-dark: #064e3b;
+$green-main: #00cf8d;
+$green-light: #f6fffa;
+$border-color: #eef2ef;
+$text-gray: #64748b;
 
-.orders-container {
-  max-width: 950px;
+.orders-compact-container {
+  max-width: 900px; // Un poco más ancho para mayor legibilidad
   margin: 0 auto;
   padding: 2.5rem 1.5rem;
-  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-family: 'Inter', sans-serif;
 
   .page-title {
-    color: $blue-navy;
-    font-size: 2rem;
+    color: $green-dark;
+    font-size: 2rem; // Título más grande y potente
     font-weight: 800;
     margin-bottom: 2.5rem;
-    position: relative;
     
     &::after {
       content: '';
       display: block;
       width: 60px;
       height: 4px;
-      background: $blue-main;
+      background: $green-main;
       margin-top: 8px;
       border-radius: 2px;
     }
   }
 }
 
-.order-card {
-  background: $white;
-  border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(26, 42, 58, 0.08);
-  margin-bottom: 3rem;
+.order-mini-card {
+  background: white;
+  border-radius: 16px; // Bordes más redondeados
+  margin-bottom: 2.5rem;
   overflow: hidden;
-  border: 1px solid $blue-border;
+  border: 1px solid $border-color;
+  box-shadow: 0 10px 25px rgba(6, 78, 59, 0.05); // Sombra más profunda
   transition: transform 0.2s ease;
 
   &:hover {
-    border-color: $blue-main;
+    border-color: $green-main;
   }
 
-  // CABECERA: Fondo Navy para un look Premium
+  // CABECERA: Más alta y con texto claro
   .order-header {
-    background-color: $blue-navy;
-    color: $white;
-    padding: 1.25rem 1.75rem;
+    background-color: $green-dark;
+    color: white;
+    padding: 1.25rem 2rem; 
     display: flex;
     justify-content: space-between;
     align-items: center;
 
     .header-left {
-      .order-id { font-weight: 700; font-size: 1.1rem; display: block; }
-      .order-date { font-size: 0.85rem; color: #aeb6bf; }
+      .order-id { 
+        font-weight: 700; 
+        font-size: 1.1rem; 
+        display: block; 
+        letter-spacing: 0.5px;
+      }
+      .order-date { 
+        font-size: 0.85rem; 
+        color: rgba(255, 255, 255, 0.7); 
+      }
     }
 
     .header-right {
@@ -67,38 +71,37 @@ $success-blue: #2471a3;
     }
   }
 
-  // BOTÓN REPETIR: Contraste alto sobre el fondo oscuro
   .btn-repeat {
-    background: $blue-main;
-    color: white;
+    background: $green-main;
+    color: $green-dark;
     border: none;
     padding: 8px 18px;
     border-radius: 8px;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 0.85rem;
     cursor: pointer;
-    transition: all 0.3s ease;
     display: flex;
     align-items: center;
     gap: 8px;
+    transition: all 0.3s ease;
 
     &:hover {
-      background: lighten($blue-main, 10%);
+      background: white;
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
     
-    i { font-size: 0.75rem; }
+    mat-icon { font-size: 18px; width: 18px; height: 18px; }
   }
 
   .status-badge {
     background: rgba(255, 255, 255, 0.15);
-    padding: 5px 12px;
+    padding: 6px 14px;
     border-radius: 6px;
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
     font-weight: 700;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.8px;
   }
 
   .order-body {
@@ -110,64 +113,78 @@ $success-blue: #2471a3;
 
       th { 
         text-align: left; 
-        color: $blue-navy; 
+        color: $green-dark; 
         font-size: 0.8rem;
         text-transform: uppercase;
-        border-bottom: 2px solid $blue-light; 
-        padding-bottom: 12px; 
+        padding-bottom: 12px;
+        border-bottom: 2px solid $green-light;
       }
 
-      td { padding: 15px 0; border-bottom: 1px solid $blue-light; }
+      td { 
+        padding: 15px 0; 
+        border-bottom: 1px solid $green-light; 
+      }
 
-      .product-name { color: $blue-navy; font-weight: 700; }
-      .product-meta { color: $text-gray; font-size: 0.8rem; display: block; margin-top: 2px; }
+      .product-name { 
+        color: $green-dark; 
+        font-weight: 700; 
+        font-size: 1rem; 
+        display: block; 
+      }
+      .product-meta { 
+        color: $text-gray; 
+        font-size: 0.85rem; 
+        margin-top: 2px;
+        display: block; 
+      }
       
       .text-right { text-align: right; }
       .text-center { text-align: center; }
+      .font-bold { font-weight: 800; color: $green-dark; }
     }
   }
 
-  // SECCIÓN DE REGALOS (GIFTBOX)
+  // SECCIÓN DE REGALOS: Más visual
   .order-gifts {
-    background-color: $blue-light;
+    background-color: $green-light;
     padding: 1.5rem 2rem;
-    border-top: 1px dashed $blue-border;
+    border-top: 1px dashed $border-color;
+    display: flex;
+    flex-direction: column; // Volvemos a columna para que los stickers luzcan
+    gap: 1rem;
 
     .gifts-label {
-      color: $blue-main;
+      color: $green-main;
       font-weight: 800;
-      font-size: 0.85rem;
-      margin-bottom: 1.25rem;
+      font-size: 0.9rem;
+      margin: 0;
       display: flex;
       align-items: center;
-      gap: 10px;
-
+      gap: 8px;
       &::before { content: '🎁'; font-size: 1.1rem; }
     }
 
     .sticker-album {
       display: flex;
-      gap: 20px;
+      gap: 15px;
     }
 
     .sticker-item {
       .sticker-wrapper {
-        background: $white;
-        border: 2px solid $blue-border;
+        background: white;
+        border: 2px solid $border-color;
         border-radius: 12px;
-        width: 65px;
-        height: 65px;
+        width: 60px; // Tamaño grande de nuevo
+        height: 60px;
         display: flex;
         align-items: center;
         justify-content: center;
         box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
         &:hover {
-          transform: scale(1.15) rotate(8deg);
-          border-color: $blue-main;
-          box-shadow: 0 8px 20px rgba(52, 152, 219, 0.25);
+          transform: scale(1.1) rotate(5deg);
+          border-color: $green-main;
         }
 
         .pokemon-img {
@@ -176,28 +193,41 @@ $success-blue: #2471a3;
           object-fit: contain;
         }
       }
-
-      .pokemon-name {
-        display: block;
-        font-size: 0.7rem;
-        margin-top: 10px;
-        color: $blue-navy;
-        font-weight: 700;
-        text-align: center;
-      }
     }
   }
 
   .order-footer {
     padding: 1.5rem 2rem;
     background-color: #fafbfc;
-    border-top: 1px solid $blue-light;
+    border-top: 1px solid $border-color;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     gap: 15px;
 
-    .total-label { color: $text-gray; font-weight: 600; }
-    .total-amount { color: $blue-main; font-size: 1.6rem; font-weight: 900; }
+    .total-label { 
+      color: $text-gray; 
+      font-weight: 600; 
+      font-size: 1rem; 
+    }
+    .total-amount { 
+      color: $green-main; 
+      font-size: 1.8rem; // Precio grande y destacado
+      font-weight: 900; 
+    }
   }
+}
+
+// Estados de carga y vacío proporcionales
+.loading-state-mini, .empty-state-mini {
+  text-align: center;
+  padding: 5rem 2rem;
+  mat-icon { 
+    font-size: 60px; 
+    width: 60px; 
+    height: 60px; 
+    color: $green-main; 
+    margin-bottom: 1rem;
+  }
+  p { font-size: 1.2rem; color: $text-gray; }
 }

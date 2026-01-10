@@ -1,35 +1,43 @@
-<div class="home-container">
+<div class="page-content">
   
   <section class="hero-section">
     <div class="hero-content">
-      <span class="badge">Nueva Colección 2025</span>
-      <h1>Todo lo que tu mascota necesita, en un solo lugar</h1>
+      <span class="pill-badge">Nueva Colección 2025</span>
+      <h1>Todo lo que tu mascota necesita, <span>en un solo lugar</span></h1>
       <p>Descubre productos premium seleccionados para el bienestar y la felicidad de tus compañeros de vida.</p>
       <div class="hero-btns">
-        <button routerLink="/shop" class="btn-main">Explorar Tienda</button>
-        <button class="btn-outline">Saber más</button>
+        <button routerLink="/shop" class="btn-primary">Explorar Tienda</button>
+        <button class="btn-secondary">Saber más</button>
       </div>
     </div>
-    <div class="hero-image">
+    <div class="hero-image-container">
       <img src="https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?q=80&w=2071&auto=format&fit=crop" alt="Mascotas felices">
     </div>
   </section>
 
-  <section class="features-section">
+  <section class="features-grid">
     <div class="feature-card">
-      <i class="fas fa-truck"></i>
-      <h3>Envío Rápido</h3>
-      <p>Recibe tus pedidos en menos de 24 horas en la puerta de tu casa.</p>
+      <div class="icon-wrap"><mat-icon>local_shipping</mat-icon></div>
+      <div class="feature-info">
+        <h3>Envío Rápido</h3>
+        <p>Recibe tus pedidos en menos de 24 horas.</p>
+      </div>
     </div>
+    
     <div class="feature-card">
-      <i class="fas fa-shield-alt"></i>
-      <h3>Pago Seguro</h3>
-      <p>Tus transacciones están protegidas con los estándares más altos.</p>
+      <div class="icon-wrap"><mat-icon>verified_user</mat-icon></div>
+      <div class="feature-info">
+        <h3>Pago Seguro</h3>
+        <p>Transacciones protegidas con altos estándares.</p>
+      </div>
     </div>
+    
     <div class="feature-card">
-      <i class="fas fa-paw"></i>
-      <h3>Calidad Premium</h3>
-      <p>Solo trabajamos con marcas que garantizan la salud animal.</p>
+      <div class="icon-wrap"><mat-icon>pets</mat-icon></div>
+      <div class="feature-info">
+        <h3>Calidad Premium</h3>
+        <p>Marcas que garantizan la salud animal.</p>
+      </div>
     </div>
   </section>
 

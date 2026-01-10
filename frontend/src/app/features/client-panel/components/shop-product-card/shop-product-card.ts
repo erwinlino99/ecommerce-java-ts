@@ -6,11 +6,12 @@ import { SessionService } from '../../../../service/session.service';
 import { error } from 'console';
 import { PopupService } from '../../../../service/pop.up.data.service';
 import { Route, Router } from '@angular/router';
+import { MatIcon } from '@angular/material/icon';
 //METEMOS AL HIJO DENTRO DE IMPORTS
 @Component({
   selector: 'shop-product-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,MatIcon],
   templateUrl: './shop-product-card.html',
   styleUrl: './shop-product-card.scss',
 })
