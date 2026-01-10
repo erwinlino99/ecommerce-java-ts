@@ -14,11 +14,15 @@ public class CorsConfig {
     return new WebMvcConfigurer() {
       @Override
       public void addCorsMappings(CorsRegistry registry) {
+        String enviorement;
+        String PROD_URL=System.getenv("FRONTEND_URL");
+        if(PROD_URL!=null){
+          enviorement=PROD_URL;
+        }else{
+          enviorement="http://localhost:4200";
+        }
         registry.addMapping("/**")
-          .allowedOrigins(
-            "http://localhost:4200","http://127.0.0.1:4200",
-            "http://localhost:5173","http://127.0.0.1:5173"
-          )
+          .allowedOrigins(enviorement)
           .allowedMethods("GET","POST","PUT","PATCH","DELETE","OPTIONS")
           .allowedHeaders("*")
           .allowCredentials(true)

@@ -58,7 +58,7 @@ public class ImportFileService {
                 String brand = (row.getCell(5) != null) ? row.getCell(5).getStringCellValue() : "Genérica";
                 String measurementName = (row.getCell(6) != null) ? row.getCell(6).getStringCellValue() : "Genérica";
                 Integer measurementUnit = (row.getCell(7) != null) ? (int) row.getCell(7).getNumericCellValue() : 0;
-                
+
                 UseLogger.info("NOMBRE FILA " + i, name);
                 UseLogger.info("DESCRIPTION", description);
                 UseLogger.info("SHORT_DESCRIPTION", shortDescription);
@@ -68,6 +68,26 @@ public class ImportFileService {
                 UseLogger.info("TIPO MEDIDA", measurementName);
                 UseLogger.info("UNIDADES DENTRO", measurementUnit);
                 System.out.println("-------------------------------------------");
+
+                // Tengo pensado poner en la entidad o en el dto de la measuerment constantes de
+                // nombres, en mi base de datos solo tengo , UDS, CAJA, PALLET,
+                // Si la celda X no coicide con alguno de estas constantes echar para atras el
+                // registro entero
+
+                // public enum MeasurementType {
+                // UDS, CAJA, PALLET;
+
+                // // Método para validar si un texto existe en el Enum
+                // public static boolean isValid(String value) {
+                // for (MeasurementType type : MeasurementType.values()) {
+                // if (type.name().equalsIgnoreCase(value)) {
+                // return true;
+                // }
+                // }
+                // return false;
+                // }
+                // }
+
             }
 
             return ResponseEntity.ok(Map.of("message", "Lectura completada exitosamente"));
