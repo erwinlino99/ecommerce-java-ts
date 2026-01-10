@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -9,6 +9,7 @@ import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angula
 import { ApiService } from '../service/api.service';
 import { SessionService } from '../service/session.service';
 import { Router } from '@angular/router';
+import { environment } from '../environment/environment';
 
 type LoginResponse = {
   roleName: string;
@@ -31,9 +32,9 @@ type LoginResponse = {
   templateUrl: './home.html',
   styleUrls: ['./home.scss'],
 })
-export class Home {
+export class Home implements OnInit {
   emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
+  isPro = environment.production;
   constructor(private api: ApiService, private router: Router, private session: SessionService) {}
 
   webUserLoginForm = new FormGroup({
@@ -41,6 +42,10 @@ export class Home {
     password: new FormControl<string>('', [Validators.required]),
   });
 
+  ngOnInit(): void {
+    //ESTA VARIABLE PUEDE SER TRUE OR FALSE, SI ES FALSE , TENEMSO QUE HACER REFERECIA EN EL LOGIN DE QUE ES LOCAL
+    console.log('VER ESTO ->', this.isPro);
+  }
   goToHomeApp() {
     const endpoint = 'auth/login';
     const email = this.webUserLoginForm.get('email')?.value ?? '';
@@ -55,7 +60,7 @@ export class Home {
     this.api.post<LoginResponse>(endpoint, body).subscribe({
       next: (data) => {
         console.log('VER ESTO ->', data);
-        if (data.roleName && data.roleName!=="ROLE_CLIENT") {
+        if (data.roleName && data.roleName !== 'ROLE_CLIENT') {
           this.session.setSuperAdminToken(data.token);
           this.router.navigate(['/admin/config']);
         } else {

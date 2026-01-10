@@ -1,23 +1,87 @@
 <div class="login-wrap">
-  <mat-card class="login-card">
-    <h1>Login</h1>
+  <div class="login-container">
     
-    <form [formGroup]="webUserLoginForm">
-      <mat-form-field appearance="outline" class="full">
-        <mat-label>E-mail</mat-label>
-        <input matInput placeholder="Escribe tu email" formControlName="email" type="em" />
-      </mat-form-field>
-      <mat-form-field appearance="outline" class="full">
-        <mat-label>Contraseña</mat-label>
-        <input matInput type="password" placeholder="Contraseña" formControlName="password" />
-      </mat-form-field>
-    </form>
+    <div class="side-branding">
+      <div>
+        <div class="brand-header">
+          <mat-icon class="brand-icon">terminal</mat-icon>
+          <span class="brand-text">ECOMMERCE<span class="accent-text">-CODE</span></span>
+        </div>
 
-    <button mat-raised-button color="primary" class="full" (click)="goToHomeApp()">
-      <mat-icon>login</mat-icon>&nbsp;Entrar
-    </button>
-    <button mat-raised-button color="accent" class="full" (click)="goToRegister()">
-      <mat-icon>person_add</mat-icon>&nbsp;Regístrate ahora
-    </button>
-  </mat-card>
+        <h2 class="hero-title">Progresando <br> <span class="muted-text">bit a bit.</span></h2>
+
+        <div class="bio-section">
+          <p class="bio-intro">Hola, soy <strong>Erwin David Lino Zabala</strong>.</p>
+          <p class="bio-desc">Proyecto personal desarrollado con <strong>Java Spring Boot</strong> y <strong>Angular</strong>.</p>
+        </div>
+      </div>
+
+      <div class="contact-section">
+        <a href="https://www.linkedin.com/in/erwin-david-lino-zabala-ab8598177/" target="_blank" class="contact-item">
+          <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" class="social-logo" alt="LinkedIn">
+          <div class="contact-info">
+            <span class="contact-label">LinkedIn</span>
+            <span class="contact-sub blue-text">Perfil Profesional</span>
+          </div>
+        </a>
+
+        <a href="https://github.com/erwinlino99/ecommerce-java-ts" target="_blank" class="contact-item">
+          <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" class="social-logo github-icon" alt="GitHub">
+          <div class="contact-info">
+            <span class="contact-label">GitHub</span>
+            <span class="contact-sub orange-text">Repositorio del proyecto</span>
+          </div>
+        </a>
+
+        <div class="contact-item no-pointer">
+          <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" class="social-logo" alt="Gmail">
+          <div class="contact-info">
+            <span class="contact-label">Email</span>
+            <span class="contact-sub grey-text">erwinlino011@gmail.com</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="status-chip" 
+           [class.local-mode]="!isPro"
+           [style.background-color]="isPro ? 'rgba(34, 197, 94, 0.1)' : 'rgba(59, 130, 246, 0.1)'"
+           [style.color]="isPro ? '#22c55e' : '#3b82f6'">
+        @if (isPro) {
+          <mat-icon class="chip-icon">cloud_done</mat-icon>
+          <span>Producción</span>
+        } @else {
+          <mat-icon class="chip-icon-local">analytics</mat-icon>
+          <span>Entorno Local</span>
+        }
+      </div>
+
+      <h3 class="form-title">Acceso al Sistema</h3>
+      <p class="form-subtitle">Introduce tus credenciales para continuar.</p>
+
+      <form [formGroup]="webUserLoginForm" (ngSubmit)="goToHomeApp()">
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" placeholder="ejemplo@correo.com" type="email">
+          <mat-icon matSuffix class="orange-text">alternate_email</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Contraseña</mat-label>
+          <input matInput type="password" formControlName="password" placeholder="••••••••">
+          <mat-icon matSuffix class="orange-text">fingerprint</mat-icon>
+        </mat-form-field>
+
+        <button mat-flat-button class="btn-submit" type="submit" [disabled]="webUserLoginForm.invalid">
+          INICIAR SESIÓN
+        </button>
+      </form>
+
+      <div class="register-footer">
+        <span class="muted-text">¿Nuevo en el lab?</span>
+        <button mat-button class="orange-text bold" (click)="goToRegister()">Crea una cuenta</button>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,4 +1,4 @@
 export const environment = {
-  production: false, 
-  apiBase: 'https://ecommerce-java-ts.onrender.com' 
+  production: false,
+  apiBase: 'http://localhost:8080',
 };

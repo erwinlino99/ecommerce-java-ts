@@ -24,12 +24,36 @@
       <div class="admin-info">
         <div class="text-group">
           <span class="full-name">{{ admin.name }} {{ admin.surname }}</span>
-          <span class="status-badge" [ngClass]="{'active': admin.is_active === 1}">
-            {{ admin.is_active === 1 ? 'ONLINE' : 'OFFLINE' }}
-          </span>
+
         </div>
         <mat-icon class="avatar">account_circle</mat-icon>
+        <span class="status-badge" style="
+    display: flex; 
+    align-items: center; 
+    background-color: #e6fcf5; 
+    color: #087f5b; 
+    padding: 4px 12px; 
+    border-radius: 20px; 
+    font-size: 0.75rem; 
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: 1px solid #b2f2bb;">
+
+          <span style="
+      height: 8px; 
+      width: 8px; 
+      background-color: #2ecc71; 
+      border-radius: 50%; 
+      display: inline-block; 
+      margin-right: 6px;
+      box-shadow: 0 0 5px rgba(46, 204, 113, 0.6);">
+          </span>
+
+          ONLINE
+        </span>
       </div>
+
     </div>
 
     <ng-template #loadingUser>
