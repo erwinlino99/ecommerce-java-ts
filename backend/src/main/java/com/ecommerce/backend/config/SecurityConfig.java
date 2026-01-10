@@ -54,7 +54,6 @@ public class SecurityConfig {
                                 "/auth/**",
                                 "/shop-index",
                                 "/shop-product",
-                                "/shop-product/**",
                                 "/shop-category/**",
                                 "/shop-brand/**")
                         .permitAll()
