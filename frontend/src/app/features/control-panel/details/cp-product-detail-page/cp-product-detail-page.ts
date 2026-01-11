@@ -1,42 +1,33 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, Validators, FormGroup } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BaseDetailComponent } from '../../../../shared/components/base-detail-component/base-detail-component';
 import { ShopProduct } from '../../../../shared/model-interface/ShopProduct';
+import { BaseSelectableComponent } from '../../../../shared/components/base-selectable-component/base-selectable-component';
 
 @Component({
   selector: 'app-cp-product-detail-page',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, BaseSelectableComponent], // Integración del selector
   templateUrl: './cp-product-detail-page.html',
   styleUrl: './../detail-page.scss',
 })
 export class CpProductDetailPage extends BaseDetailComponent<ShopProduct> {
-  // EL ENDPOINT QUE TU API ESPERA (siguiendo tu interfaz)
   protected override endpoint = 'shop-product-id';
-  // EL NOMBRE DEL PARÁMETRO EN TU RUTAS (debe coincidir con app.routes.ts)
   protected override idParamName = 'productIdDetail';
 
+  
   protected override createForm(): FormGroup {
     return this.fb.group({
-      id: [{ value: null, disabled: true }], // El ID suele ser solo lectura
-      name: ['', [Validators.required, Validators.minLength(3)]],
+      id: [{ value: null, disabled: true }],
+      name: ['', [Validators.required]],
+      brandName: ['', [Validators.required]], 
+      price: [0, [Validators.required]],
+      currentStock: [0, [Validators.required]],
+      shopProductMeasurement: [''],
       shortDescription: ['', [Validators.required]],
       description: [''],
-      brandName: ['', [Validators.required]],
-      shopProductMeasurement: [''],
-      currentStock: [0, [Validators.required, Validators.min(0)]],
-      price: [0, [Validators.required, Validators.min(0.01)]],
-      deleted: [null],
-    });
-  }
-  override ngOnInit(): void {
-    super.ngOnInit();
-    const BRAND_SELECTABLE = 'shop-product-brand/selectable';
-    this.api.get(BRAND_SELECTABLE).subscribe({
-      next: (data) => {
-        console.log(data);
-      },
+      deleted: [null]
     });
   }
 }

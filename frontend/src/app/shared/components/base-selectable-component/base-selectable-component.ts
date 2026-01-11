@@ -16,8 +16,16 @@ import { SelectableItem } from '../../model-interface/SelectableItem';
       multi: true,
     },
   ],
-  templateUrl: './base-selectable.component.html',
-  styleUrl: './base-selectable.component.scss'
+  template: `
+    <div class="form-field">
+      <label *ngIf="label">{{ label }}</label>
+      <select [formControl]="internalControl" class="form-select" [attr.disabled]="readonly ? true : null">
+        <option [value]="null" disabled>{{ placeholder }}</option>
+        <option *ngFor="let item of items()" [value]="item.name"> {{ item.name }}
+        </option>
+      </select>
+    </div>
+  `
 })
 export class BaseSelectableComponent implements OnInit, OnDestroy, ControlValueAccessor {
   private api = inject(ApiService);
@@ -25,7 +33,7 @@ export class BaseSelectableComponent implements OnInit, OnDestroy, ControlValueA
 
   @Input() label: string = '';
   @Input() endpoint: string = '';
-  @Input() placeholder: string = 'Seleccione una opción...';
+  @Input() placeholder: string = 'Seleccione una marca...';
   @Input() readonly: boolean = false;
 
   public items = signal<SelectableItem[]>([]);
@@ -35,34 +43,20 @@ export class BaseSelectableComponent implements OnInit, OnDestroy, ControlValueA
   onTouched: any = () => {};
 
   ngOnInit() {
-    if (this.endpoint) {
-      this.loadData();
-    }
+    if (this.endpoint) this.loadData();
 
-    // Notificar al padre cuando el usuario cambia el valor
     this.internalControl.valueChanges
       .pipe(takeUntil(this.destroy$))
-      .subscribe((value) => {
-        this.onChange(value);
-      });
+      .subscribe(value => this.onChange(value));
   }
 
   private loadData() {
-    this.api.get<any[]>(this.endpoint).subscribe({
-      next: (data) => {
-        if (data) {
-          const mappedData: SelectableItem[] = data.map((item) => ({
-            id: item.id,
-            name: item.name || item.label || 'Sin nombre',
-          }));
-          this.items.set(mappedData);
-        }
-      },
-      error: (err) => console.error(`Error cargando selectable [${this.endpoint}]:`, err),
+    this.api.get<SelectableItem[]>(this.endpoint).subscribe({
+      next: (data) => this.items.set(data || []),
+      error: (err) => console.error('Error:', err)
     });
   }
 
-  // --- Control Value Accessor ---
   writeValue(value: any): void {
     this.internalControl.setValue(value, { emitEvent: false });
   }
@@ -71,9 +65,5 @@ export class BaseSelectableComponent implements OnInit, OnDestroy, ControlValueA
   setDisabledState(isDisabled: boolean): void {
     isDisabled ? this.internalControl.disable() : this.internalControl.enable();
   }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
+  ngOnDestroy() { this.destroy$.next(); this.destroy$.complete(); }
 }
