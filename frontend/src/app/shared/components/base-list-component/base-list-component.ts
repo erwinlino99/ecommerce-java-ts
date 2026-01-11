@@ -1,6 +1,6 @@
 import { Directive, OnInit, inject } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { catchError, tap, take, switchMap } from 'rxjs/operators';
 import { ApiService } from '../../../service/api.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -10,51 +10,48 @@ export abstract class BaseListComponent<T> implements OnInit {
   protected router = inject(Router);
   protected route = inject(ActivatedRoute);
   public data$!: Observable<T[]>;
-  // Propiedad abstracta obligatoria
   protected abstract readonly endpoint: string;
-
-  /**
-   * OPCIÓN DE DEPURACIÓN:
-   * Si el hijo pone esto a 'true', la base hará un .subscribe() automático
-   * para ver los datos en consola sin necesidad de HTML.
-   */
+  protected deletedEndpoint?: string;
   protected forceSubscribe: boolean = false;
   protected abstract detailRoutePath: string;
+
+  private readonly refresh$ = new BehaviorSubject<void>(undefined);
+
   ngOnInit(): void {
-    this.loadData();
-  }
-
-  protected loadData(): void {
-    console.log(`--- INICIANDO PETICIÓN A: ${this.endpoint}`);
-
-    // Configuramos el observable con los pipes de log
-    const request$ = this.api.get<T[]>(this.endpoint).pipe(
-      tap((data) => {
-        console.log(`✅ ÉXITO [${this.endpoint}]: ${data?.length} registros.`);
-        console.log('Datos recibidos ->', data);
-      }),
-      catchError((error) => {
-        console.error(`❌ ERROR [${this.endpoint}]:`, error);
-        return of([]);
+    this.data$ = this.refresh$.pipe(
+      switchMap(() => {
+        return this.api.get<T[]>(this.endpoint).pipe(
+          tap((data) => {
+            if (this.forceSubscribe) {
+              console.log(`✅ [${this.endpoint}] Datos:`, data);
+            }
+          }),
+          catchError((error) => {
+            console.error("❌ Error:", error);
+            return of([]);
+          })
+        );
       })
     );
-
-    this.data$ = request$;
-
-    // SI LA OPCIÓN ESTÁ ACTIVA, FORZAMOS LA SUSCRIPCIÓN
     if (this.forceSubscribe) {
-      console.warn(`⚠️ MODO DEBUG ACTIVO: Suscripción manual forzada en ${this.endpoint}`);
-      this.data$.subscribe({
-        next: (data) => {
-          // Ya lo muestra el 'tap', pero aquí podrías hacer lógica extra si quisieras
-        },
-      });
+      this.data$.subscribe();
     }
   }
+  protected loadData(): void {
+    this.refresh$.next();
+  }
 
+  deleteItem(id: number): void {
+    const URL = `${this.deletedEndpoint}/id=${id}`;
+    this.api.delete(URL).pipe(take(1)).subscribe({
+      next: () => {
+        console.log(`🗑️ Registro ${id} borrado.`);
+        this.loadData(); 
+      },
+      error: (err) => console.error("Error al borrar", err)
+    });
+  }
   goToDetail(id: number | string): void {
-    // Si detailRoutePath es 'product-detail' e id es 2
-    // Navegará a: .../products/product-detail/2
     this.router.navigate([this.detailRoutePath, id], { relativeTo: this.route });
   }
 }

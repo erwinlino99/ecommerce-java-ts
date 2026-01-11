@@ -1,7 +1,10 @@
 package com.ecommerce.backend.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,7 +48,7 @@ public class ShopProductService {
     }
 
     public List<ShopProductDto> getAllRecords() {
-        List<ShopProduct> products = this.repo.findAll();
+        List<ShopProduct> products = this.repo.findByDeletedIsNull();
         return products.stream().map(p -> ShopProductMapper.toFullDto(p)).toList();
     }
 
@@ -68,5 +71,13 @@ public class ShopProductService {
                 p.getModified(),
                 p.getDeleted());
 
+    }
+
+    public ResponseEntity deletedShopProduct(Integer shopProductId) {
+        ShopProduct product = this.repo.findById(shopProductId)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+        product.setDeleted(LocalDateTime.now());
+        this.repo.save(product);
+        return ResponseEntity.ok(Map.of("ok", "Producto eliminado"));
     }
 }

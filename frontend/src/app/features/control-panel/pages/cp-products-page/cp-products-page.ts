@@ -16,5 +16,6 @@ export class CpProductsPage extends BaseListComponent<ShopProduct> {
   // 1. El endpoint que usará la clase padre
   protected readonly endpoint = '/all-shop-products';
   protected override detailRoutePath = 'product-detail';
+  protected override deletedEndpoint="/shop-product/delete";
 
 }

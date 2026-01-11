@@ -2,7 +2,9 @@ package com.ecommerce.backend.controllers;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -34,7 +36,13 @@ public class ShopProductController {
     }
 
     @PutMapping("/shop-product-id/{shopProductId}")
-    public ShopProductDto updateShopProduct(@PathVariable Integer shopProductId,@RequestBody ShopProductRequest shopProductRequest) {
+    public ShopProductDto updateShopProduct(@PathVariable Integer shopProductId,
+            @RequestBody ShopProductRequest shopProductRequest) {
         return this.service.updateShopProduct(shopProductId, shopProductRequest);
+    }
+
+    @DeleteMapping("/shop-product/delete/id={shopProductId}")
+    public ResponseEntity deletedShopProduct(@PathVariable Integer shopProductId){
+        return this.service.deletedShopProduct(shopProductId);
     }
 }
