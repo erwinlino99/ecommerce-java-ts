@@ -1,0 +1,129 @@
+.ia-dashboard-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+.glass-card {
+  background: #ffffff;
+  border-radius: 24px;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+  max-width: 850px;
+  width: 100%;
+  padding: 40px;
+  overflow: hidden;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr; /* Distribución horizontal */
+  gap: 40px;
+  align-items: center;
+}
+
+.badge {
+  background: #f0fdf4;
+  color: #166534;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.main-message h2 {
+  font-size: 2.2rem;
+  color: #111827;
+  margin: 15px 0;
+  line-height: 1.2;
+}
+
+.main-message p {
+  font-size: 1.15rem;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+/* Spinner estilo Orbit mas moderno */
+.tech-status {
+  background: #f9fafb;
+  border-radius: 16px;
+  padding: 30px;
+  text-align: center;
+}
+
+.orbit-spinner {
+  height: 60px;
+  width: 60px;
+  position: relative;
+  margin: 0 auto 15px;
+}
+
+.orbit {
+  position: absolute;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: #10a37f;
+  animation: orbit-spin 1.2s linear infinite;
+}
+
+.orbit:nth-child(2) { border-top-color: #3b82f6; animation-delay: 0.4s; }
+.orbit:nth-child(3) { border-top-color: #8b5cf6; animation-delay: 0.8s; }
+
+@keyframes orbit-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.status-label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.status-detail {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.divider {
+  height: 1px;
+  background: #f3f4f6;
+  margin: 30px 0;
+}
+
+.footer-section {
+  text-align: center;
+}
+
+.patience-msg {
+  font-size: 1.1rem;
+  font-style: italic;
+  color: #9ca3af;
+  margin-bottom: 20px;
+}
+
+.dev-img {
+  width: 280px;
+  height: auto;
+  filter: grayscale(20%);
+  transition: transform 0.3s ease;
+}
+
+.dev-img:hover {
+  transform: scale(1.05);
+}
+
+/* Responsivo para móviles */
+@media (max-width: 768px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}

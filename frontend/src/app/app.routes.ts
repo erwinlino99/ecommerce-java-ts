@@ -16,9 +16,7 @@ import { CpImportsPage } from './features/control-panel/pages/cp-imports-page/cp
 import { CpOrderDetailPage } from './features/control-panel/details/cp-order-detail-page/cp-order-detail-page';
 import { CpProductDetailPage } from './features/control-panel/details/cp-product-detail-page/cp-product-detail-page';
 import { CpWebUserDetailPage } from './features/control-panel/details/cp-web-user-detail-page/cp-web-user-detail-page';
-import path from 'path';
-import { Component } from '@angular/core';
-
+import { ChatIaPage } from './features/client-panel/pages/chat-ia-page/chat-ia-page';
 export const routes: Routes = [
   { path: '', component: Home },
   { path: 'register', component: RegisterPage },
@@ -31,6 +29,7 @@ export const routes: Routes = [
       { path: 'products', component: ProductsPage },
       { path: 'cart', component: CartPage },
       { path: 'orders', component: ShopOrderPage },
+      { path: 'chat', component: ChatIaPage },
       { path: 'products/detail/:shopProductId', component: ShopProductDetail },
     ],
   },
