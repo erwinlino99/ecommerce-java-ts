@@ -1,0 +1,1 @@
+ng g c shared/components/loading-screen-components --standalone --skip-tests

@@ -1,0 +1,139 @@
+/* Fondo azul marino muy oscuro y difuminado */
+.loading-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  /* Un azul noche profundo */
+  background: rgba(10, 25, 41, 0.85); 
+  backdrop-filter: blur(25px) saturate(180%); 
+  -webkit-backdrop-filter: blur(25px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999999;
+  animation: fadeIn 0.5s ease;
+}
+
+/* Tarjeta con tinte azulado y bordes brillantes */
+.glass-card {
+  background: rgba(255, 255, 255, 0.9); /* Casi blanca para que el texto resalte mucho */
+  padding: 4rem 3rem;
+  border-radius: 60px;
+  width: 90%;
+  max-width: 460px;
+  text-align: center;
+  /* Sombras azules profundas */
+  box-shadow: 0 40px 100px rgba(0, 18, 50, 0.6);
+  border: 2px solid rgba(0, 119, 255, 0.1);
+  animation: smoothPop 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* Imagen circular con borde azul eléctrico */
+.main-image {
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 2.5rem;
+  /* Borde con azul cian */
+  border: 8px solid rgba(0, 119, 255, 0.2); 
+  box-shadow: 0 15px 45px rgba(0, 119, 255, 0.3);
+  animation: bounceAndScale 3s infinite ease-in-out; 
+}
+
+/* Tipografía en Azules de alta visibilidad */
+.main-title {
+  font-family: 'Inter', sans-serif;
+  color: #001e3c; /* Azul Oxford */
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+  letter-spacing: -1px;
+}
+
+.description {
+  color: #1a4d7d; /* Azul acero */
+  font-size: 1.1rem;
+  margin-bottom: 3rem;
+  line-height: 1.6;
+}
+
+/* Barra de carga con degradado de Azul Noche a Azul Neón */
+.glow-progress-wrapper {
+  width: 100%;
+  height: 12px;
+  background: rgba(0, 30, 60, 0.1);
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+
+.glow-bar {
+  width: 100%;
+  height: 100%;
+  /* Degradado Tech: Azul oscuro -> Azul Eléctrico -> Azul Claro */
+  background: linear-gradient(90deg, #001e3c, #007fff, #66b2ff, #007fff);
+  background-size: 200% 100%;
+  border-radius: 20px;
+  animation: loadingSlide 2.5s infinite linear, gradientMove 4s infinite ease;
+  box-shadow: 0 0 20px rgba(0, 127, 255, 0.6);
+}
+
+/* Footer con detalles en azul neón */
+.footer-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+.pulse-dot {
+  width: 12px;
+  height: 12px;
+  background: #007fff; /* Azul eléctrico */
+  border-radius: 50%;
+  animation: pulseDot 1.5s infinite;
+  box-shadow: 0 0 12px rgba(0, 127, 255, 0.8);
+}
+
+.loading-text {
+  color: #003366;
+  font-size: 0.9rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* --- ANIMACIONES --- */
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+@keyframes loadingSlide {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes pulseDot {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.8); opacity: 0.4; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes smoothPop {
+  0% { transform: scale(0.9) translateY(40px); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+@keyframes bounceAndScale {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}

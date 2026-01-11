@@ -1,0 +1,26 @@
+<div class="loading-overlay" *ngIf="loadingService.isLoading$ | async">
+  <div class="glass-card">
+    
+    <div class="image-section">
+      <img src="conejo.jpg" alt="Conejo corriendo" class="main-image">
+    </div>
+    
+    <div class="text-section">
+      <h2 class="main-title">¡Aguanta, Primo!</h2>
+      <p class="description">
+        La aplicación está corriendo en el servidor gratis del barrio. 
+        Esto puede tardar un ratito.
+      </p>
+    </div>
+
+    <div class="glow-progress-wrapper">
+      <div class="glow-bar"></div>
+    </div>
+    
+    <div class="footer-info">
+      <span class="pulse-dot"></span>
+      <span class="loading-text">Cargando al máximo de power...</span>
+    </div>
+    
+  </div>
+</div>
