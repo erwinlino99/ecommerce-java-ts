@@ -9,17 +9,14 @@ import { ShopProduct } from '../../../../shared/model-interface/ShopProduct';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './cp-product-detail-page.html',
-    styleUrl: './../detail-page.scss',
+  styleUrl: './../detail-page.scss',
 })
 export class CpProductDetailPage extends BaseDetailComponent<ShopProduct> {
   // EL ENDPOINT QUE TU API ESPERA (siguiendo tu interfaz)
   protected override endpoint = 'shop-product-id';
   // EL NOMBRE DEL PARÁMETRO EN TU RUTAS (debe coincidir con app.routes.ts)
   protected override idParamName = 'productIdDetail';
-  /**
-   * MÉTODO OBLIGATORIO: Definimos la estructura del formulario basada en ShopProduct.
-   * Usamos los mismos nombres de la interfaz para que el patchValue funcione solo.
-   */
+
   protected override createForm(): FormGroup {
     return this.fb.group({
       id: [{ value: null, disabled: true }], // El ID suele ser solo lectura
@@ -31,6 +28,15 @@ export class CpProductDetailPage extends BaseDetailComponent<ShopProduct> {
       currentStock: [0, [Validators.required, Validators.min(0)]],
       price: [0, [Validators.required, Validators.min(0.01)]],
       deleted: [null],
+    });
+  }
+  override ngOnInit(): void {
+    super.ngOnInit();
+    const BRAND_SELECTABLE = 'shop-product-brand/selectable';
+    this.api.get(BRAND_SELECTABLE).subscribe({
+      next: (data) => {
+        console.log(data);
+      },
     });
   }
 }

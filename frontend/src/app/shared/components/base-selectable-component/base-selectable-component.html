@@ -1,0 +1,13 @@
+<div class="selectable-container">
+  <label *ngIf="label">{{ label }}</label>
+  <select 
+    [formControl]="internalControl" 
+    [attr.disabled]="readonly ? true : null"
+    (blur)="onTouched()"
+    class="form-select">
+    <option [value]="null" disabled>{{ placeholder }}</option>
+    <option *ngFor="let item of items()" [value]="item.id">
+      {{ item.name }}
+    </option>
+  </select>
+</div>

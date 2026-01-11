@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, tap, take, switchMap } from 'rxjs/operators';
 import { ApiService } from '../../../service/api.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Directive()
 export abstract class BaseListComponent<T> implements OnInit {
@@ -27,7 +28,7 @@ export abstract class BaseListComponent<T> implements OnInit {
             }
           }),
           catchError((error) => {
-            console.error("❌ Error:", error);
+            console.error('❌ Error:', error);
             return of([]);
           })
         );
@@ -42,15 +43,35 @@ export abstract class BaseListComponent<T> implements OnInit {
   }
 
   deleteItem(id: number): void {
-    const URL = `${this.deletedEndpoint}/id=${id}`;
-    this.api.delete(URL).pipe(take(1)).subscribe({
-      next: () => {
-        console.log(`🗑️ Registro ${id} borrado.`);
-        this.loadData(); 
-      },
-      error: (err) => console.error("Error al borrar", err)
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: `Se eliminará el registro seleccionado`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33', 
+      cancelButtonColor: '#3085d6', 
+      confirmButtonText: 'Sí, borrarlo',
+      cancelButtonText: 'No, mantenerlo',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const URL = `${this.deletedEndpoint}/id=${id}`;
+        this.api
+          .delete(URL)
+          .pipe(take(1))
+          .subscribe({
+            next: () => {
+              Swal.fire('¡Borrado!', 'El registro ha sido eliminado correctamente.', 'success');
+              this.loadData();
+            },
+            error: (err) => {
+              console.error('Error al borrar', err);
+              Swal.fire('Error', 'No se pudo eliminar el registro. Inténtalo más tarde.', 'error');
+            },
+          });
+      }
     });
   }
+
   goToDetail(id: number | string): void {
     this.router.navigate([this.detailRoutePath, id], { relativeTo: this.route });
   }

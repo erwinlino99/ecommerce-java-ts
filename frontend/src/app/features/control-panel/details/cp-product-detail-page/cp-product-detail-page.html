@@ -9,7 +9,6 @@
 </div>
 
 <div class="detail-panel" *ngIf="!loading() && item()">
-  
   <div class="detail-header">
     <div class="title-group">
       <h2>{{ form.get('name')?.value }}</h2>
@@ -19,32 +18,27 @@
       <span>SALIR</span>
     </button>
   </div>
-
   <form [formGroup]="form" (ngSubmit)="save()" class="industrial-form">
-    
     <div class="form-grid">
-      
       <div class="form-field full-width">
         <label>Denominación del Producto</label>
-        <input type="text" formControlName="name" [readonly]="!isEditing()" 
-               [style.font-size]="'1.2rem'" [style.color]="'var(--accent)'">
+        <input type="text" formControlName="name" [readonly]="!isEditing()" [style.font-size]="'1.2rem'"
+          [style.color]="'var(--accent)'">
       </div>
 
       <div class="form-field">
         <label>Proveedor / Marca</label>
         <input type="text" formControlName="brandName" [readonly]="!isEditing()">
       </div>
-
       <div class="form-field">
         <label>Valor Unitario (EUR)</label>
-        <input type="number" formControlName="price" [readonly]="!isEditing()"
-               [style.font-weight]="'800'">
+        <input type="number" formControlName="price" [readonly]="!isEditing()" [style.font-weight]="'800'">
       </div>
 
       <div class="form-field">
         <label>Inventario Actual</label>
         <input type="number" formControlName="currentStock" [readonly]="!isEditing()"
-               [style.color]="form.get('currentStock')?.value > 0 ? 'var(--success)' : 'var(--danger)'">
+          [style.color]="form.get('currentStock')?.value > 0 ? 'var(--success)' : 'var(--danger)'">
       </div>
 
       <div class="form-field">
@@ -65,7 +59,7 @@
     </div>
 
     <div class="detail-footer">
-      
+
       <ng-container *ngIf="!isEditing(); else actionButtons">
         <button type="button" (click)="toggleEdit()" class="btn-industrial btn-edit">
           Editar Producto
