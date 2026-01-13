@@ -1,10 +1,8 @@
 package com.ecommerce.backend.services;
 
-import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -24,7 +22,6 @@ import com.ecommerce.backend.repositories.ShopCartRepository;
 import com.ecommerce.backend.repositories.ShopOrderRepository;
 import com.ecommerce.backend.repositories.ShopProductRepository;
 import com.ecommerce.backend.repositories.WebUserRepository;
-import com.ecommerce.backend.util.UseLogger;
 
 import jakarta.transaction.Transactional;
 

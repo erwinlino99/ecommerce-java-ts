@@ -7,6 +7,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -16,11 +17,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
-
+import com.ecommerce.backend.dto.request.ShopProductImportRequest;
+import com.ecommerce.backend.models.ShopProductBrand;
 import com.ecommerce.backend.util.UseLogger;
+import jakarta.validation.Validator;
 
 @Service
 public class ImportFileService {
+
+    // INYECTAMOS UN VALIDADOR
+    @Autowired
+    private Validator validator;
+    private ShopProductBrandService brandService;
+    private ShopProductMeasurementService measurementService;
 
     public ResponseEntity getXlsxTemplate() {
         try {
@@ -36,7 +45,7 @@ public class ImportFileService {
                             .parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
                     .body(template);
 
-        } catch (Exception e) {
+        } catch (ResponseStatusException e) {
             Map<String, String> errorResponse = new HashMap<>();
             errorResponse.put("error", "Ha ocurrido un fallo inesperado");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
@@ -48,45 +57,31 @@ public class ImportFileService {
             Sheet sheet = workbook.getSheetAt(0);
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                 Row row = sheet.getRow(i);
+                System.out.println("EMPEZAMOS A PROCESAR");
                 if (row == null)
                     continue;
                 String name = (row.getCell(0) != null) ? row.getCell(0).getStringCellValue() : "S/N";
                 String description = (row.getCell(1) != null) ? row.getCell(1).getStringCellValue() : "S/D";
                 String shortDescription = (row.getCell(2) != null) ? row.getCell(2).getStringCellValue() : "S/D";
-                double price = (row.getCell(3) != null) ? row.getCell(3).getNumericCellValue() : 0.0;
-                double stock = (row.getCell(4) != null) ? row.getCell(4).getNumericCellValue() : 0.0;
+                Double price = (row.getCell(3) != null) ? row.getCell(3).getNumericCellValue() : 0.0;
+                Double stock = (row.getCell(4) != null) ? row.getCell(4).getNumericCellValue() : 0.0;
                 String brand = (row.getCell(5) != null) ? row.getCell(5).getStringCellValue() : "Genérica";
                 String measurementName = (row.getCell(6) != null) ? row.getCell(6).getStringCellValue() : "Genérica";
-                Integer measurementUnit = (row.getCell(7) != null) ? (int) row.getCell(7).getNumericCellValue() : 0;
 
-                UseLogger.info("NOMBRE FILA " + i, name);
-                UseLogger.info("DESCRIPTION", description);
-                UseLogger.info("SHORT_DESCRIPTION", shortDescription);
-                UseLogger.info("PRECIO", price);
-                UseLogger.info("STOCK", (int) stock);
-                UseLogger.info("MARCA", brand);
-                UseLogger.info("TIPO MEDIDA", measurementName);
-                UseLogger.info("UNIDADES DENTRO", measurementUnit);
-                System.out.println("-------------------------------------------");
+                // DENTRO ESTAN LAS ANOTACIONES @NotBlank, @Positive @Min ...
+                ShopProductImportRequest product = new ShopProductImportRequest(name, description, shortDescription,
+                        price, stock.intValue(), brand, measurementName);
+                // TENEMSO QUE ACTIVAR EL VALIDATOR.
+                var badRequest = validator.validate(product);
+                if (!badRequest.isEmpty()) {
+                    // MOSTRAMOS LOS ERRORES
+                }
+                // this.measurementService.measurementNameValid(measurementName);
 
-                // Tengo pensado poner en la entidad o en el dto de la measuerment constantes de
-                // nombres, en mi base de datos solo tengo , UDS, CAJA, PALLET,
-                // Si la celda X no coicide con alguno de estas constantes echar para atras el
-                // registro entero
-
-                // public enum MeasurementType {
-                // UDS, CAJA, PALLET;
-
-                // // Método para validar si un texto existe en el Enum
-                // public static boolean isValid(String value) {
-                // for (MeasurementType type : MeasurementType.values()) {
-                // if (type.name().equalsIgnoreCase(value)) {
-                // return true;
-                // }
-                // }
-                // return false;
-                // }
-                // }
+                //UNA VEZ SE HAN HECHO TODOS LOS CHECK , HACEMOS UNO FINAL DE LA MARCA
+                //SI LA MARCA NO EXISTE LO CREAMOS Y LO ASOCIAMOS A UN NUEVO PRODUCTO ENTERO
+                // SI LA MARCA YA EXISTE SIMPLEMENTE ACTUALIZAMOS EL STOCK DEL MISMO PRODUCTO
+                ShopProductBrand shopProductBrand=this.brandService.getOrCreateBrand(brand);
 
             }
 

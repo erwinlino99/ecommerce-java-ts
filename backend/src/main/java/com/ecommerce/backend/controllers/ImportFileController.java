@@ -17,7 +17,7 @@ import com.ecommerce.backend.services.ImportFileService;
 @RequestMapping("/file")
 public class ImportFileController {
 
-    private ImportFileService service;
+    private final ImportFileService service;
 
     public ImportFileController(ImportFileService service) {
         this.service = service;

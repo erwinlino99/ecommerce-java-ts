@@ -1,6 +1,7 @@
 package com.ecommerce.backend.models;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,12 +16,18 @@ import jakarta.persistence.Table;
 @Table(name = "shop_product_measurement")
 public class ShopProductMeasurement {
 
+    // CONSTANTES
+    public static final String UDS = "UDS";
+    public static final String CAJA = "CAJA";
+    public static final String PALLET = "PALLET";
+    public static final List<String> VALID_MEASUREMENT_NAME = List.of(UDS, CAJA, PALLET);
+    // FIN
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    //Por que tiene que ser Integer y no int/ Int ? 
     @Column
-    private String name; // Es necesario que despues de la anotacion de COlumn este tipado fuertemente con (length = 150, nullable = false) ??
+    private String name;
     @Column
     private String description;
     @Column
@@ -36,7 +43,7 @@ public class ShopProductMeasurement {
 
     }
 
-    //IMPORTANTE ->
+    // IMPORTANTE ->
     @PrePersist
     public void prePersist() {
         this.created = LocalDateTime.now();

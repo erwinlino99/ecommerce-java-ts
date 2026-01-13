@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.ecommerce.backend.dto.SelectableDto;
+import com.ecommerce.backend.models.ShopProductBrand;
 import com.ecommerce.backend.repositories.ShopProductBrandRepository;
 
 @Service
@@ -15,6 +16,11 @@ public class ShopProductBrandService {
 
     public ShopProductBrandService(ShopProductBrandRepository repo) {
         this.repo = repo;
+    }
+
+    public ShopProductBrand getOrCreateBrand(String shopProductBrandName){
+        //LLAMAOS AL A BASE DE DATOS
+        return this.repo.existsByNameIgnoreCase(shopProductBrandName);
     }
 
     public List<SelectableDto> getSelectable() {

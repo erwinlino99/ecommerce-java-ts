@@ -19,7 +19,6 @@ import com.ecommerce.backend.dto.request.AdjustShopCartItemRequest;
 import com.ecommerce.backend.models.ShopCart;
 import com.ecommerce.backend.services.ShopCartService;
 import com.ecommerce.backend.services.WebUserService;
-import com.ecommerce.backend.util.UseLogger;
 
 @RestController
 @CrossOrigin

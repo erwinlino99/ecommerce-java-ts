@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 @Entity
@@ -34,6 +36,17 @@ public class ShopProductBrand {
 
     public ShopProductBrand() {
 
+    }
+
+    @PrePersist
+    public void prePersist() {
+        this.created = LocalDateTime.now();
+        this.isActive=true;
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.modified = LocalDateTime.now();
     }
 
     public Integer getId() {

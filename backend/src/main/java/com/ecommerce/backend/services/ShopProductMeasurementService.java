@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.ecommerce.backend.models.ShopProductMeasurement;
 import com.ecommerce.backend.repositories.ShopProductMeasurementRepository;
+
 @Service
 public class ShopProductMeasurementService {
 
@@ -17,5 +18,11 @@ public class ShopProductMeasurementService {
 
     public List<ShopProductMeasurement> getAllRecord() {
         return this.repo.findAll();
+    }
+
+    public void measurementNameValid(String measurementName) {
+        if(!ShopProductMeasurement.VALID_MEASUREMENT_NAME.contains(measurementName)){
+              
+        }
     }
 }
