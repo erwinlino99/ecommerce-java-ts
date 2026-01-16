@@ -22,7 +22,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.ecommerce.backend.dto.enums.ShopProductMeasurementEnum;
 import com.ecommerce.backend.dto.request.ShopProductImportRequest;
-import com.ecommerce.backend.models.ShopProduct;
 import com.ecommerce.backend.models.ShopProductBrand;
 import com.ecommerce.backend.models.ShopProductMeasurement;
 import com.ecommerce.backend.util.UseLogger;
@@ -35,14 +34,12 @@ public class ImportFileService {
     // INYECTAMOS UN VALIDADOR
     @Autowired
     private Validator validator;
-    private ShopProductBrandService brandService;
-    private ShopProductMeasurementService measurementService;
-    private ShopProductService productService;
+    private final ShopProductBrandService brandService;
+    private final ShopProductService productService;
 
-    public ImportFileService(ShopProductBrandService brandService, ShopProductMeasurementService measurementService,
+    public ImportFileService(ShopProductBrandService brandService,
             ShopProductService productService) {
         this.brandService = brandService;
-        this.measurementService = measurementService;
         this.productService = productService;
 
     }
@@ -100,26 +97,15 @@ public class ImportFileService {
                 ShopProductImportRequest productImport = new ShopProductImportRequest(name, description,
                         shortDescription,
                         price, stock.intValue(), brandName, measurementName);
-
                 // PASO 4: VEMOS SI LA MARCA EXISTE O LA CREAMOS
-                UseLogger.info("MARCA ->", brandName);
                 ShopProductBrand shopProductBrand = this.brandService.getOrCreateBrand(brandName);
-
                 // PASO 5: CREAMOS EL ShopProductMeasurement
                 // NOTA: CON SETEAR EL ID DE LA BASE DE DATOS YA VALE PARA LUEGO
                 ShopProductMeasurement validShopProductBrand = new ShopProductMeasurement();
                 validShopProductBrand.setId(ShopProductMeasurementEnum.getId(measurementName));
                 // PASO 6: CREAMOS O ACTUALIZAMOS STOCK DEL SHOP-PRODUCT
-                ShopProduct valid = new ShopProduct();
-                valid.setName(name);
-                valid.setDescription(description);
-                valid.setShortDescription(shortDescription);
-                valid.setShopProductBrand(shopProductBrand);
-                valid.setMeasurement(validShopProductBrand);
-                valid.setCurrentStock(stock.intValue());
-                valid.setPrice(price);
-                this.productService.createOrUpdate(valid);
-      
+                this.productService.createOrUpdate(productImport, shopProductBrand, validShopProductBrand);
+
             }
 
             return ResponseEntity.ok(Map.of("message", "Lectura completada exitosamente"));

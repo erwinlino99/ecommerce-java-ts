@@ -11,8 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ecommerce.backend.dto.ShopProductDto;
 import com.ecommerce.backend.dto.mapper.ShopProductMapper;
+import com.ecommerce.backend.dto.request.ShopProductImportRequest;
 import com.ecommerce.backend.dto.request.ShopProductRequest;
 import com.ecommerce.backend.models.ShopProduct;
+import com.ecommerce.backend.models.ShopProductBrand;
+import com.ecommerce.backend.models.ShopProductMeasurement;
 import com.ecommerce.backend.repositories.ShopProductRepository;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -82,19 +85,29 @@ public class ShopProductService {
         return ResponseEntity.ok(Map.of("ok", "Producto eliminado"));
     }
 
-    public void createOrUpdate(ShopProduct shopProductImport) {
+    public void createOrUpdate(ShopProductImportRequest shopProductImport, ShopProductBrand shopProductBrand,
+            ShopProductMeasurement shopProductMeasurement) {
         // PRIMERO TENEMOS QUE HACER UNA CONSULTA A BASE DE DATOS
-        Optional<ShopProduct> existingProduct = repo.findByNameIgnoreCase(shopProductImport.getName());
+        Optional<ShopProduct> existingProduct = repo.findByNameIgnoreCase(shopProductImport.name());
+        ShopProduct product;
         if (existingProduct.isPresent()) {
             // RECUPERAMOS EL REGISTRO DE LA BASE DE DATOS
             // ACTUALIZAMOS EL STOCK Y EL PRECIO SEGUN EL EXCEL
-            ShopProduct db = existingProduct.get();
-            db.setCurrentStock(shopProductImport.getCurrentStock());
-            db.setPrice(shopProductImport.getPrice());
-            this.repo.save(db);
+            product = existingProduct.get();
+            product.setCurrentStock(shopProductImport.currentStock());
+            product.setPrice(shopProductImport.price());
 
         } else {
-            this.repo.save(shopProductImport);
+            product = new ShopProduct();
+            product.setName(shopProductImport.name());
+            product.setDescription(shopProductImport.name());
+            product.setShortDescription(shopProductImport.shortDescription());
+            product.setShopProductBrand(shopProductBrand);
+            product.setMeasurement(shopProductMeasurement);
+            product.setCurrentStock(shopProductImport.currentStock());
+            product.setPrice(shopProductImport.price());
         }
+        this.repo.save(product);
+
     }
 }
