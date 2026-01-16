@@ -20,9 +20,4 @@ public class ShopProductMeasurementService {
         return this.repo.findAll();
     }
 
-    public void measurementNameValid(String measurementName) {
-        if(!ShopProductMeasurement.VALID_MEASUREMENT_NAME.contains(measurementName)){
-              
-        }
-    }
 }

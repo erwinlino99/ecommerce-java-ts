@@ -32,7 +32,7 @@ public class ShopProductService {
                 .orElseThrow(() -> new EntityNotFoundException("Producto no encontrado con ID: " + shopProductId));
 
         product.setName(request.name());
-        product.setShort_description(request.shortDescription());
+        product.setShortDescription(request.shortDescription());
         product.setDescription(request.description());
         product.setCurrentStock(request.currentStock());
         product.setPrice(request.price());
@@ -79,5 +79,9 @@ public class ShopProductService {
         product.setDeleted(LocalDateTime.now());
         this.repo.save(product);
         return ResponseEntity.ok(Map.of("ok", "Producto eliminado"));
+    }
+
+    public void save(ShopProduct shopProduct) {
+        this.repo.save(shopProduct);
     }
 }

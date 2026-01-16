@@ -84,6 +84,10 @@ public class ShopProduct {
         this.name = name;
     }
 
+    public void setShopProductBrand(ShopProductBrand brand) {
+        this.brand = brand;
+    }
+
     public String getBrandName() {
         if (this.brand != null) {
             return this.brand.getName();
@@ -96,7 +100,7 @@ public class ShopProduct {
         return shortDescription;
     }
 
-    public void setShort_description(String shortDescription) {
+    public void setShortDescription(String shortDescription) {
         this.shortDescription = shortDescription;
     }
 

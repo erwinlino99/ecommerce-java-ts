@@ -14,7 +14,7 @@ import com.ecommerce.backend.repositories.CpIndexRepository;
 @RequestMapping("/cp-index")
 @CrossOrigin
 public class CpIndexController {
-    private CpIndexRepository cpRepo;
+    private final CpIndexRepository cpRepo;
 
     public CpIndexController(CpIndexRepository cpRepo) {
         this.cpRepo = cpRepo;

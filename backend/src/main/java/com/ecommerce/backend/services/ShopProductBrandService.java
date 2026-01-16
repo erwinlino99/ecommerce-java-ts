@@ -12,15 +12,21 @@ import com.ecommerce.backend.repositories.ShopProductBrandRepository;
 @Service
 public class ShopProductBrandService {
 
-    private ShopProductBrandRepository repo;
+    private final ShopProductBrandRepository repo;
 
     public ShopProductBrandService(ShopProductBrandRepository repo) {
         this.repo = repo;
     }
 
-    public ShopProductBrand getOrCreateBrand(String shopProductBrandName){
-        //LLAMAOS AL A BASE DE DATOS
-        return this.repo.existsByNameIgnoreCase(shopProductBrandName);
+    public ShopProductBrand getOrCreateBrand(String shopProductBrandName) {
+        // LLAMADA AL BASE DE DATOS MEDIANTE EL REPOSITORIO JPA DIRECTAMENTE
+        return this.repo.findByNameIgnoreCase(shopProductBrandName)
+                .orElseGet(() -> {
+                    // SI NO EXISTE LO CREAMOS EN ESTE MOMENTO
+                    ShopProductBrand newBrand = new ShopProductBrand();
+                    newBrand.setName(shopProductBrandName);
+                    return repo.save(newBrand);
+                });
     }
 
     public List<SelectableDto> getSelectable() {
