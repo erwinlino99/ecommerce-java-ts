@@ -3,6 +3,7 @@ package com.ecommerce.backend.services;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -81,7 +82,19 @@ public class ShopProductService {
         return ResponseEntity.ok(Map.of("ok", "Producto eliminado"));
     }
 
-    public void save(ShopProduct shopProduct) {
-        this.repo.save(shopProduct);
+    public void createOrUpdate(ShopProduct shopProductImport) {
+        // PRIMERO TENEMOS QUE HACER UNA CONSULTA A BASE DE DATOS
+        Optional<ShopProduct> existingProduct = repo.findByNameIgnoreCase(shopProductImport.getName());
+        if (existingProduct.isPresent()) {
+            // RECUPERAMOS EL REGISTRO DE LA BASE DE DATOS
+            // ACTUALIZAMOS EL STOCK Y EL PRECIO SEGUN EL EXCEL
+            ShopProduct db = existingProduct.get();
+            db.setCurrentStock(shopProductImport.getCurrentStock());
+            db.setPrice(shopProductImport.getPrice());
+            this.repo.save(db);
+
+        } else {
+            this.repo.save(shopProductImport);
+        }
     }
 }

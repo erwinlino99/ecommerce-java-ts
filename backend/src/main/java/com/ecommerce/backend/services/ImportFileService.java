@@ -107,10 +107,9 @@ public class ImportFileService {
 
                 // PASO 5: CREAMOS EL ShopProductMeasurement
                 // NOTA: CON SETEAR EL ID DE LA BASE DE DATOS YA VALE PARA LUEGO
-                // CREAR/ACTUALIZAR EL SHOPPRODUCT
                 ShopProductMeasurement validShopProductBrand = new ShopProductMeasurement();
                 validShopProductBrand.setId(ShopProductMeasurementEnum.getId(measurementName));
-                // PASO 6: CREAMOS O ACTUALIZAMOS EL SHOP-PRODUCT
+                // PASO 6: CREAMOS O ACTUALIZAMOS STOCK DEL SHOP-PRODUCT
                 ShopProduct valid = new ShopProduct();
                 valid.setName(name);
                 valid.setDescription(description);
@@ -119,7 +118,8 @@ public class ImportFileService {
                 valid.setMeasurement(validShopProductBrand);
                 valid.setCurrentStock(stock.intValue());
                 valid.setPrice(price);
-                this.productService.save(valid);
+                this.productService.createOrUpdate(valid);
+      
             }
 
             return ResponseEntity.ok(Map.of("message", "Lectura completada exitosamente"));
