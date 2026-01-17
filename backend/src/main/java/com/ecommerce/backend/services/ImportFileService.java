@@ -22,9 +22,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.ecommerce.backend.dto.enums.ShopProductMeasurementEnum;
 import com.ecommerce.backend.dto.request.ShopProductImportRequest;
+import com.ecommerce.backend.exceptions.ImportException;
 import com.ecommerce.backend.models.ShopProductBrand;
 import com.ecommerce.backend.models.ShopProductMeasurement;
-import com.ecommerce.backend.util.UseLogger;
 
 import jakarta.validation.Validator;
 
@@ -66,21 +66,19 @@ public class ImportFileService {
     }
 
     public ResponseEntity readXlsxTemplate(MultipartFile file) {
+        List<String> errors = new ArrayList<>();
+        Integer success = 0;
         try (Workbook workbook = new XSSFWorkbook(file.getInputStream())) {
             Sheet sheet = workbook.getSheetAt(0);
-
-            List<String> errors = new ArrayList<>();
-
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                 Row row = sheet.getRow(i);
-                System.out.println("EMPEZAMOS A PROCESAR");
                 if (row == null) {
                     continue;
                 }
                 // PASO 1 : MEDIDA CORRECTA
                 String measurementName = (row.getCell(6) != null) ? row.getCell(6).getStringCellValue() : "";
                 if (measurementName.isBlank() || !ShopProductMeasurementEnum.isValid(measurementName)) {
-                    errors.add("Error en la fila:" + (i + 1)
+                    errors.add("Fila :" + (i + 1)
                             + ". EL FORMATO DE LA MEDIDA NO ES CORRECTO. NO SE HA IMPORTADO");
                     continue;
                 }
@@ -93,27 +91,38 @@ public class ImportFileService {
                 Double stock = (row.getCell(4) != null) ? row.getCell(4).getNumericCellValue() : 0.0;
                 String brandName = (row.getCell(5) != null) ? row.getCell(5).getStringCellValue() : "";
 
-                // PASO 3: CONSTRUIMOS EL PRODUCTO REQUEST
+                // PASO 3: CONSTRUIMOS EL PRODUCTO REQUEST PARA PODER VALIDARLO Y SACAR POSIBLES
+                // ERRORES
                 ShopProductImportRequest productImport = new ShopProductImportRequest(name, description,
                         shortDescription,
                         price, stock.intValue(), brandName, measurementName);
-                // PASO 4: VEMOS SI LA MARCA EXISTE O LA CREAMOS
+
+                // PASO 4: AGREGAMOS MENSAJES DE POSIBLES ERRORES
+                var violations = validator.validate(productImport);
+                if (!violations.isEmpty()) {
+                    String msm = violations.iterator().next().getMessage();
+                    errors.add("Fila " + (i + 1) + ": " + msm);
+                    continue;
+                }
+                // PASO 5: VEMOS SI LA MARCA EXISTE O LA CREAMOS
                 ShopProductBrand shopProductBrand = this.brandService.getOrCreateBrand(brandName);
-                // PASO 5: CREAMOS EL ShopProductMeasurement
+                // PASO 6: CREAMOS EL ShopProductMeasurement
                 // NOTA: CON SETEAR EL ID DE LA BASE DE DATOS YA VALE PARA LUEGO
                 ShopProductMeasurement validShopProductBrand = new ShopProductMeasurement();
                 validShopProductBrand.setId(ShopProductMeasurementEnum.getId(measurementName));
-                // PASO 6: CREAMOS O ACTUALIZAMOS STOCK DEL SHOP-PRODUCT
+                // PASO 7: CREAMOS O ACTUALIZAMOS STOCK DEL SHOP-PRODUCT
                 this.productService.createOrUpdate(productImport, shopProductBrand, validShopProductBrand);
-
+                success++;
             }
-
+            if (!errors.isEmpty()) {
+                throw new ImportException(errors, success);
+            }
             return ResponseEntity.ok(Map.of("message", "Lectura completada exitosamente"));
 
+        } catch (ImportException ex) {
+            throw ex;
         } catch (Exception e) {
-            UseLogger.error("FALLO CRÍTICO AL LEER EXCEL", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-
 }

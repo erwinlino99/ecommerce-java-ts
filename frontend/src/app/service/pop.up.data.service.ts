@@ -3,7 +3,7 @@ import { Injectable, signal } from '@angular/core';
 export type PopupType = 'success' | 'error';
 
 export interface PopupData {
-  message: string;
+  message: string | String[];
   type: PopupType;
 }
 
@@ -18,6 +18,10 @@ export class PopupService {
   }
 
   error(message: string, ms = 1100) {
+    this.show({ message, type: 'error' }, ms);
+  }
+
+  errorMultiple(message: string[], ms = 6500) {
     this.show({ message, type: 'error' }, ms);
   }
 

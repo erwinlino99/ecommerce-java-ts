@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../../../service/api.service';
+import { ImportResponse } from '../../../../shared/model-interface/ImportResponse';
+import { disableDebugTools } from '@angular/platform-browser';
+import { PopupService } from '../../../../service/pop.up.data.service';
 
 @Component({
   selector: 'cp-app-imports-page',
@@ -13,8 +16,7 @@ export class CpImportsPage {
   selectedFile: File | null = null;
   isDragging: boolean = false;
   isUploading: boolean = false;
-
-  constructor(private api: ApiService) {}
+  constructor(private api: ApiService,private popUp:PopupService) {}
 
   downloadTemplate(): void {
     const endpoint = '/file/download-template';
@@ -25,7 +27,7 @@ export class CpImportsPage {
         const link = document.createElement('a');
         link.href = url;
         link.download = 'plantilla_productos.xlsx';
-        document.body.appendChild(link); 
+        document.body.appendChild(link);
         link.click();
 
         document.body.removeChild(link);
@@ -33,7 +35,6 @@ export class CpImportsPage {
       },
       error: (err) => {
         console.log('Error al descargar:', err);
-
       },
     });
   }
@@ -46,27 +47,30 @@ export class CpImportsPage {
     }
   }
 
-uploadFile(): void {
-  if (!this.selectedFile) return;
-  this.isUploading = true;
-  const formData = new FormData();
-  formData.append('file', this.selectedFile); // El nombre 'file' debe coincidir con el Backend
-  const endpoint = '/file/upload-template';
+  uploadFile(): void {
+    if (!this.selectedFile) return;
+    this.isUploading = true;
+    const formData = new FormData();
+    formData.append('file', this.selectedFile); // El nombre 'file' debe coincidir con el Backend
+    const endpoint = '/file/upload-template';
 
-  this.api.post(endpoint, formData).subscribe({
-    next: (res: any) => {
-      console.log('Archivo procesado con éxito:', res);
-      this.isUploading = false;
-      this.clearFile(); // Limpiamos la selección
-      alert('Productos importados correctamente');
-    },
-    error: (err) => {
-      console.error('Error al subir el archivo:', err);
-      this.isUploading = false;
-      alert('Error al procesar el Excel');
-    }
-  });
-}
+    this.api.post<ImportResponse>(endpoint, formData).subscribe({
+      next: (res: any) => {
+        console.log('Archivo procesado con éxito:', res);
+        this.isUploading = false;
+        this.clearFile();
+        alert('Productos importados correctamente');
+      },
+      error: (err) => {
+        this.isUploading = true;
+        const msm=err.error?.message;
+        const success=err.error?.success;
+        const erroresArray: string[] = err.error?.errors || [];
+        this.isUploading = false;
+        this.popUp.errorMultiple(erroresArray)
+      },
+    });
+  }
 
   clearFile(): void {
     this.selectedFile = null;
