@@ -21,10 +21,10 @@ export class PopupService {
     this.show({ message, type: 'error' }, ms);
   }
 
-  errorMultiple(message: string[], ms = 6500) {
-    this.show({ message, type: 'error' }, ms);
+  errorMultiple(messages: string[], ms = 10000) {
+    const formattedMessage = messages.join('\n');
+    this.show({ message: formattedMessage, type: 'error' }, ms);
   }
-
   private show(data: PopupData, ms: number) {
     clearTimeout(this.hideTimer);
 

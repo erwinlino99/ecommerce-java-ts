@@ -4,21 +4,45 @@
   left: 50%;
   transform: translate(-50%, -50%);
 
-  padding: 16px 20px;
+  // Ajustes de tamaño
+  padding: 20px 30px; // Un poco más de aire
   border-radius: 12px;
   color: #fff;
   font-weight: 600;
   z-index: 9999;
+  
+  // Soporte para saltos de línea (\n)
+  white-space: pre-line;
+  line-height: 1.5;
+  text-align: center;
 
-  animation: popupFade 1s ease forwards;
+  // Animación suave
+  animation: popupFade 2.5s ease forwards;
   pointer-events: none;
+  
+  // Tamaño base
+  min-width: 300px;
+}
+
+// Clase específica para cuando el tipo es error
+.error { 
+  background: #c62828; 
+  min-width: 450px;     // El error es más ancho por defecto
+  max-width: 80vw;     // No deja que pase del 80% de la pantalla
+  max-height: 70vh;    // Si hay muchos errores, permite scroll interno
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3); // Sombra más pesada para dar importancia
+  pointer-events: all; // Permitir que el usuario pueda hacer scroll si es largo
+}
+
+.success { 
+  background: #2e7d32; 
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
 @keyframes popupFade {
-  0% { opacity: 1; }
-  50% { opacity: 1; }
+  0% { opacity: 0; transform: translate(-50%, -60%); }
+  10% { opacity: 1; transform: translate(-50%, -50%); }
+  90% { opacity: 1; }
   100% { opacity: 0; }
 }
-
-.success { background: #2e7d32; }
-.error { background: #c62828; }

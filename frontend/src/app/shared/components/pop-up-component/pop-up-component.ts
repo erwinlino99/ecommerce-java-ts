@@ -8,7 +8,9 @@ import { PopupService } from '../../../service/pop.up.data.service';
   imports: [CommonModule],
   template: `
     <div *ngIf="popupService.popup() as p" class="popup" [ngClass]="p.type">
-      {{ p.message }}
+      <div class="popup-content" [ngClass]="p.type">
+        <span class="message-text">{{ p.message }}</span>
+      </div>
     </div>
   `,
   styleUrls: ['./pop-up-component.scss'],
