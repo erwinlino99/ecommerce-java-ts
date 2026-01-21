@@ -88,7 +88,7 @@ public class ShopProductService {
     public void createOrUpdate(ShopProductImportRequest shopProductImport, ShopProductBrand shopProductBrand,
             ShopProductMeasurement shopProductMeasurement) {
         // PRIMERO TENEMOS QUE HACER UNA CONSULTA A BASE DE DATOS
-        Optional<ShopProduct> existingProduct = repo.findByNameIgnoreCase(shopProductImport.name());
+        Optional<ShopProduct> existingProduct = repo.findByNameIgnoreCaseAndShopProductBrand_Id(shopProductImport.name(),shopProductBrand.getId());
         ShopProduct product;
         if (existingProduct.isPresent()) {
             // RECUPERAMOS EL REGISTRO DE LA BASE DE DATOS

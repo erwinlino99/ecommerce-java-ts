@@ -41,7 +41,7 @@ public class ShopProduct {
 
     @ManyToOne
     @JoinColumn(name = "shop_product_brand_id")
-    private ShopProductBrand brand;
+    private ShopProductBrand shopProductBrand;
 
     @ManyToOne
     @JoinColumn(name = "shop_product_measurement_id")
@@ -85,12 +85,12 @@ public class ShopProduct {
     }
 
     public void setShopProductBrand(ShopProductBrand brand) {
-        this.brand = brand;
+        this.shopProductBrand = brand;
     }
 
     public String getBrandName() {
-        if (this.brand != null) {
-            return this.brand.getName();
+        if (this.shopProductBrand != null) {
+            return this.shopProductBrand.getName();
         } else {
             return null;
         }
@@ -137,7 +137,7 @@ public class ShopProduct {
     }
 
     public Integer getShopProductBrandId() {
-        return this.brand.getId();
+        return this.shopProductBrand.getId();
     }
 
     public String getMeasurementName() {
@@ -186,7 +186,7 @@ public class ShopProduct {
                 + ", created=" + created
                 + ", modified=" + modified
                 + ", deleted=" + deleted
-                + ", shopProductBrandName=" + this.brand.getName()
+                + ", shopProductBrandName=" + this.shopProductBrand.getName()
                 + ", measurementName=" + getMeasurementName()
                 + ", measurementUnit=" + getMeasurementUnit()
                 + ", currentStock=" + currentStock

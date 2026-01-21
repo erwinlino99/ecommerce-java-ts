@@ -9,9 +9,10 @@ import org.springframework.stereotype.Repository;
 import com.ecommerce.backend.models.ShopProduct;
 
 @Repository
-public interface ShopProductRepository extends JpaRepository<ShopProduct,Integer>{
+public interface ShopProductRepository extends JpaRepository<ShopProduct, Integer> {
 
     List<ShopProduct> findByDeletedIsNull();
-    Optional<ShopProduct> findByNameIgnoreCase(String name);
+
+    Optional<ShopProduct> findByNameIgnoreCaseAndShopProductBrand_Id(String name, Integer brandId);
 
 }
