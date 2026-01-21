@@ -74,4 +74,12 @@ public class WebUserController {
         }
         return this.service.impersonate(webuser.webUserId());
     }
+
+    @PostMapping("/web-user/block-web-user/{webUserId}")
+    public ResponseEntity blockWebUserById(Authentication auth, @PathVariable Integer webUserId) {
+        if (auth == null || !auth.isAuthenticated()) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+        }
+        return this.service.blockWebUserById(webUserId);
+    }
 }

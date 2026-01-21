@@ -16,6 +16,7 @@ import com.ecommerce.backend.dto.response.ImpersonateTokenResponse;
 import com.ecommerce.backend.models.WebUser;
 import com.ecommerce.backend.repositories.WebUserRepository;
 import com.ecommerce.backend.security.JwtService;
+import com.ecommerce.backend.util.UseLogger;
 
 @Service
 public class WebUserService {
@@ -103,4 +104,11 @@ public class WebUserService {
         return ResponseEntity.ok(new ImpersonateTokenResponse(token));
     }
 
+    public ResponseEntity blockWebUserById(Integer webUserId) {
+        WebUser webUser = this.repo.getById(webUserId);
+        Boolean blocked = webUser.getIsBlocked();
+        webUser.setIsBlocked(!blocked);
+        this.repo.save(webUser);
+        return ResponseEntity.ok().build();
+    }
 }
