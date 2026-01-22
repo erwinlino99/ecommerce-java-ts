@@ -4,14 +4,31 @@
 </header>
 
 <div class="panel-container">
-    <div class="table-header">
-        <h2>LISTADO GENERAL PRODUCTOS</h2>
-        <div class="count-tag" *ngIf="data$ | async as productos">
-            {{ productos.length }} REGISTROS
-        </div>
+
+    <div style="display: flex; gap: 5px; margin-bottom: 25px; border-bottom: 1px solid var(--border-ui);">
+        <button (click)="setTab('active')" 
+                [style.border-bottom]="currentTab === 'active' ? '3px solid var(--accent)' : 'none'"
+                [style.color]="currentTab === 'active' ? 'var(--accent)' : 'var(--text-secondary)'"
+                style="background: transparent; border: none; padding: 12px 24px; cursor: pointer; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">
+            CATÁLOGO ACTIVO
+        </button>
+        <button (click)="setTab('deleted')" 
+                [style.border-bottom]="currentTab === 'deleted' ? '3px solid var(--danger)' : 'none'"
+                [style.color]="currentTab === 'deleted' ? 'var(--danger)' : 'var(--text-secondary)'"
+                style="background: transparent; border: none; padding: 12px 24px; cursor: pointer; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">
+            ARTÍCULOS BORRADOS
+        </button>
     </div>
 
     <div *ngIf="data$ | async as productos; else loading">
+        
+        <div class="table-header">
+            <h2>{{ currentTab === 'active' ? 'LISTADO GENERAL PRODUCTOS' : 'ARCHIVO DE ELIMINADOS' }}</h2>
+            <div class="count-tag" [style.background]="currentTab === 'active' ? 'var(--accent)' : 'var(--danger)'">
+                {{ getFilteredProducts(productos).length }} REGISTROS
+            </div>
+        </div>
+
         <table class="cp-table">
             <thead>
                 <tr>
@@ -24,53 +41,54 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let p of productos">
+                <tr *ngFor="let p of getFilteredProducts(productos)">
                     <td class="id-cell">{{ p.id }}</td>
-
                     <td>
                         <div class="object-info">
                             <span class="object-main">{{ p.name | uppercase }}</span>
                             <span class="object-sub">{{ p.shortDescription }}</span>
                         </div>
                     </td>
-
                     <td>
-                        <span class="object-sub" style="opacity: 1; font-weight: 600;">
-                            {{ p.brandName }}
-                        </span>
+                        <span class="object-sub" style="opacity: 1; font-weight: 600;">{{ p.brandName }}</span>
                     </td>
-
-                    <td class="price-cell">{{ p.price}} €</td>
-
+                    <td class="price-cell">{{ p.price }} €</td>
                     <td>
-                        <span class="status-badge" [ngClass]="p.currentStock > 100 ? 'status-ok' : 'status-error'"
-                            style="font-size: 0.9rem; font-weight: 900; padding: 6px 14px; min-width: 70px; text-align: center; display: inline-block;">
+                        <span class="status-badge" [ngClass]="p.currentStock > 100 ? 'status-ok' : 'status-error'">
                             {{ p.currentStock }}
                         </span>
                     </td>
 
                     <td style="text-align: center">
                         <div class="actions-wrapper">
-                            <button class="btn-management btn-view" title="Ver Detalles" (click)="goToDetail(p.id)">
-                                <mat-icon>visibility</mat-icon>
-                            </button>
+                            <ng-container *ngIf="currentTab === 'active'">
+                                <button class="btn-management btn-view" title="Ver Detalles" (click)="goToDetail(p.id)">
+                                    <mat-icon>visibility</mat-icon>
+                                </button>
+                                <button class="btn-management btn-edit" title="Editar Producto" (click)="goToDetail(p.id)">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                                <button class="btn-management btn-delete" title="Eliminar Producto" (click)="deleteItem(p.id)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </ng-container>
 
-                            <button class="btn-management btn-edit" title="Editar Producto" (click)="goToDetail(p.id)">
-                                <mat-icon>edit</mat-icon>
-                            </button>
-
-                            <button class="btn-management btn-delete" title="Eliminar Producto" (click)="deleteItem(p.id)">
-                                <mat-icon>delete</mat-icon>
-                            </button>
+                            <ng-container *ngIf="currentTab === 'deleted'">
+                                <button class="btn-management" style="color: var(--success)" title="Restaurar" (click)="restoreItem(p.id)">
+                                    <mat-icon>settings_backup_restore</mat-icon>
+                                </button>
+                            </ng-container>
                         </div>
                     </td>
                 </tr>
             </tbody>
         </table>
 
-        <div class="pending-container" *ngIf="productos.length === 0">
-            <mat-icon style="font-size: 48px; width: 48px; height: 48px; opacity: 0.2;">inventory</mat-icon>
-            <p>No se han encontrado productos registrados en el sistema.</p>
+        <div class="pending-container" *ngIf="getFilteredProducts(productos).length === 0">
+            <mat-icon style="font-size: 48px; width: 48px; height: 48px; opacity: 0.2;">
+                {{ currentTab === 'active' ? 'inventory' : 'delete_sweep' }}
+            </mat-icon>
+            <p>{{ currentTab === 'active' ? 'No hay productos en el catálogo activo.' : 'La papelera está vacía.' }}</p>
         </div>
     </div>
 

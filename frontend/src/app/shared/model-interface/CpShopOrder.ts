@@ -1,12 +1,14 @@
 import { ShopOrderItem } from './ShopOrderItem';
+import { PokemonGift } from './PokemonGift';
 export interface CpShopOrder {
   id: number;
   userName: string;
-  userEmail: string;     
+  userEmail: string;
   totalAmount: number;
   items: ShopOrderItem[];
-  shopOrderStatusName: string; 
+  shopOrderStatusName: string;
   created: string;
-  currentStock:number
-  price:number
+  currentStock: number;
+  price: number;
+  pokeGift?: PokemonGift[];
 }

@@ -26,7 +26,7 @@
       <tbody>
         <tr *ngFor="let o of pedidos">
           <td class="id-cell">{{ o.id }}</td>
-          
+
           <td>
             <div class="object-info">
               <span class="object-main">{{ o.userName | uppercase }}</span>
@@ -51,12 +51,8 @@
               <button class="btn-management btn-view" title="Ver Detalles de Compra" (click)="goToDetail(o.id)">
                 <mat-icon>visibility</mat-icon>
               </button>
-
-              <button class="btn-management btn-edit" title="Cambiar Estado">
-                <mat-icon>edit</mat-icon>
-              </button>
-
-              <button class="btn-management btn-delete" title="Anular Pedido">
+              <button *ngIf="o.shopOrderStatusName !== 'Cancelado'" class="btn-management btn-delete"
+                title="Anular Pedido" (click)="cancelOrderId(o.id)">
                 <mat-icon>block</mat-icon>
               </button>
             </div>
