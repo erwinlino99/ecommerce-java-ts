@@ -26,6 +26,7 @@ public class ShopOrderMapper {
                 
         String userName = shopOrder.getWebUser().getName();
         String userEmail = shopOrder.getWebUser().getEmail();
+        shopOrder.getGift();
         return new CpShopOrderDto(
                 shopOrder.getId(),
                 shopOrder.getTotalAmount(),
@@ -33,6 +34,6 @@ public class ShopOrderMapper {
                 userEmail,
                 itemsDto,
                 shopOrder.getShopOrderStatus().getName(),
-                shopOrder.getCreated());
+                shopOrder.getCreated(),shopOrder.getGift());
     }
 }

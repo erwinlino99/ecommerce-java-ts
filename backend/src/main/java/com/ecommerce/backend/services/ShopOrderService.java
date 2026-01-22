@@ -12,6 +12,7 @@ import com.ecommerce.backend.dto.ShopOrderDto;
 import com.ecommerce.backend.dto.mapper.ShopOrderMapper;
 import com.ecommerce.backend.models.ShopOrder;
 import com.ecommerce.backend.models.ShopOrderItem;
+import com.ecommerce.backend.models.ShopOrderStatus;
 import com.ecommerce.backend.models.ShopProduct;
 import com.ecommerce.backend.repositories.ShopOrderRepository;
 
@@ -55,5 +56,15 @@ public class ShopOrderService {
         ShopOrder shopOrder = shopOrderRepo.findById(shopOrderId)
                 .orElseThrow(() -> new EntityNotFoundException("Orden no encontrada con ID: " + shopOrderId));
         return ShopOrderMapper.toCpDto(shopOrder);
+    }
+
+    public ResponseEntity cancelShopOrderId(Integer shopOrderId) {
+        ShopOrder shopOrder = shopOrderRepo.findById(shopOrderId)
+                .orElseThrow(() -> new EntityNotFoundException("Orden no encontrada con ID: " + shopOrderId));
+        ShopOrderStatus cancel = new ShopOrderStatus();
+        cancel.setId(4);
+        shopOrder.setShopOrderStatus(cancel);
+        this.shopOrderRepo.save(shopOrder);
+        return ResponseEntity.ok().build();
     }
 }

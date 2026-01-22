@@ -10,6 +10,8 @@ public record CpShopOrderDto(
         String userEmail,
         List<ShopOrderItemDto> items,
         String shopOrderStatusName,
-        LocalDateTime created) {
+        LocalDateTime created,
+        List<PokemonGiftDto> pokeGift
+) {
 
 }

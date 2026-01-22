@@ -52,7 +52,8 @@ public class ShopProductService {
     }
 
     public List<ShopProductDto> getAllRecords() {
-        List<ShopProduct> products = this.repo.findByDeletedIsNull();
+        // List<ShopProduct> products = this.repo.findByDeletedIsNull();
+        List<ShopProduct> products = this.repo.findAll();
         return products.stream().map(p -> ShopProductMapper.toFullDto(p)).toList();
     }
 
@@ -88,7 +89,8 @@ public class ShopProductService {
     public void createOrUpdate(ShopProductImportRequest shopProductImport, ShopProductBrand shopProductBrand,
             ShopProductMeasurement shopProductMeasurement) {
         // PRIMERO TENEMOS QUE HACER UNA CONSULTA A BASE DE DATOS
-        Optional<ShopProduct> existingProduct = repo.findByNameIgnoreCaseAndShopProductBrand_Id(shopProductImport.name(),shopProductBrand.getId());
+        Optional<ShopProduct> existingProduct = repo
+                .findByNameIgnoreCaseAndShopProductBrand_Id(shopProductImport.name(), shopProductBrand.getId());
         ShopProduct product;
         if (existingProduct.isPresent()) {
             // RECUPERAMOS EL REGISTRO DE LA BASE DE DATOS
@@ -109,5 +111,13 @@ public class ShopProductService {
         }
         this.repo.save(product);
 
+    }
+
+    public ResponseEntity restoreShopProduct(Integer shopProductId) {
+        ShopProduct product = this.repo.findById(shopProductId)
+                .orElseThrow(() -> new EntityNotFoundException("Producto no encontrado con ID: " + shopProductId));
+        product.setDeleted(null);
+        this.repo.save(product);
+        return ResponseEntity.ok().build();
     }
 }

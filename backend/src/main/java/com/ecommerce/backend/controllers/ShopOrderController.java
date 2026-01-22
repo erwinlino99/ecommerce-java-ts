@@ -59,4 +59,10 @@ public class ShopOrderController {
         return this.orderService.getShopOrderbyId(shopOrderId);
     }
 
+    @PostMapping("/cancel/{shopOrderId}")
+    public ResponseEntity cancelShopOrderId(@PathVariable Integer shopOrderId) {
+        return this.orderService.cancelShopOrderId(shopOrderId);
+    }
+    
+
 }
