@@ -16,16 +16,16 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>DETALLES PRODUCTO</th>
+                    <th>NOMBRE</th>
                     <th>MARCA</th>
-                    <th>PRECIO ÚNICO</th>
-                    <th>STOCK</th>
+                    <th>PRECIO</th>
+                    <th>INVENTARIO</th>
                     <th style="text-align: center">ACCIONES</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let p of productos">
-                    <td class="id-cell">#PRD-{{ p.id }}</td>
+                    <td class="id-cell">{{ p.id }}</td>
 
                     <td>
                         <div class="object-info">

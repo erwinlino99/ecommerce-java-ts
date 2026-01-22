@@ -1,1 +1,114 @@
-<p>cp-order-detail-page works!</p>
+<div class="dashboard-header">
+    <h1>DETALLE DE EXPEDICIÓN</h1>
+    <p>Control de logística, artículos y obsequios del pedido</p>
+</div>
+
+<div class="pending-container" *ngIf="loading()">
+    <div class="spinner-mini"></div>
+    <p>Sincronizando manifiesto del pedido...</p>
+</div>
+
+<div class="detail-panel" *ngIf="!loading() && item()">
+
+    <div class="detail-header"
+        style="padding: 1.5rem; display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid var(--accent); background: var(--bg-header);">
+
+        <div class="title-group" style="display: flex; flex-direction: column; gap: 0.5rem;">
+            <div class="subtitle"
+                style="font-family: 'JetBrains Mono', monospace; color: var(--accent); font-size: 0.8rem; letter-spacing: 1px;">
+                ID PEDIDO:: {{ item()?.id }}
+            </div>
+
+            <div style="border-left: 3px solid var(--accent); padding-left: 1rem; margin: 0.5rem 0;">
+                <h2
+                    style="margin: 0; font-size: 1.4rem; font-weight: 800; text-transform: uppercase; color: var(--text-primary);">
+                    Cliente : {{ item()?.userName }}
+                </h2>
+                <div
+                    style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 2px; display: flex; align-items: center; gap: 8px;">
+                    <mat-icon style="font-size: 16px; width: 16px; height: 16px;">email</mat-icon>
+                    {{ item()?.userEmail }}
+                </div>
+            </div>
+
+            <span class="registration-date"
+                style="font-size: 0.75rem; color: var(--text-secondary); background: rgba(0,0,0,0.2); padding: 4px 8px; border-radius: 4px; align-self: flex-start;">
+                Comprado el : {{ item()?.created | date:'dd/MM/yyyy HH:mm' }}
+            </span>
+        </div>
+
+        <button class="btn-industrial" (click)='goBack()' style="margin-top: 0.5rem;">
+            <mat-icon>arrow_back</mat-icon>
+            <span style="margin-left: 8px;">VOLVER AL LISTADO</span>
+        </button>
+
+    </div>
+
+    <form [formGroup]="form" class="industrial-form">
+        <div class="form-sections-wrapper">
+
+            <div class="form-section highlight">
+                <h3 class="section-title">DETALLES DEL PEDIDO</h3>
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label>ESTADO</label>
+                        <div class="status-indicator"
+                            [style.color]="item()?.shopOrderStatusName === 'COMPLETED' ? 'var(--success)' : 'var(--warning)'">
+                            {{ item()?.shopOrderStatusName }}
+                        </div>
+                    </div>
+                    <div class="form-field">
+                        <label>Importe Total</label>
+                        <input type="text" [value]="item()?.totalAmount | currency:'EUR'" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3 class="section-title">Artículos </h3>
+                <table class="industrial-table-v2">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Formato</th>
+                            <th style="text-align: center;">Cant.</th>
+                            <th style="text-align: right;">Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let it of item()?.items">
+                            <td><span class="text-highlight">{{ it.product.name | uppercase }}</span></td>
+                            <td>{{ it.product.measurementUnit }} {{ it.product.measurementName }}</td>
+                            <td style="text-align: center;">{{ it.quantity }}</td>
+                            <td style="text-align: right; font-weight: bold;">{{ it.subtotal | currency:'EUR' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- <div class="gifts-container-industrial">
+                <h3 class="section-title">PEGATINAS DE REGALO</h3>
+                <div class="pokemon-grid-industrial">
+                    <div class="pokemon-card-industrial" *ngFor="let poke of item()?.pokeGift">
+                        <span class="poke-id-tag">NÚM#{{ poke.id }}</span>
+                        <img [src]="poke.imageUrl" [alt]="poke.name">
+                        <span class="poke-name-industrial">{{ poke.name }}</span>
+                    </div>
+                </div>
+
+                <div *ngIf="item()?.pokeGift?.length === 0" class="registration-date"
+                    style="text-align: center; display: block; padding: 1rem;">
+                    SIN REGALOS
+                </div>
+            </div> -->
+
+        </div>
+
+        <div class="detail-footer">
+            <button type="button" class="btn-industrial btn-save">
+                DESCARGAR ALBARÁN EN PDF
+            </button>
+        </div>
+
+    </form>
+</div>

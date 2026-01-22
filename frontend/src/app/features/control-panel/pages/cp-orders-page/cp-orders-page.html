@@ -15,17 +15,17 @@
     <table class="cp-table">
       <thead>
         <tr>
-          <th>ID TRANSAC</th>
+          <th>ID</th>
           <th>CLIENTE / CONTACTO</th>
           <th>FECHA CREACIÓN</th>
           <th>ESTADO ORDEN</th>
-          <th>TOTAL IMPORTE</th>
-          <th style="text-align: center">GESTIÓN</th>
+          <th>IMPORTE TOTAL</th>
+          <th style="text-align: center">ACCIONES</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let o of pedidos">
-          <td class="id-cell">#ORD-{{ o.id }}</td>
+          <td class="id-cell">{{ o.id }}</td>
           
           <td>
             <div class="object-info">
@@ -48,7 +48,7 @@
 
           <td style="text-align: center">
             <div class="actions-wrapper">
-              <button class="btn-management btn-view" title="Ver Detalles de Compra">
+              <button class="btn-management btn-view" title="Ver Detalles de Compra" (click)="goToDetail(o.id)">
                 <mat-icon>visibility</mat-icon>
               </button>
 

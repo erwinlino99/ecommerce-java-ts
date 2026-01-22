@@ -42,7 +42,7 @@ public class ShopOrderService {
     public ResponseEntity repeatShopOrder(Integer webUserId, Integer ShopOrderId) {
         ShopOrder shopOrder = shopOrderRepo.findById(ShopOrderId)
                 .orElseThrow(() -> new EntityNotFoundException("Orden no encontrada con ID: " + ShopOrderId));
-                
+
         for (ShopOrderItem item : shopOrder.getItems()) {
             ShopProduct shopProduct = item.getShopProduct();
             // LLAMAOS AL SERVICIO DEL CARRO Y AGREGAMOS LA CANTIDAD Y EL PRODUCTO
@@ -51,4 +51,9 @@ public class ShopOrderService {
         return ResponseEntity.ok(Map.of("message", "PRODUCTOS AGREGADOS "));
     }
 
+    public CpShopOrderDto getShopOrderbyId(Integer shopOrderId) {
+        ShopOrder shopOrder = shopOrderRepo.findById(shopOrderId)
+                .orElseThrow(() -> new EntityNotFoundException("Orden no encontrada con ID: " + shopOrderId));
+        return ShopOrderMapper.toCpDto(shopOrder);
+    }
 }

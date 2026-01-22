@@ -14,7 +14,7 @@
     <div class="title-group">
       <!-- <div class="id-badge">ID: {{ item()?.id }}</div> -->
       <h2>{{ form.get('name')?.value }} {{ form.get('lastName')?.value }}</h2>
-      <span class="registration-date">MIEMBRO DESDE: {{ item()?.created | date:'dd/MM/yyyy HH:mm' }}</span>
+      <span class="registration-date">Registrado el : {{ item()?.created | date:'dd/MM/yyyy HH:mm' }}</span>
     </div>
     <button class="btn-industrial" (click)="goBack()">
       <span>VOLVER AL LISTADO</span>
@@ -40,7 +40,7 @@
             <input type="text" formControlName="lastName" [readonly]="!isEditing()">
           </div>
           <div class="form-field">
-            <label>Identificación Fiscal (CIF/NIF)</label>
+            <label>(CIF/NIF)</label>
             <input type="text" formControlName="cif" [readonly]="!isEditing()" placeholder="---">
           </div>
           <div class="form-field">
@@ -56,27 +56,28 @@
           <div class="form-field">
             <label>Cuenta Activa</label>
             <div class="status-indicator" [class.active]="form.get('isActive')?.value == 1">
-              {{ form.get('isActive')?.value == 1 ? 'SISTEMA OPERATIVO' : 'SISTEMA SUSPENDIDO' }}
+              {{ form.get('isActive')?.value == 1 ? 'ACTIVO' : 'INACTIVO' }}
             </div>
           </div>
           <div class="form-field">
             <label>Restricción de Acceso</label>
             <div class="status-indicator" [class.blocked]="form.get('isBlocked')?.value == 1">
-              {{ form.get('isBlocked')?.value == 1 ? 'BLOQUEADO' : 'ACCESO PERMITIDO' }}
+              {{ form.get('isBlocked')?.value == 1 ? 'BLOQUEADO' : 'NORMAL' }}
             </div>
           </div>
-          <div class="form-field full-width">
+          <!-- <div class="form-field full-width">
             <label>Trazabilidad: Última Sincronización</label>
             <div class="readonly-text">
               {{ (item()?.last_time_login | date:'fullDate') || 'No se han registrado accesos previos' }}
               <small *ngIf="item()?.last_time_login">({{ item()?.last_time_login | date:'shortTime' }})</small>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
 
     </div>
 
+    <hr>
     <div class="detail-footer">
       <div class="modification-info" *ngIf="item()?.modified">
         Última modificación: {{ item()?.modified | date:'short' }}
@@ -85,7 +86,7 @@
       <div class="buttons-group">
         <ng-container *ngIf="!isEditing(); else actionButtons">
           <button type="button" (click)="toggleEdit()" class="btn-industrial btn-edit">
-            MODIFICAR REGISTRO
+            EDITAR REGISTRO
           </button>
         </ng-container>
 

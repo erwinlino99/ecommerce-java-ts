@@ -15,17 +15,18 @@
         <table class="cp-table">
             <thead>
                 <tr>
-                    <th>ID REF</th>
-                    <th>USUARIO / CONTACTO</th>
+                    <th>ID</th>
+                    <th>EMAIL</th>
                     <th>FECHA REGISTRO</th>
                     <th>ESTADO CUENTA</th>
                     <th>ACCESO</th>
-                    <th style="text-align: center">GESTIÓN</th>
+                    <th style="text-align: center">ACCIONES</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let u of usuarios">
-                    <td class="id-cell">#USR-{{ u.id }}</td>
+                    
+                    <td class="id-cell">{{ u.id }}</td>
 
                     <td>
                         <div class="object-info">

@@ -167,3 +167,145 @@
     &:hover { background: var(--danger); color: var(--bg-app); }
   }
 }
+
+
+
+/* --- SECCIONES DEL FORMULARIO --- */
+.form-section {
+  margin-bottom: 2.5rem;
+  padding: 1.5rem;
+  background: rgba(15, 23, 42, 0.2);
+  border-left: 3px solid var(--border-ui);
+  border-radius: 0 8px 8px 0;
+
+  &.highlight {
+    border-left-color: var(--accent);
+    background: rgba(56, 189, 248, 0.05);
+  }
+
+  .section-title {
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+
+    &::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, var(--border-ui), transparent);
+    }
+  }
+}
+
+/* --- SECCIÓN ESPECIAL POKEMON GIFTS --- */
+.gifts-container-industrial {
+  margin-top: 2rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
+  border: 2px dashed var(--border-ui);
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--accent);
+    opacity: 0.5;
+  }
+
+  .pokemon-grid-industrial {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .pokemon-card-industrial {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-ui);
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.3s ease;
+    cursor: default;
+
+    &:hover {
+      border-color: var(--accent);
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      
+      img { filter: drop-shadow(0 0 8px var(--accent)); }
+    }
+
+    .poke-id-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--accent);
+      align-self: flex-start;
+      background: rgba(56, 189, 248, 0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      transition: filter 0.3s ease;
+    }
+
+    .poke-name-industrial {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-primary);
+      margin-top: 0.5rem;
+    }
+  }
+}
+
+/* --- TABLA INDUSTRIAL (Para el desglose de artículos) --- */
+.industrial-table-v2 {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 5px;
+  margin-top: 1rem;
+
+  th {
+    text-align: left;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-ui);
+  }
+
+  td {
+    padding: 1rem;
+    background: rgba(30, 41, 59, 0.4);
+    font-size: 0.9rem;
+    border-top: 1px solid var(--border-ui);
+    border-bottom: 1px solid var(--border-ui);
+
+    &:first-child { border-left: 1px solid var(--border-ui); border-radius: 8px 0 0 8px; }
+    &:last-child { border-right: 1px solid var(--border-ui); border-radius: 0 8px 8px 0; }
+  }
+
+  .text-highlight {
+    color: var(--accent);
+    font-weight: 700;
+  }
+}
+

@@ -12,7 +12,7 @@
   <div class="detail-header">
     <div class="title-group">
       <h2>{{ form.get('name')?.value }}</h2>
-      <span class="subtitle">SISTEMA_ID: {{ item()?.id }} | {{ form.get('brandName')?.value }}</span>
+      <!-- <span class="subtitle">ID: {{ item()?.id }} | {{ form.get('name')?.value }}</span> -->
     </div>
     <button class="btn-industrial" (click)="goBack()">
       <span>SALIR</span>
@@ -21,31 +21,27 @@
 
   <form [formGroup]="form" (ngSubmit)="save()" class="industrial-form">
     <div class="form-grid">
-      
       <div class="form-field full-width">
-        <label>Denominación del Producto</label>
-        <input type="text" formControlName="name" [readonly]="!isEditing()" 
-               [style.font-size]="'1.2rem'" [style.color]="'var(--accent)'">
+        <label>Nombre del producto</label>
+        <input type="text" formControlName="name" [readonly]="!isEditing()" [style.font-size]="'1.2rem'"
+          [style.color]="'var(--accent)'">
       </div>
 
       <div class="form-field">
-        <app-base-selectable 
-          label="Proveedor / Marca"
-          endpoint="shop-product-brand/selectable"
-          formControlName="brandName"
+        <app-base-selectable label="Marca producto" endpoint="shop-product-brand/selectable" formControlName="brandName"
           [readonly]="!isEditing()">
         </app-base-selectable>
       </div>
 
       <div class="form-field">
-        <label>Valor Unitario (EUR)</label>
+        <label>Precio (EUR)</label>
         <input type="number" formControlName="price" [readonly]="!isEditing()" [style.font-weight]="'800'">
       </div>
 
       <div class="form-field">
         <label>Inventario Actual</label>
         <input type="number" formControlName="currentStock" [readonly]="!isEditing()"
-               [style.color]="form.get('currentStock')?.value > 0 ? 'var(--success)' : 'var(--danger)'">
+          [style.color]="form.get('currentStock')?.value > 0 ? 'var(--success)' : 'var(--danger)'">
       </div>
 
       <div class="form-field">
@@ -54,12 +50,12 @@
       </div>
 
       <div class="form-field full-width">
-        <label>Resumen Operativo</label>
+        <label>Descripción corta</label>
         <input type="text" formControlName="shortDescription" [readonly]="!isEditing()">
       </div>
 
       <div class="form-field full-width">
-        <label>Documentación y Detalles Técnicos</label>
+        <label>Descripción completa</label>
         <textarea formControlName="description" [readonly]="!isEditing()"></textarea>
       </div>
 
