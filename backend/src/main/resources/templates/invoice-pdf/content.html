@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <div th:fragment="tableFragment">
+        
+        <div style="font-family: 'Helvetica', sans-serif; margin-top: 10px;">
+            
+            <div style="background: #000; color: #fff; display: inline-block; padding: 3px 12px; font-size: 10px; font-weight: bold; letter-spacing: 1px;">
+                RESUMEN DE ARTICULOS COMPRADOS
+            </div>
+
+            <table style="width: 100%; border: 2px solid #000; border-collapse: collapse; margin-top: 5px;">
+                <thead>
+                    <tr style="background: #f2f2f2; border-bottom: 2px solid #000;">
+                        <th style="border-right: 1px solid #000; padding: 8px; text-align: left; font-size: 9px; color: #333;">PRODUCTO</th>
+                        <th style="border-right: 1px solid #000; padding: 8px; text-align: center; font-size: 9px; color: #333; width: 90px;">FORMATO</th>
+                        <th style="border-right: 1px solid #000; padding: 8px; text-align: center; font-size: 9px; color: #333; width: 50px;">PEDIDO</th>
+                        <th style="border-right: 1px solid #000; padding: 8px; text-align: right; font-size: 9px; color: #333; width: 80px;">PRECIO UNI.</th>
+                        <th style="padding: 8px; text-align: right; font-size: 9px; color: #333; width: 90px;">SUBTOTAL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="it : ${order.items}" style="border-bottom: 1px solid #000;">
+                        <td style="border-right: 1px solid #000; padding: 10px; font-size: 11px; vertical-align: top;">
+                            <div style="font-weight: bold; text-transform: uppercase;">[[${it.product.name}]]</div>
+                            <div style="font-size: 8px; color: #666; font-family: 'Courier New', monospace; margin-top: 2px;">
+                                REF:: [[${it.product.id}]]
+                            </div>
+                        </td>
+                        <td style="border-right: 1px solid #000; padding: 10px; text-align: center; font-size: 10px; vertical-align: middle;">
+                            [[${it.product.measurementUnit}]] [[${it.product.measurementName}]]
+                        </td>
+                        <td style="border-right: 1px solid #000; padding: 10px; text-align: center; font-size: 11px; font-weight: bold; vertical-align: middle;">
+                            [[${it.quantity}]]
+                        </td>
+                        <td style="border-right: 1px solid #000; padding: 10px; text-align: right; font-size: 11px; font-family: 'Courier New', monospace; vertical-align: middle;">
+                            [[${#numbers.formatDecimal(it.unitPrice, 1, 2, 'COMMA')}]]€
+                        </td>
+                        <td style="padding: 10px; text-align: right; font-size: 11px; font-weight: bold; font-family: 'Courier New', monospace; vertical-align: middle; background: #fafafa;">
+                            [[${#numbers.formatDecimal(it.subtotal, 1, 2, 'COMMA')}]]€
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                    <td style="width: 60%; padding: 15px; vertical-align: top;">
+                        <div style="font-size: 8px; color: #666; font-weight: bold;">NOTES:</div>
+                        <div style="font-size: 8px; color: #999; font-family: 'Courier New', monospace;">
+                            >> SYSTEM_VERIFIED_TOTALS<br/>
+                            >> NO_ADDITIONAL_TAXES_APPLIED
+                        </div>
+                    </td>
+                    <td style="width: 40%;">
+                        <table style="width: 100%; border: 2px solid #000; border-top: none;">
+                            <tr style="background: #000; color: #fff;">
+                                <td style="padding: 10px; font-size: 10px; font-weight: bold;">PRECIO TOTAL:</td>
+                                <td style="padding: 10px; text-align: right; font-family: 'Courier New', monospace; font-weight: bold; font-size: 15px;">
+                                    [[${#numbers.formatDecimal(order.totalAmount, 1, 2, 'COMMA')}]]€
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+</body>
+</html>

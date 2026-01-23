@@ -16,7 +16,6 @@ import com.ecommerce.backend.dto.response.ImpersonateTokenResponse;
 import com.ecommerce.backend.models.WebUser;
 import com.ecommerce.backend.repositories.WebUserRepository;
 import com.ecommerce.backend.security.JwtService;
-import com.ecommerce.backend.util.UseLogger;
 
 @Service
 public class WebUserService {

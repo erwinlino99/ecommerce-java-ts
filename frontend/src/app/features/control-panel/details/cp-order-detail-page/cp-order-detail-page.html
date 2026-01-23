@@ -37,6 +37,13 @@
             </span>
         </div>
 
+        <button class="btn-industrial"
+            style="margin-top: 0.5rem; background-color: #d4a017; color: #fff; border: 1px solid #b8860b;"
+            (click)="downloadInvoice(item()?.id)">
+            <mat-icon style="font-size: 20px;">file_download</mat-icon>
+            <span style="margin-left: 8px; letter-spacing: 0.5px;">DESCARGAR FACTURA</span>
+        </button>
+
         <button class="btn-industrial" (click)='goBack()' style="margin-top: 0.5rem;">
             <mat-icon>arrow_back</mat-icon>
             <span style="margin-left: 8px;">VOLVER AL LISTADO</span>

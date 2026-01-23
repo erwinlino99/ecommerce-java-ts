@@ -20,27 +20,42 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.ecommerce.backend.dto.CpShopOrderDto;
 import com.ecommerce.backend.dto.enums.ShopProductMeasurementEnum;
 import com.ecommerce.backend.dto.request.ShopProductImportRequest;
 import com.ecommerce.backend.exceptions.ImportException;
 import com.ecommerce.backend.models.ShopProductBrand;
 import com.ecommerce.backend.models.ShopProductMeasurement;
+import com.ecommerce.backend.util.UseLogger;
+
+import org.thymeleaf.context.Context;
+import org.xhtmlrenderer.pdf.ITextRenderer;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
+import com.lowagie.text.DocumentException;
 
 import jakarta.validation.Validator;
 
 @Service
-public class ImportFileService {
+public class FileService {
 
     // INYECTAMOS UN VALIDADOR
     @Autowired
     private Validator validator;
+    @Autowired
+    private org.thymeleaf.spring6.SpringTemplateEngine templateEngine;
+
     private final ShopProductBrandService brandService;
     private final ShopProductService productService;
+    private final ShopOrderService shopOrderService;
 
-    public ImportFileService(ShopProductBrandService brandService,
-            ShopProductService productService) {
+    public FileService(ShopProductBrandService brandService,
+            ShopProductService productService, ShopOrderService shopOrderService) {
         this.brandService = brandService;
         this.productService = productService;
+        this.shopOrderService = shopOrderService;
 
     }
 
@@ -122,6 +137,52 @@ public class ImportFileService {
         } catch (ImportException ex) {
             throw ex;
         } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @SuppressWarnings("ConvertToTryWithResources")
+    public ResponseEntity<byte[]> downloadInvociceShopOrderId(Integer shopOrderId) {
+        try {
+
+            CpShopOrderDto order = this.shopOrderService.getShopOrderbyId(shopOrderId);
+            UseLogger.info("INICIANDO GENERACIÓN DE PDF - PEDIDO_ID::", shopOrderId);
+
+            // AGREGAMOS EL CONTEXTO PARA QUE LO TOME EL HTML
+            Context context = new Context();
+            context.setVariable("order", order);
+
+            // APUNTAOS A LA RUTA:
+            // src/main/resources/templates/invoice-pdf/main-invoice.html
+            String htmlContent = templateEngine.process("invoice-pdf/main-invoice", context);
+
+            // 4. GENERACIÓN BINARIA (PDF): Usamos Flying Saucer (ITextRenderer) para
+            // transformar HTML/CSS a PDF
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ITextRenderer renderer = new ITextRenderer();
+
+            // Seteamos el contenido renderizado
+            renderer.setDocumentFromString(htmlContent);
+            renderer.layout();
+            renderer.createPDF(baos);
+
+            byte[] pdfBytes = baos.toByteArray();
+            baos.close();
+
+            // 5. RESPUESTA HTTP: Configuramos cabeceras profesionales para forzar la
+            // descarga en el cliente
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+
+            // El nombre del archivo que recibirá el usuario en su navegador
+            String fileName = "Factura_ECOMMERCE_" + shopOrderId + ".pdf";
+            headers.setContentDispositionFormData("attachment", fileName);
+
+            // Evitamos que el navegador cachee el archivo por seguridad
+            headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+            return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
+
+        } catch (DocumentException | IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }

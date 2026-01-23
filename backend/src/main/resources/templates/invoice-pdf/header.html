@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+    <div th:fragment="headerFragment">
+        <div style="font-family: 'Helvetica', sans-serif; padding: 10px; border: 2px solid #000;">
+            <table style="width: 100%; border-bottom: 2px solid #000; border-collapse: collapse;">
+                <tr>
+                    <td style="padding: 10px; width: 65%;">
+                        <table style="border-collapse: collapse;">
+                            <tr>
+                                <td style="vertical-align: middle;">
+                                    <a href="https://github.com/erwinlino99"
+                                        style="text-decoration: none; color: #000; display: block; font-size: 26px; font-weight: 900; letter-spacing: -2px; line-height: 0.9;">
+                                        ECOMMERCE-CODE
+                                        <span
+                                            style="font-size: 12px; font-weight: normal; letter-spacing: 0;">&copy;</span>
+                                    </a>
+
+                                    <div
+                                        style="font-size: 10px; font-family: 'Courier New', monospace; margin-top: 4px;">
+                                        <a href="https://github.com/erwinlino99"
+                                            style="color: #000; text-decoration: none; font-weight: bold;">
+                                            GITHUB:: erwinlino99
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="text-align: right; padding: 10px; background: #000; color: #fff; width: 35%;">
+                        <div style="font-size: 20px; font-weight: bold; letter-spacing: 2px;">FACTURA</div>
+                        <div style="font-size: 10px; font-family: 'Courier New', monospace;">COPIA DEL PEDIDO
+                            [[${order.id}]] </div>
+                    </td>
+                </tr>
+            </table>
+
+            <table style="width: 100%; border-bottom: 1px solid #000; border-collapse: collapse;">
+                <tr>
+                    <td style="border-right: 1px solid #000; padding: 10px; width: 33%;">
+                        <div style="font-size: 8px; color: #666; font-weight: bold;">PEDIDO ID</div>
+                        <div style="font-size: 14px; font-family: 'Courier New', monospace; font-weight: bold;">
+                            #[[${order.id}]]</div>
+                    </td>
+                    <td style="border-right: 1px solid #000; padding: 10px; width: 33%;">
+                        <div style="font-size: 8px; color: #666; font-weight: bold;">HORA COMPRADA</div>
+                        <div style="font-size: 12px;">[[${#temporals.format(order.created, 'dd.MM.yyyy / HH:mm')}]]
+                        </div>
+                    </td>
+                    <td style="padding: 10px; width: 34%;">
+                        <div style="font-size: 8px; color: #666; font-weight: bold;">ESTADO DEL PEDIDO</div>
+                        <div style="font-size: 12px; font-weight: bold;">[[${order.shopOrderStatusName}]]</div>
+                    </td>
+                </tr>
+            </table>
+
+            <table style="width: 100%;">
+                <tr>
+                    <td style="padding: 15px;">
+                        <div style="font-size: 8px; color: #666; font-weight: bold; margin-bottom: 5px;">INFORMACIÓN DEL
+                            CLIENTE</div>
+                        <div style="font-size: 16px; font-weight: bold;">[[${order.userName}]]</div>
+                        <div style="font-size: 12px; color: #333; font-family: 'Courier New', monospace;">
+                            [[${order.userEmail}]]</div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div style="margin-top: 5px; height: 1px; background: #000;"></div>
+        <div style="margin-top: 2px; height: 1px; background: #000;"></div>
+    </div>
+</body>
+
+</html>

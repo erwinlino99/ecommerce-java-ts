@@ -55,6 +55,10 @@
                 title="Anular Pedido" (click)="cancelOrderId(o.id)">
                 <mat-icon>block</mat-icon>
               </button>
+              <button class="btn-management btn-view" title="Descargar factura en PDF" (click)="downloadInvoice(o.id)"
+                style="color: #fbc02d;">
+                <mat-icon>file_download</mat-icon>
+              </button>
             </div>
           </td>
         </tr>

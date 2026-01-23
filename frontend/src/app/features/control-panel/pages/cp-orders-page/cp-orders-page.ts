@@ -16,7 +16,7 @@ import Swal from 'sweetalert2'; // Asegúrate de tenerlo importado
 export class CpOrdersPage extends BaseListComponent<CpShopOrder> {
   protected readonly endpoint = '/shop-order/all-summary-shop-orders';
   protected override detailRoutePath = 'order-detail';
- protected override forceSubscribe = true;
+  protected override forceSubscribe = true;
   cancelOrderId(shopOrderId: number) {
     const endpoint = `shop-order/cancel/${shopOrderId}`;
 
@@ -56,6 +56,25 @@ export class CpOrdersPage extends BaseListComponent<CpShopOrder> {
             },
           });
       }
+    });
+  }
+
+  downloadInvoice(shopOrderId: number | undefined) {
+    if (!shopOrderId) return;
+    const endpoint = `file/download-invoice/${shopOrderId}`;
+    this.api.get(endpoint, { responseType: 'blob' }).subscribe({
+      next: (res: any) => {
+        const file = new Blob([res], { type: 'application/pdf' });
+        const fileURL = URL.createObjectURL(file);
+        const link = document.createElement('a');
+        link.href = fileURL;
+        link.download = `Factura_ECC_${shopOrderId}.pdf`;
+        link.click();
+        URL.revokeObjectURL(fileURL);
+      },
+      error: (err) => {
+        console.error('Error al descargar la factura:', err);
+      },
     });
   }
 }

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <div th:fragment="footerFragment">
+        
+        <div style="font-family: 'Helvetica', sans-serif; margin-top: 30px;">
+            
+            <table style="width: 100%; border: 2px solid #000; border-collapse: collapse;">
+                <tr>
+                    <td style="border-right: 2px solid #000; padding: 15px; width: 65%; vertical-align: top;">
+                        <div style="font-size: 8px; color: #666; font-weight: bold; margin-bottom: 10px;">SOURCE_REPOSITORY</div>
+                        
+                        <table style="border-collapse: collapse;">
+                            <tr>
+                                <td style="padding-right: 10px; vertical-align: middle;">
+                                    <a href="https://github.com/erwinlino99/ecommerce-java-ts" style="text-decoration: none;">
+                                        <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" 
+                                             width="25" height="25" style="border: none;" />
+                                    </a>
+                                </td>
+                                <td style="vertical-align: middle;">
+                                    <div style="font-size: 11px; font-family: 'Courier New', monospace; font-weight: bold;">
+                                        <a href="https://github.com/erwinlino99/ecommerce-java-ts" 
+                                           style="color: #000; text-decoration: none;">
+                                            erwinlino99 / ecommerce-java-ts
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <div style="margin-top: 15px; font-size: 8px; color: #666; font-weight: bold;">LEGAL_TERM</div>
+                        <div style="font-size: 9px; text-align: justify; line-height: 1.2;">
+                            Este documento es una copia electrónica original generada por el sistema ECOMMERCE-CODE. 
+                            Todos los derechos reservados &copy; 2026.
+                        </div>
+                    </td>
+
+                    <td style="padding: 15px; width: 35%; text-align: center; vertical-align: middle; background: #f9f9f9;">
+                        <img src="https://cdn-icons-png.flaticon.com/512/9752/9752284.png" 
+                             width="50" height="50" style="display: block; margin: 0 auto 5px auto;" />
+                        <div style="font-size: 8px; font-weight: bold; letter-spacing: 1px;">
+                            SECURE_TRANSACTION
+                        </div>
+                        <div style="font-size: 7px; font-family: 'Courier New', monospace; color: #999; margin-top: 2px;">
+                            ORDER_CODE: ECC_[[${order.id}]]
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <div style="margin-top: 5px; font-family: 'Courier New', monospace; font-size: 8px; color: #000; text-align: right;">
+                [ PAGE_01_OF_01 // SYSTEM_STAMP: [[${#temporals.format(order.created, 'HH:mm:ss')}]] ]
+            </div>
+            
+        </div>
+    </div>
+</body>
+</html>

@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,15 +12,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.ecommerce.backend.services.ImportFileService;
+import com.ecommerce.backend.services.FileService;
 
 @RestController
 @RequestMapping("/file")
-public class ImportFileController {
+public class FileController {
 
-    private final ImportFileService service;
+    private final FileService service;
 
-    public ImportFileController(ImportFileService service) {
+    public FileController(FileService service) {
         this.service = service;
     }
 
@@ -38,6 +39,11 @@ public class ImportFileController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         return this.service.readXlsxTemplate(file);
+    }
+
+    @GetMapping("/download-invoice/{shopOrderId}")
+    public ResponseEntity<byte[]> downloadInvociceShopOrderId(@PathVariable Integer shopOrderId) {
+        return this.service.downloadInvociceShopOrderId(shopOrderId);
     }
 
 }

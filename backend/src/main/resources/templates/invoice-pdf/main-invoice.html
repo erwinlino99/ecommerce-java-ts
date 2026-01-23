@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+            /* Controlamos márgenes en el body */
+        }
+
+        body {
+            font-family: 'Helvetica', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div th:replace="~{invoice-pdf/header :: headerFragment}"></div>
+
+    <div th:replace="~{invoice-pdf/content :: tableFragment}"></div>
+
+    <div th:replace="~{invoice-pdf/footer :: footerFragment}"></div>
+</body>
+
+</html>
