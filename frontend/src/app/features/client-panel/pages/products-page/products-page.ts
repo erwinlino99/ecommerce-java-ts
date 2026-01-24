@@ -23,7 +23,7 @@ export class ProductsPage implements OnInit {
   }
 
   private getShopProducts() {
-    const endoint = '/all-shop-products';
+    const endoint = '/web-all-shop-products';
     this.shopProduct$ = this.api.get<ShopProduct[]>(endoint).pipe(
       tap((items) => {
         // console.log('Products BACKEND', items);

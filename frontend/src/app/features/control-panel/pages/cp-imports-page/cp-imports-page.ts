@@ -4,11 +4,12 @@ import { ApiService } from '../../../../service/api.service';
 import { ImportResponse } from '../../../../shared/model-interface/ImportResponse';
 import { PopupService } from '../../../../service/pop.up.data.service';
 import Swal from 'sweetalert2';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'cp-app-imports-page',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,MatIcon],
   templateUrl: './cp-imports-page.html',
   styleUrl: './cp-imports-page.scss',
 })

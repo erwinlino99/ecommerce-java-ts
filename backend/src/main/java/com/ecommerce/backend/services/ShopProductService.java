@@ -32,7 +32,6 @@ public class ShopProductService {
     @Transactional
     public ShopProductDto updateShopProduct(Integer shopProductId, ShopProductRequest request) {
         UseLogger.info("DESDE EL FRONTEND ", request.toString());
-
         ShopProduct product = this.repo.findById(shopProductId)
                 .orElseThrow(() -> new EntityNotFoundException("Producto no encontrado con ID: " + shopProductId));
 
@@ -40,7 +39,7 @@ public class ShopProductService {
         product.setShortDescription(request.shortDescription());
         product.setDescription(request.description());
         product.setCurrentStock(request.currentStock());
-        ShopProductBrand brand=new ShopProductBrand();
+        ShopProductBrand brand = new ShopProductBrand();
         brand.setId(request.shopProductBrandId());
         product.setShopProductBrand(brand);
         product.setPrice(request.price());
@@ -56,39 +55,22 @@ public class ShopProductService {
     }
 
     public List<ShopProductDto> getAllRecords() {
-        // List<ShopProduct> products = this.repo.findByDeletedIsNull();
         List<ShopProduct> products = this.repo.findAll();
         return products.stream().map(p -> ShopProductMapper.toFullDto(p)).toList();
     }
 
-    @SuppressWarnings("null")
     public ShopProductDto getShopProductById(Integer shopProductId) {
         ShopProduct p = this.repo.findById(shopProductId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
-
-        return new ShopProductDto(
-                p.getId(),
-                p.getName(),
-                p.getBrandName(),
-                p.getShopProductBrandId(),
-                p.getDescription(),
-                p.getShortDescription(),
-                p.getPrice(),
-                p.getCurrentStock(),
-                p.getMeasurementName(),
-                p.getMeasurementUnit(),
-                p.getCreated(),
-                p.getModified(),
-                p.getDeleted());
-
+        return ShopProductMapper.toFullDto(p);
     }
 
-    public ResponseEntity deletedShopProduct(Integer shopProductId) {
+    public ResponseEntity deleteShopProduct(Integer shopProductId) {
         ShopProduct product = this.repo.findById(shopProductId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
         product.setDeleted(LocalDateTime.now());
         this.repo.save(product);
-        return ResponseEntity.ok(Map.of("ok", "Producto eliminado"));
+        return ResponseEntity.ok().build();
     }
 
     public void createOrUpdate(ShopProductImportRequest shopProductImport, ShopProductBrand shopProductBrand,
@@ -124,5 +106,10 @@ public class ShopProductService {
         product.setDeleted(null);
         this.repo.save(product);
         return ResponseEntity.ok().build();
+    }
+
+    public List<ShopProductDto> getAllNotDeleted() {
+        List<ShopProduct> products = this.repo.findByDeletedIsNull();
+        return products.stream().map(p -> ShopProductMapper.toFullDto(p)).toList();
     }
 }

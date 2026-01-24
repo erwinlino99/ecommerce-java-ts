@@ -31,13 +31,18 @@ public class ShopProductController {
         return this.service.getAllRecords();
     }
 
-    //RECUPERACION DEL PRODUCTO MEDIANTE EL ID
+    @GetMapping("/web-all-shop-products")
+    public List<ShopProductDto> getAllNotDeleted() {
+        return this.service.getAllNotDeleted();
+    }
+
+    // RECUPERACION DEL PRODUCTO MEDIANTE EL ID
     @GetMapping("/shop-product-id/{shopProductId}")
     public ShopProductDto getShopProductById(@PathVariable Integer shopProductId) {
         return this.service.getShopProductById(shopProductId);
     }
 
-    //PARA ACTULIZAR LA INFORMACION DEL PRODUCTO
+    // PARA ACTULIZAR LA INFORMACION DEL PRODUCTO
     @PutMapping("/shop-product-id/{shopProductId}")
     public ShopProductDto updateShopProduct(@PathVariable Integer shopProductId,
             @RequestBody ShopProductRequest shopProductRequest) {
@@ -45,9 +50,10 @@ public class ShopProductController {
     }
 
     @DeleteMapping("/shop-product/delete/id={shopProductId}")
-    public ResponseEntity deletedShopProduct(@PathVariable Integer shopProductId) {
-        return this.service.deletedShopProduct(shopProductId);
+    public ResponseEntity deleteShopProduct(@PathVariable Integer shopProductId) {
+        return this.service.deleteShopProduct(shopProductId);
     }
+
     @PostMapping("/shop-product/restore/{shopProductId}")
     public ResponseEntity restoreShopProduct(@PathVariable Integer shopProductId) {
         return this.service.restoreShopProduct(shopProductId);
