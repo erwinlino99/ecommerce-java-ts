@@ -8,7 +8,7 @@
   </appender>
 
   <!-- COMENTAR ESTO EN PRODUCCION , SOLO FUNCIONA EN LOCAL PARA HACER LOGGERS -->
-  <appender name="DB" class="ch.qos.logback.classic.db.DBAppender">
+  <!-- <appender name="DB" class="ch.qos.logback.classic.db.DBAppender">
     <connectionSource class="ch.qos.logback.core.db.DriverManagerConnectionSource">
       <driverClass>com.mysql.cj.jdbc.Driver</driverClass>
       <url>jdbc:mysql://localhost:3306/e-commerce?useSSL=false&amp;serverTimezone=Europe/Madrid&amp;allowPublicKeyRetrieval=true</url>
@@ -21,7 +21,7 @@
     </filter>
 
     <includeCallerData>true</includeCallerData>
-  </appender>
+  </appender> -->
 
   <!-- === Solo tus clases se guardan en BD === -->
   <logger name="com.ecommerce.backend" level="INFO" additivity="false">
