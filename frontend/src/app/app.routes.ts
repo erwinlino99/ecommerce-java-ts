@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { Home } from './home/home';
+import { LoginHome } from './login-home/login.home';
 import { RegisterPage } from './features/client-panel/pages/register-page/register-page';
 import { HomePage } from './features/client-panel/pages/home-page/home-page';
 import { ProductsPage } from './features/client-panel/pages/products-page/products-page';
@@ -18,7 +18,7 @@ import { CpProductDetailPage } from './features/control-panel/details/cp-product
 import { CpWebUserDetailPage } from './features/control-panel/details/cp-web-user-detail-page/cp-web-user-detail-page';
 import { ChatIaPage } from './features/client-panel/pages/chat-ia-page/chat-ia-page';
 export const routes: Routes = [
-  { path: '', component: Home },
+  { path: '', component: LoginHome },
   { path: 'register', component: RegisterPage },
   {
     // --- RUTAS DE CLIENTE ---

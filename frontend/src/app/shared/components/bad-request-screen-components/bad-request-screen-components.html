@@ -1,0 +1,27 @@
+<div class="error-backdrop" *ngIf="errorService.errorState$ | async as message">
+    <div class="vibrant-error-card">
+
+        <button class="btn-close-vibrant" (click)="errorService.hide()">✕</button>
+
+        <div class="card-content">
+            <div class="vibration-subtle">
+                <div class="image-wrapper">
+                    <img src="bad.png" alt="Error" class="main-img">
+                </div>
+            </div>
+
+            <div class="text-wrapper">
+                <span class="alert-label">ERROR</span>
+                <h1 class="main-title">¡Algo ha ido mal!</h1>
+
+                <div class="message-box">
+                    <p>{{ message }}</p>
+                </div>
+            </div>
+        </div>
+        <!-- 
+        <div class="footer-beat">
+            <div class="beat-line"></div>
+        </div> -->
+    </div>
+</div>

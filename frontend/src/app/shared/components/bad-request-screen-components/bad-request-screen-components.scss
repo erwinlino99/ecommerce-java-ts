@@ -1,0 +1,141 @@
+/* CONTENEDOR PRINCIPAL (FONDO) */
+.error-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 0, 0, 0.94); 
+    backdrop-filter: blur(15px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000000;
+}
+
+/* TARJETA DE ERROR */
+.vibrant-error-card {
+    position: relative;
+    background: #ff0000; // Rojo puro
+    width: 95%;
+    max-width: 500px;
+    border-radius: 50px;
+    padding: 60px 40px 40px;
+    box-shadow: 0 0 80px rgba(255, 0, 0, 0.5), inset 0 0 40px rgba(0,0,0,0.2);
+    border: 3px solid #ffffff;
+    text-align: center;
+    animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* BOTÓN DE CIERRE */
+.btn-close-vibrant {
+    position: absolute;
+    top: 25px; 
+    right: 25px;
+    background: white;
+    border: none;
+    color: #ff0000;
+    width: 45px; 
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: 900;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s ease;
+    z-index: 10;
+
+    &:hover {
+        transform: scale(1.1) rotate(180deg);
+        box-shadow: 0 0 20px white;
+    }
+}
+
+/* SECCIÓN DE IMAGEN Y VIBRACIÓN */
+.vibration-subtle {
+    display: inline-block;
+    animation: shake-subtle 0.4s infinite ease-in-out; 
+}
+
+.image-wrapper {
+    margin-bottom: 30px;
+    
+    .main-img {
+        width: 250px;
+        height: auto;
+        // Efecto neón rojo alrededor de la imagen
+        filter: drop-shadow(0 0 15px #ff0000) drop-shadow(0 0 5px #ff4d4d);
+    }
+}
+
+/* TEXTOS Y MENSAJE */
+.alert-label {
+    background: #000;
+    color: #ff0000;
+    padding: 6px 20px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 900;
+    letter-spacing: 4px;
+    border: 2px solid #ff0000;
+}
+
+.main-title {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin: 20px 0;
+    text-transform: uppercase;
+    text-shadow: 3px 3px 0px #000; // Sombra tipo retro
+}
+
+.message-box {
+    background: #000; // Negro para contraste máximo
+    padding: 25px;
+    border: 2px solid #ff4d4d;
+    border-radius: 20px;
+    box-shadow: 0 8px 0px #800000; // Efecto 3D inferior
+    
+    p {
+        color: #fff; 
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin: 0;
+        line-height: 1.4;
+    }
+}
+
+/* LÍNEA DE PULSO FINAL */
+.footer-beat {
+    margin-top: 40px;
+    
+    .beat-line {
+        height: 6px; 
+        width: 100px;
+        background: #fff;
+        margin: 0 auto;
+        border-radius: 10px;
+        box-shadow: 0 0 10px #fff;
+        animation: pulse-line 0.8s infinite alternate ease-in-out;
+    }
+}
+
+/* --- ANIMACIONES --- */
+
+// Vibración sutil (1px de movimiento)
+@keyframes shake-subtle {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(1px, 1px) rotate(0.2deg); }
+  50% { transform: translate(-1px, 1px) rotate(-0.2deg); }
+  75% { transform: translate(1px, -1px) rotate(0.1deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+@keyframes bounceIn {
+    from { opacity: 0; transform: scale(0.3); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulse-line {
+    from { opacity: 0.3; width: 60px; }
+    to { opacity: 1; width: 140px; }
+}

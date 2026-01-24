@@ -10,6 +10,8 @@ import { ApiService } from '../service/api.service';
 import { SessionService } from '../service/session.service';
 import { Router } from '@angular/router';
 import { environment } from '../environment/environment';
+import { ErrorService } from '../service/error.service';
+import { CommonModule } from '@angular/common';
 
 type LoginResponse = {
   roleName: string;
@@ -28,14 +30,20 @@ type LoginResponse = {
     MatInputModule,
     MatButtonModule,
     MatIconModule,
+    CommonModule,
   ],
-  templateUrl: './home.html',
-  styleUrls: ['./home.scss'],
+  templateUrl: './login-home.html',
+  styleUrls: ['./login-home.scss'],
 })
-export class Home implements OnInit {
+export class LoginHome implements OnInit {
   emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   isPro = environment.production;
-  constructor(private api: ApiService, private router: Router, private session: SessionService) {}
+  constructor(
+    private api: ApiService,
+    private router: Router,
+    private session: SessionService,
+    private errorService: ErrorService,
+  ) {}
 
   webUserLoginForm = new FormGroup({
     email: new FormControl<string>('', [Validators.required, Validators.pattern(this.emailRegex)]),
@@ -70,6 +78,8 @@ export class Home implements OnInit {
       },
       error: (err) => {
         console.error('Error en login:', err);
+        const message = err.error?.error || 'Error inesperado en el servidor';
+        this.errorService.show(message);
       },
     });
   }
