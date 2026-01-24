@@ -36,6 +36,7 @@ export class ControlPanelToolBar implements OnInit {
       this.fetchCpMenu();
       this.fetchAdminUser();
     } else {
+      this.router.navigate(["/"])
       this.errorMsg = 'Sesión de administrador no válida.';
     }
   }

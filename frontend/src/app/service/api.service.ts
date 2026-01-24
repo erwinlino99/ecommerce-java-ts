@@ -5,6 +5,7 @@ import { Observable, throwError, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../environment/environment';
 import { SessionService } from './session.service';
+import { Router } from '@angular/router';
 
 type Path = string | number;
 
@@ -22,6 +23,7 @@ export class ApiService {
   constructor(
     private http: HttpClient,
     private session: SessionService,
+    private router:Router,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -101,8 +103,9 @@ export class ApiService {
 
     if (activeToken) {
       headers = headers.set('Authorization', `Bearer ${activeToken}`);
+    }else{
+      this.router.navigate(['/']);
     }
-
     const responseType = (options?.responseType ?? 'json') as any;
     const withCredentials = options?.withCredentials ?? false;
 

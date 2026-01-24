@@ -26,12 +26,16 @@ export class ToolBar implements OnInit {
   loading = false;
   errorMsg = '';
 
-  constructor(private api: ApiService, private session: SessionService, private router: Router) {}
+  constructor(
+    private api: ApiService,
+    private session: SessionService,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.userToken = this.session.getClientToken();
     if (!this.userToken) {
-      // this.router.navigate(['/']);
+      this.router.navigate(['/']);
       return;
     }
     this.fetchShopIndex();
@@ -46,7 +50,7 @@ export class ToolBar implements OnInit {
         return of([] as ShopIndex[]);
       }),
 
-      shareReplay(1)
+      shareReplay(1),
     );
   }
 
@@ -63,7 +67,7 @@ export class ToolBar implements OnInit {
       finalize(() => {
         this.loading = false;
       }),
-      shareReplay(1)
+      shareReplay(1),
     );
   }
 
