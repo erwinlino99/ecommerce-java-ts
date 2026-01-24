@@ -37,7 +37,7 @@ restoreItem(shopProductId: number) {
     Swal.fire({
         title: '¿RESTAURAR PRODUCTO?',
         text: 'Volverá al catálogo activo',
-        icon: 'question',
+        icon: 'info',
         showCancelButton: true,
         confirmButtonText: 'SÍ', // Texto simple
         cancelButtonText: 'NO',

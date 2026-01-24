@@ -1,27 +1,26 @@
 <header class="dashboard-header">
-    <h1>GESTIÓN DE PRODUCTOS</h1>
-    <p>Control de inventario, existencias y catálogo maestro</p>
+    <h1>LISTADO DE PRODUCTOS</h1>
 </header>
 
 <div class="panel-container">
 
     <div style="display: flex; gap: 5px; margin-bottom: 25px; border-bottom: 1px solid var(--border-ui);">
-        <button (click)="setTab('active')" 
-                [style.border-bottom]="currentTab === 'active' ? '3px solid var(--accent)' : 'none'"
-                [style.color]="currentTab === 'active' ? 'var(--accent)' : 'var(--text-secondary)'"
-                style="background: transparent; border: none; padding: 12px 24px; cursor: pointer; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">
+        <button (click)="setTab('active')"
+            [style.border-bottom]="currentTab === 'active' ? '3px solid var(--accent)' : 'none'"
+            [style.color]="currentTab === 'active' ? 'var(--accent)' : 'var(--text-secondary)'"
+            style="background: transparent; border: none; padding: 12px 24px; cursor: pointer; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">
             CATÁLOGO ACTIVO
         </button>
-        <button (click)="setTab('deleted')" 
-                [style.border-bottom]="currentTab === 'deleted' ? '3px solid var(--danger)' : 'none'"
-                [style.color]="currentTab === 'deleted' ? 'var(--danger)' : 'var(--text-secondary)'"
-                style="background: transparent; border: none; padding: 12px 24px; cursor: pointer; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">
+        <button (click)="setTab('deleted')"
+            [style.border-bottom]="currentTab === 'deleted' ? '3px solid var(--danger)' : 'none'"
+            [style.color]="currentTab === 'deleted' ? 'var(--danger)' : 'var(--text-secondary)'"
+            style="background: transparent; border: none; padding: 12px 24px; cursor: pointer; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">
             ARTÍCULOS BORRADOS
         </button>
     </div>
 
     <div *ngIf="data$ | async as productos; else loading">
-        
+
         <div class="table-header">
             <h2>{{ currentTab === 'active' ? 'LISTADO GENERAL PRODUCTOS' : 'ARCHIVO DE ELIMINADOS' }}</h2>
             <div class="count-tag" [style.background]="currentTab === 'active' ? 'var(--accent)' : 'var(--danger)'">
@@ -65,16 +64,14 @@
                                 <button class="btn-management btn-view" title="Ver Detalles" (click)="goToDetail(p.id)">
                                     <mat-icon>visibility</mat-icon>
                                 </button>
-                                <button class="btn-management btn-edit" title="Editar Producto" (click)="goToDetail(p.id)">
-                                    <mat-icon>edit</mat-icon>
-                                </button>
-                                <button class="btn-management btn-delete" title="Eliminar Producto" (click)="deleteItem(p.id)">
+                                <button class="btn-management btn-delete" title="Eliminar Producto"
+                                    (click)="deleteItem(p.id)">
                                     <mat-icon>delete</mat-icon>
                                 </button>
                             </ng-container>
-
                             <ng-container *ngIf="currentTab === 'deleted'">
-                                <button class="btn-management" style="color: var(--success)" title="Restaurar" (click)="restoreItem(p.id)">
+                                <button class="btn-management" style="color: var(--success)" title="Restaurar"
+                                    (click)="restoreItem(p.id)">
                                     <mat-icon>settings_backup_restore</mat-icon>
                                 </button>
                             </ng-container>

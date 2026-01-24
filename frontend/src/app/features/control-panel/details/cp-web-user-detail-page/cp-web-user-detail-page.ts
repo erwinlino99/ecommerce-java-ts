@@ -7,10 +7,11 @@ import { CpUser } from '../../../../shared/model-interface/CpUser';
 import { CommonModule, DatePipe } from '@angular/common';
 import { LoginResponse } from '../../../../shared/model-interface/LoginResponse';
 import { SessionService } from '../../../../service/session.service';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-cp-web-user-detail-page',
-  imports: [DatePipe, CommonModule, ReactiveFormsModule],
+  imports: [DatePipe, CommonModule, ReactiveFormsModule,MatIcon],
   templateUrl: './cp-web-user-detail-page.html',
   styleUrl: './../detail-page.scss',
 })

@@ -5,7 +5,7 @@ public record ShopProductRequest(
         String name,
         String shortDescription,
         String description,
-        String brandName,
+        Integer shopProductBrandId,
         String shopProductMeasurement,
         Integer currentStock,
         double price,

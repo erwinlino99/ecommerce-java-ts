@@ -1,6 +1,5 @@
 <div class="dashboard-header">
-    <h1>DETALLE DE EXPEDICIÓN</h1>
-    <p>Control de logística, artículos y obsequios del pedido</p>
+    <h1>DETALLE DE PEDIDO</h1>
 </div>
 
 <div class="pending-container" *ngIf="loading()">
@@ -44,9 +43,10 @@
             <span style="margin-left: 8px; letter-spacing: 0.5px;">DESCARGAR FACTURA</span>
         </button>
 
-        <button class="btn-industrial" (click)='goBack()' style="margin-top: 0.5rem;">
-            <mat-icon>arrow_back</mat-icon>
-            <span style="margin-left: 8px;">VOLVER AL LISTADO</span>
+        <button class="btn-industrial" (click)="goBack()"
+            style="margin-top: 0.5rem; background-color: #991b1b; color: #fff; border: 1px solid #7f1d1d;">
+            <mat-icon style="font-size: 20px;">keyboard_return</mat-icon>
+            <span style="margin-left: 8px;">VOLVER</span>
         </button>
 
     </div>
@@ -109,11 +109,6 @@
                 </div>
             </div>
 
-        </div>
-        <div class="detail-footer">
-            <button type="button" class="btn-industrial btn-save">
-                DESCARGAR ALBARÁN EN PDF
-            </button>
         </div>
 
     </form>

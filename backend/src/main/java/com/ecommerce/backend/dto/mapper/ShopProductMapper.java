@@ -14,6 +14,7 @@ public class ShopProductMapper {
                 product.getId(),
                 product.getName(),
                 product.getBrandName(),
+                product.getShopProductBrandId(),
                 product.getDescription(),
                 product.getShortDescription(),
                 product.getPrice(),

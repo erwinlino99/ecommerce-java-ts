@@ -3,6 +3,7 @@ import { ApiService } from '../../../service/api.service';
 import { ActivatedRoute, Router } from '@angular/router'; // CORREGIDO: Router de Angular, no de Express
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable, tap } from 'rxjs';
+import { PopupService } from '../../../service/pop.up.data.service';
 
 @Directive()
 export abstract class BaseDetailComponent<T> implements OnInit {
@@ -21,7 +22,8 @@ export abstract class BaseDetailComponent<T> implements OnInit {
     protected api: ApiService,
     protected route: ActivatedRoute,
     protected router: Router,
-    protected fb: FormBuilder
+    protected fb: FormBuilder,
+    protected popup: PopupService,
   ) {}
 
   ngOnInit(): void {
@@ -43,12 +45,12 @@ export abstract class BaseDetailComponent<T> implements OnInit {
             this.form.patchValue(data as any);
           }
           this.loading.set(false);
-        })
+        }),
       );
 
       this.observable$.subscribe({
         next: (data) => {
-          console.log('DESDE', this.endpoint, 'DATO ->', data);
+          console.log('ENDPOINT:', this.endpoint, 'DATO ->', data);
         },
         error: (err) => {
           console.error('Error en ApiService:', err);
@@ -67,15 +69,17 @@ export abstract class BaseDetailComponent<T> implements OnInit {
 
       //COMBINAMOS EL OBJETO ORIGINAL CON LOS VALORES DEL FORMULARIO
       const payload = { ...this.item(), ...this.form.value };
-
+      console.log('ENVIANDO AL ENDPOINT -> a :', this.endpoint, payload);
       this.api.put<T>([this.endpoint, id], payload).subscribe({
         next: (updatedData) => {
           this.item.set(updatedData);
           this.isEditing.set(false);
           this.form.markAsPristine();
-          console.log('ACTUALIZADO CON ÉXITO');
+          console.log('MODELO ACTUALIZADO');
+          this.popup.success('DATOS GUARDADOS');
         },
         error: (err) => {
+          this.popup.error('ERROR AL GUARDAR DATOS');
           console.error('ERROR AL ACTUALIZAR:', err);
         },
       });

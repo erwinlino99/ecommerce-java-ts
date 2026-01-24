@@ -1,6 +1,5 @@
 <div class="dashboard-header">
-  <h1>EXPEDIENTE DE USUARIO</h1>
-  <p>Gestión de credenciales y trazabilidad de acceso</p>
+  <h1>DETALLE DE USUARIO</h1>
 </div>
 
 <div class="pending-container" *ngIf="loading()">
@@ -12,24 +11,49 @@
 
   <div class="detail-header">
     <div class="title-group">
-      <!-- <div class="id-badge">ID: {{ item()?.id }}</div> -->
-      <h2>{{ form.get('name')?.value }} {{ form.get('lastName')?.value }}</h2>
-      <span class="registration-date">Registrado el : {{ item()?.created | date:'dd/MM/yyyy HH:mm' }}</span>
+      <h2>Usuario: {{ form.get('name')?.value }} {{ form.get('lastName')?.value }}</h2>
+      <span class="subtitle">REF: {{ item()?.id }}</span>
     </div>
-    <button class="btn-industrial" (click)="goBack()">
-      <span>VOLVER AL LISTADO</span>
-    </button>
-    <button class="btn-industrial" (click)="goImpersonate(item()?.id!)">
-      <span>Impersonar</span>
-    </button>
+
+    <div class="actions-group" style="display: flex; gap: 0.75rem; align-items: center;">
+
+
+
+      <button *ngIf="!isEditing()" type="button" (click)="toggleEdit()" class="btn-industrial btn-edit">
+        <mat-icon>edit</mat-icon>
+        <span>EDITAR</span>
+      </button>
+
+      <ng-container *ngIf="isEditing()">
+        <button type="button" (click)="toggleEdit()" class="btn-industrial btn-cancel">
+          <mat-icon>close</mat-icon>
+          <span>CANCELAR</span>
+        </button>
+
+        <button type="submit" form="userForm" [disabled]="form.invalid" class="btn-industrial btn-save">
+          <mat-icon>save</mat-icon>
+          <span>GUARDAR</span>
+        </button>
+      </ng-container>
+
+
+      <button type="button" class="btn-industrial"
+        style="background-color: #059669; color: #fff; border: 1px solid #047857;" (click)="goImpersonate(item()?.id!)">
+        <mat-icon>switch_account</mat-icon>
+        <span>IMPERSONAR</span>
+      </button>
+      <button class="btn-industrial" style="background-color: #991b1b; color: #fff; border: 1px solid #7f1d1d;"
+        (click)="goBack()">
+        <mat-icon>keyboard_return</mat-icon>
+        <span>VOLVER</span>
+      </button>
+    </div>
   </div>
-
-  <form [formGroup]="form" (ngSubmit)="save()" class="industrial-form">
-
+  <form [formGroup]="form" id="userForm" (ngSubmit)="save()" class="industrial-form">
     <div class="form-sections-wrapper">
 
       <div class="form-section">
-        <h3 class="section-title">Información de Perfil</h3>
+        <h3 class="section-title">Información general</h3>
         <div class="form-grid">
           <div class="form-field">
             <label>Nombre</label>
@@ -51,7 +75,7 @@
       </div>
 
       <div class="form-section highlight">
-        <h3 class="section-title">Estatus Operativo</h3>
+        <h3 class="section-title">ESTADO DEL USUARIO</h3>
         <div class="form-grid">
           <div class="form-field">
             <label>Cuenta Activa</label>
@@ -65,40 +89,15 @@
               {{ form.get('isBlocked')?.value == 1 ? 'BLOQUEADO' : 'NORMAL' }}
             </div>
           </div>
-          <!-- <div class="form-field full-width">
-            <label>Trazabilidad: Última Sincronización</label>
-            <div class="readonly-text">
-              {{ (item()?.last_time_login | date:'fullDate') || 'No se han registrado accesos previos' }}
-              <small *ngIf="item()?.last_time_login">({{ item()?.last_time_login | date:'shortTime' }})</small>
-            </div>
-          </div> -->
         </div>
       </div>
 
     </div>
 
-    <hr>
-    <div class="detail-footer">
-      <div class="modification-info" *ngIf="item()?.modified">
-        Última modificación: {{ item()?.modified | date:'short' }}
-      </div>
-
-      <div class="buttons-group">
-        <ng-container *ngIf="!isEditing(); else actionButtons">
-          <button type="button" (click)="toggleEdit()" class="btn-industrial btn-edit">
-            EDITAR REGISTRO
-          </button>
-        </ng-container>
-
-        <ng-template #actionButtons>
-          <button type="button" (click)="toggleEdit()" class="btn-industrial btn-cancel">
-            DESCARTAR
-          </button>
-          <button type="submit" [disabled]="form.invalid" class="btn-industrial btn-save">
-            CONFIRMAR CAMBIOS
-          </button>
-        </ng-template>
-      </div>
+    <div
+      style="padding: 1rem 2rem; opacity: 0.6; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; border-top: 1px solid var(--border-ui);"
+      *ngIf="item()?.modified">
+      >> ÚLTIMA_MODIFICACIÓN_SISTEMA: {{ item()?.modified | date:'short' }}
     </div>
   </form>
 </div>

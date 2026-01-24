@@ -4,6 +4,7 @@ export interface ShopProduct{
     shortDescription:string,
     description:string,
     brandName:string,
+    BrandId:number,
     shopProductMeasurement:string,
     currentStock:number,
     price:number,

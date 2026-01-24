@@ -31,11 +31,13 @@ public class ShopProductController {
         return this.service.getAllRecords();
     }
 
+    //RECUPERACION DEL PRODUCTO MEDIANTE EL ID
     @GetMapping("/shop-product-id/{shopProductId}")
     public ShopProductDto getShopProductById(@PathVariable Integer shopProductId) {
         return this.service.getShopProductById(shopProductId);
     }
 
+    //PARA ACTULIZAR LA INFORMACION DEL PRODUCTO
     @PutMapping("/shop-product-id/{shopProductId}")
     public ShopProductDto updateShopProduct(@PathVariable Integer shopProductId,
             @RequestBody ShopProductRequest shopProductRequest) {

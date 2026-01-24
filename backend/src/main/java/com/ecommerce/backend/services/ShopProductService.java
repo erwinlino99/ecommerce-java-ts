@@ -17,7 +17,7 @@ import com.ecommerce.backend.models.ShopProduct;
 import com.ecommerce.backend.models.ShopProductBrand;
 import com.ecommerce.backend.models.ShopProductMeasurement;
 import com.ecommerce.backend.repositories.ShopProductRepository;
-
+import com.ecommerce.backend.util.UseLogger;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
@@ -31,6 +31,7 @@ public class ShopProductService {
 
     @Transactional
     public ShopProductDto updateShopProduct(Integer shopProductId, ShopProductRequest request) {
+        UseLogger.info("DESDE EL FRONTEND ", request.toString());
 
         ShopProduct product = this.repo.findById(shopProductId)
                 .orElseThrow(() -> new EntityNotFoundException("Producto no encontrado con ID: " + shopProductId));
@@ -39,6 +40,9 @@ public class ShopProductService {
         product.setShortDescription(request.shortDescription());
         product.setDescription(request.description());
         product.setCurrentStock(request.currentStock());
+        ShopProductBrand brand=new ShopProductBrand();
+        brand.setId(request.shopProductBrandId());
+        product.setShopProductBrand(brand);
         product.setPrice(request.price());
 
         if (request.deleted() != null && !request.deleted().isBlank() && product.getDeleted() == null) {
@@ -66,6 +70,7 @@ public class ShopProductService {
                 p.getId(),
                 p.getName(),
                 p.getBrandName(),
+                p.getShopProductBrandId(),
                 p.getDescription(),
                 p.getShortDescription(),
                 p.getPrice(),

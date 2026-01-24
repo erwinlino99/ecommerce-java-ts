@@ -1,6 +1,5 @@
 <div class="dashboard-header">
-  <h1>GESTIÓN DE ACTIVOS</h1>
-  <p>Control centralizado de especificaciones y disponibilidad</p>
+  <h1>DETALLE DEL PRODUCTO</h1>
 </div>
 
 <div class="pending-container" *ngIf="loading()">
@@ -9,29 +8,56 @@
 </div>
 
 <div class="detail-panel" *ngIf="!loading() && item()">
+  
   <div class="detail-header">
     <div class="title-group">
-      <h2>{{ form.get('name')?.value }}</h2>
-      <!-- <span class="subtitle">ID: {{ item()?.id }} | {{ form.get('name')?.value }}</span> -->
+      <h2>Producto: {{ form.get('name')?.value }}</h2>
+      <span class="subtitle">REF: {{ item()?.id }}</span>
     </div>
-    <button class="btn-industrial" (click)="goBack()">
-      <span>SALIR</span>
-    </button>
+
+    <div class="actions-group" style="display: flex; gap: 0.75rem; align-items: center;">
+      
+      <button *ngIf="!isEditing()" type="button" (click)="toggleEdit()" class="btn-industrial btn-edit">
+        <mat-icon>edit</mat-icon>
+        <span>EDITAR</span>
+      </button>
+
+      <ng-container *ngIf="isEditing()">
+        <button type="button" (click)="toggleEdit()" class="btn-industrial btn-cancel">
+          <mat-icon>close</mat-icon>
+          <span>CANCELAR</span>
+        </button>
+
+        <button type="submit" form="productForm" [disabled]="form.invalid" class="btn-industrial btn-save">
+          <mat-icon>save</mat-icon>
+          <span>GUARDAR</span>
+        </button>
+      </ng-container>
+
+      <button class="btn-industrial" 
+              style="background-color: #991b1b; color: #fff; border: 1px solid #7f1d1d;"
+              (click)="goBack()">
+        <mat-icon>keyboard_return</mat-icon>
+        <span>VOLVER</span>
+      </button>
+    </div>
   </div>
 
-  <form [formGroup]="form" (ngSubmit)="save()" class="industrial-form">
+  <form [formGroup]="form" id="productForm" (ngSubmit)="save()" class="industrial-form">
     <div class="form-grid">
+      
       <div class="form-field full-width">
         <label>Nombre del producto</label>
-        <input type="text" formControlName="name" [readonly]="!isEditing()" [style.font-size]="'1.2rem'"
-          [style.color]="'var(--accent)'">
+        <input type="text" formControlName="name" [readonly]="!isEditing()" 
+               [style.font-size]="'1.2rem'" [style.color]="'var(--accent)'">
       </div>
 
-      <div class="form-field">
-        <app-base-selectable label="Marca producto" endpoint="shop-product-brand/selectable" formControlName="brandName"
-          [readonly]="!isEditing()">
-        </app-base-selectable>
-      </div>
+      <app-base-selectable 
+        label="Marca producto" 
+        endpoint="shop-product-brand/selectable"
+        formControlName="shopProductBrandId" 
+        [readonly]="!isEditing()">
+      </app-base-selectable>
 
       <div class="form-field">
         <label>Precio (EUR)</label>
@@ -39,17 +65,24 @@
       </div>
 
       <div class="form-field">
-        <label>Inventario Actual</label>
-        <input type="number" formControlName="currentStock" [readonly]="!isEditing()"
-          [style.color]="form.get('currentStock')?.value > 0 ? 'var(--success)' : 'var(--danger)'">
+        <label>Unidad de Medida</label>
+        <input type="text" formControlName="measurementName" [readonly]="true" 
+               style="background: rgba(0,0,0,0.1); border-style: dashed;">
       </div>
 
       <div class="form-field">
-        <label>Unidad de Medida</label>
-        <input type="text" formControlName="shopProductMeasurement" [readonly]="!isEditing()">
+        <label>Unidades dentro del formato</label>
+        <input type="text" formControlName="measurementUnit" [readonly]="true" 
+               style="background: rgba(0,0,0,0.1); border-style: dashed;">
       </div>
 
-      <div class="form-field full-width">
+      <div class="form-field">
+        <label>Inventario Actual</label>
+        <input type="number" formControlName="currentStock" [readonly]="!isEditing()"
+               [style.color]="form.get('currentStock')?.value > 0 ? 'var(--success)' : 'var(--danger)'">
+      </div>
+
+      <div class="form-field">
         <label>Descripción corta</label>
         <input type="text" formControlName="shortDescription" [readonly]="!isEditing()">
       </div>
@@ -59,23 +92,6 @@
         <textarea formControlName="description" [readonly]="!isEditing()"></textarea>
       </div>
 
-    </div>
-
-    <div class="detail-footer">
-      <ng-container *ngIf="!isEditing(); else actionButtons">
-        <button type="button" (click)="toggleEdit()" class="btn-industrial btn-edit">
-          Editar Producto
-        </button>
-      </ng-container>
-
-      <ng-template #actionButtons>
-        <button type="button" (click)="toggleEdit()" class="btn-industrial btn-cancel">
-          CANCELAR
-        </button>
-        <button type="submit" [disabled]="form.invalid" class="btn-industrial btn-save">
-          PERSISTIR CAMBIOS
-        </button>
-      </ng-template>
     </div>
   </form>
 </div>
