@@ -9,6 +9,7 @@ import { ApiService } from '../../../../service/api.service';
 import { WebUser } from '../../../../shared/model-interface/WebUser';
 import { Router } from '@angular/router';
 import { LoginResponse } from '../../../../shared/model-interface/LoginResponse';
+import { PopupService } from '../../../../service/pop.up.data.service';
 @Component({
   selector: 'app-register-page',
   standalone: true,
@@ -24,12 +25,13 @@ import { LoginResponse } from '../../../../shared/model-interface/LoginResponse'
   styleUrls: ['./register-page.scss'],
 })
 export class RegisterPage {
-
   webUsers: WebUser[] = [];
 
-  constructor(private api: ApiService, private router: Router) {
-
-  }
+  constructor(
+    private api: ApiService,
+    private router: Router,
+    private popup: PopupService,
+  ) {}
 
   registerForm = new FormGroup({
     name: new FormControl<string>(''),
@@ -49,8 +51,11 @@ export class RegisterPage {
     const endpoint = 'auth/register';
     this.api.post<LoginResponse>(endpoint, newWebUser).subscribe({
       next: (resp) => {
-        localStorage.setItem('token', resp.token);
-        this.router.navigate(['/']);
+        // localStorage.setItem('token', resp.token);
+        this.popup.success('REGISTRADO CORRECTAMENTE');
+        setTimeout(() => {
+          this.router.navigate(['/']);
+        }, 1000);
       },
       error: (err) => {
         console.error('Error registering:', err);
@@ -68,5 +73,8 @@ export class RegisterPage {
       next: (txt) => console.log('INFO FROM BACKEND :', txt),
       error: (err) => console.error('ERROR PING /:', err),
     });
+  }
+  goToLogin() {
+    this.router.navigate(['/']);
   }
 }

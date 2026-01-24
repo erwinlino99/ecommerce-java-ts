@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ecommerce.backend.dto.request.LoginRequest;
+import com.ecommerce.backend.dto.request.ResetPasswordRequest;
 import com.ecommerce.backend.dto.response.LoginResponse;
 import com.ecommerce.backend.models.CpUser;
 import com.ecommerce.backend.models.WebUser;
@@ -119,6 +120,35 @@ public class AuthService {
         String token = jwtService.generateToken(saved);
         return ResponseEntity.ok(new LoginResponse(token, user.getId(), ""));
 
+    }
+
+    public ResponseEntity<?> resetPassword(ResetPasswordRequest request) {
+        UseLogger.info("VER  ", request.toString());
+        
+        UseLogger.info("Iniciando recuperación de contraseña para: ", request.getEmail());
+
+        Optional<CpUser> cpUser = cpUserRepo.findByEmail(request.getEmail());
+        if (cpUser.isPresent()) {
+            CpUser admin = cpUser.get();
+            admin.setPassword(passwordEncoder.encode(request.getNewPassword()));
+            cpUserRepo.save(admin);
+            UseLogger.info("Contraseña actualizada con éxito para ADMIN: ", admin.getEmail());
+            return ResponseEntity.ok("{\"message\": \"Contraseña de administrador actualizada correctamente\"}");
+        }
+
+        Optional<WebUser> webUser = webUserRepo.findByEmail(request.getEmail());
+        if (webUser.isPresent()) {
+            WebUser client = webUser.get();
+            // Encriptar y setear la nueva password
+            client.setPassword(passwordEncoder.encode(request.getNewPassword()));
+            webUserRepo.save(client);
+
+            UseLogger.info("Contraseña actualizada con éxito para CLIENTE: ", client.getEmail());
+            return ResponseEntity.ok("{\"message\": \"Contraseña de cliente actualizada correctamente\"}");
+        }
+        UseLogger.warning("No se encontró usuario para resetear password: ", request.getEmail());
+        return ResponseEntity.status(404)
+                .body("{\"error\": \"El correo electrónico no está registrado en el sistema\"}");
     }
 
 }

@@ -1,6 +1,6 @@
 <div class="login-wrap">
   <div class="login-container">
-    
+
     <div class="side-branding">
       <div>
         <div class="brand-header">
@@ -12,7 +12,9 @@
 
         <div class="bio-section">
           <p class="bio-intro">Hola, soy <strong>Erwin David Lino Zabala</strong>.</p>
-          <p class="bio-desc">Proyecto personal desarrollado con <strong>Java Spring Boot</strong> y <strong>Angular</strong>.</p>
+          <p class="bio-desc">Proyecto personal desarrollado con <strong>Java Spring Boot</strong> y
+            <strong>Angular</strong>.
+          </p>
         </div>
       </div>
 
@@ -44,16 +46,15 @@
     </div>
 
     <div class="form-section">
-      <div class="status-chip" 
-           [class.local-mode]="!isPro"
-           [style.background-color]="isPro ? 'rgba(34, 197, 94, 0.1)' : 'rgba(59, 130, 246, 0.1)'"
-           [style.color]="isPro ? '#22c55e' : '#3b82f6'">
+      <div class="status-chip" [class.local-mode]="!isPro"
+        [style.background-color]="isPro ? 'rgba(34, 197, 94, 0.1)' : 'rgba(59, 130, 246, 0.1)'"
+        [style.color]="isPro ? '#22c55e' : '#3b82f6'">
         @if (isPro) {
-          <mat-icon class="chip-icon">cloud_done</mat-icon>
-          <span>Producción</span>
+        <mat-icon class="chip-icon">cloud_done</mat-icon>
+        <span>Producción</span>
         } @else {
-          <mat-icon class="chip-icon-local">analytics</mat-icon>
-          <span>Entorno Local</span>
+        <mat-icon class="chip-icon-local">analytics</mat-icon>
+        <span>Entorno Local</span>
         }
       </div>
 
@@ -81,6 +82,10 @@
       <div class="register-footer">
         <span class="muted-text">¿Eres nuevo?</span>
         <button mat-button class="orange-text bold" (click)="goToRegister()">Crea una cuenta</button>
+        <hr>
+        <button mat-button (click)="goToReset()" class="reset-button">
+          Restablecer contraseña
+        </button>
       </div>
     </div>
   </div>

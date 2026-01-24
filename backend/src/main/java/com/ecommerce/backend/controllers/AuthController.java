@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ecommerce.backend.dto.request.LoginRequest;
+import com.ecommerce.backend.dto.request.ResetPasswordRequest;
 import com.ecommerce.backend.dto.response.LoginResponse;
 import com.ecommerce.backend.models.WebUser;
 import com.ecommerce.backend.services.AuthService;
@@ -32,4 +33,10 @@ public class AuthController {
     public ResponseEntity<LoginResponse> register(@RequestBody WebUser user) {
         return this.authService.register(user);
     }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity resetPassword(@RequestBody ResetPasswordRequest request) {
+        return this.authService.resetPassword(request);
+    }
+
 }

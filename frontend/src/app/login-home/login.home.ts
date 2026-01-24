@@ -12,12 +12,7 @@ import { Router } from '@angular/router';
 import { environment } from '../environment/environment';
 import { ErrorService } from '../service/error.service';
 import { CommonModule } from '@angular/common';
-
-type LoginResponse = {
-  roleName: string;
-  token: string;
-  webUserId: number;
-};
+import { LoginResponse } from '../shared/model-interface/LoginResponse';
 
 @Component({
   selector: 'app-home',
@@ -67,7 +62,6 @@ export class LoginHome implements OnInit {
 
     this.api.post<LoginResponse>(endpoint, body).subscribe({
       next: (data) => {
-        console.log('VER ESTO ->', data);
         if (data.roleName && data.roleName !== 'ROLE_CLIENT') {
           this.session.setSuperAdminToken(data.token);
           this.router.navigate(['/admin/config']);
@@ -83,8 +77,11 @@ export class LoginHome implements OnInit {
       },
     });
   }
-
   goToRegister() {
     this.router.navigate(['/register']);
+  }
+
+  goToReset() {
+    this.router.navigate(['/reset-password']);
   }
 }

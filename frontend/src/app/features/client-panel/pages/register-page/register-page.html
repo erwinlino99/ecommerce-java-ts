@@ -11,7 +11,7 @@
         <h2 class="hero-title">Únete a la <br> <span class="muted-text">comunidad.</span></h2>
 
         <div class="bio-section">
-          <p class="bio-intro">Estás a un paso, <strong>Developer</strong>.</p>
+          <p class="bio-intro">Estás a un paso de entrar a la app
           <p class="bio-desc">Crea tu cuenta para explorar la integración completa entre <strong>Spring Boot</strong> y <strong>Angular</strong>.</p>
         </div>
       </div>
@@ -21,7 +21,7 @@
           <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" class="social-logo" alt="LinkedIn">
           <div class="contact-info">
             <span class="contact-label">LinkedIn</span>
-            <span class="contact-sub blue-text">Conectar con Erwin</span>
+            <span class="contact-sub blue-text">Conecta conmigo </span>
           </div>
         </a>
       </div>
@@ -61,12 +61,10 @@
           <mat-icon>send</mat-icon>&nbsp; REGISTRARME
         </button>
       </form>
-
       <div class="register-footer">
         <span class="muted-text">¿Ya tienes cuenta?</span>
-        <button mat-button class="orange-text bold" >Inicia sesión</button>
+        <button mat-button class="orange-text bold" (click)="goToLogin()">Inicia sesión</button>
       </div>
     </div>
-
   </div>
 </div>

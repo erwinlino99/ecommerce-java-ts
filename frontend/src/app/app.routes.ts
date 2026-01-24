@@ -17,9 +17,11 @@ import { CpOrderDetailPage } from './features/control-panel/details/cp-order-det
 import { CpProductDetailPage } from './features/control-panel/details/cp-product-detail-page/cp-product-detail-page';
 import { CpWebUserDetailPage } from './features/control-panel/details/cp-web-user-detail-page/cp-web-user-detail-page';
 import { ChatIaPage } from './features/client-panel/pages/chat-ia-page/chat-ia-page';
+import { ResetPasswordPage } from './features/client-panel/pages/reset-password-page/reset-password-page';
 export const routes: Routes = [
   { path: '', component: LoginHome },
   { path: 'register', component: RegisterPage },
+  { path: 'reset-password', component: ResetPasswordPage },
   {
     // --- RUTAS DE CLIENTE ---
     path: '',
