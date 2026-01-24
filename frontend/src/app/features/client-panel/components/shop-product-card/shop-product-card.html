@@ -5,15 +5,23 @@
       <h2 class="product-title">{{ shopProduct.name }}</h2>
     </div>
 
+    <div class="product-image">
+      <img src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?q=80&w=500&auto=format&fit=crop" 
+           alt="Mascota Premium">
+    </div>
+
     <div class="card-bottom">
+      <div class="price-tag">35.00€</div>
+
       <div class="card-actions-pro">
         <button class="btn-buy" (click)="buyItem(shopProduct.id)">
-          <mat-icon>shopping_cart</mat-icon> Comprar
+          <mat-icon>shopping_cart</mat-icon> 
+          <span>Comprar</span>
         </button>
+        
         <button class="btn-details" (click)="goDetailPage(shopProduct.id)">
           Ver detalle
         </button>
       </div>
     </div>
-    
 </div>

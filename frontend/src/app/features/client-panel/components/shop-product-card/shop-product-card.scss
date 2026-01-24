@@ -1,126 +1,157 @@
-// Variables globales de tu sistema
-$green-dark: #064e3b;
-$green-main: #00cf8d;
-$green-light: #f6fffa;
-$border-color: #eef2ef;
-$text-gray: #64748b;
+/* --- VARIABLES CORPORATIVAS ECOMMERCE-CODE --- */
+$web-dark: #1c1917;
+$web-orange: #d97706;
+$web-orange-dark: #b45309;
+$web-bg: #f8fafc;
+$web-border: #e2e8f0;
+$web-text-muted: #64748b;
 
+/* --- CONTENEDOR GRID (FULL-WIDTH) --- */
 .shop-grid-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 25px; // Un poco más de aire entre productos
-  justify-content: center; // Centrado queda mejor en pantallas grandes
+  gap: 25px;
+  justify-content: center;
   padding: 2rem;
-  max-width: 1300px;
-  margin: 0 auto;
+  max-width: 100%;
+  margin: 0;
 }
 
+/* --- TARJETA DE PRODUCTO PREMIUM --- */
 .product-card-pro {
   background: #ffffff;
-  border-radius: 20px; // Más redondeado como las cabeceras
+  border: 1px solid $web-border;
+  border-radius: 24px;
   padding: 1.75rem;
-  width: 280px;
-  min-height: 220px; // Para que todas midan lo mismo
+  width: 300px;
+  min-height: 420px; /* Ajustado para acomodar la imagen */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border: 1px solid $border-color;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
 
   &:hover {
     transform: translateY(-8px);
-    border-color: $green-main;
-    box-shadow: 0 12px 30px rgba(6, 78, 59, 0.08);
+    border-color: $web-orange;
+    box-shadow: 0 12px 30px rgba(28, 25, 23, 0.1);
 
     .brand-pill {
-      background: $green-main;
+      background: $web-orange;
       color: white;
     }
-  }
-
-  .brand-pill {
-    display: inline-block;
-    background: $green-light;
-    color: $green-dark;
-    padding: 4px 12px;
-    border-radius: 8px;
-    font-size: 0.7rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 1rem;
-    transition: all 0.2s;
-  }
-
-  .product-title {
-    font-size: 1.35rem;
-    color: $green-dark;
-    margin: 0;
-    font-weight: 800;
-    line-height: 1.2;
-  }
-
-  .price-tag {
-    font-size: 1.5rem;
-    font-weight: 900;
-    color: $green-dark;
-    margin: 1rem 0;
-  }
-
-  .card-actions-pro {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 1.5rem;
-  }
-
-  // BOTÓN PRINCIPAL
-  .btn-buy {
-    background-color: $green-main;
-    color: white;
-    border: none;
-    padding: 12px;
-    border-radius: 12px;
-    font-weight: 700;
-    font-size: 0.95rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    transition: all 0.2s;
-
-    &:hover {
-      background-color: $green-dark;
-      transform: scale(1.02);
-    }
-
-    mat-icon {
-      font-size: 20px;
-      width: 20px;
-      height: 20px;
+    
+    .product-image img {
+      transform: scale(1.08);
     }
   }
+}
 
-  // BOTÓN SECUNDARIO
-  .btn-details {
-    background-color: transparent;
-    color: $text-gray;
-    border: 1px solid $border-color;
-    padding: 10px;
-    border-radius: 12px;
-    font-weight: 600;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: all 0.2s;
+/* --- COMPONENTES INTERNOS --- */
 
-    &:hover {
-      background-color: $green-light;
-      border-color: $green-main;
-      color: $green-dark;
-    }
+.brand-pill {
+  display: inline-block;
+  background: #fff7ed;
+  color: $web-orange;
+  padding: 6px 14px;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.8rem;
+  transition: all 0.2s ease;
+}
+
+.product-title {
+  font-size: 1.4rem;
+  color: $web-dark;
+  margin: 0;
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+}
+
+.product-image {
+  width: 100%;
+  height: 180px;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: #f1f5f9;
+  margin: 1rem 0;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+}
+
+.price-tag {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: $web-orange; /* Precio resaltado en naranja corporativo */
+  margin: 0.5rem 0 1rem 0;
+}
+
+/* --- ACCIONES (BOTONES SÓLIDOS) --- */
+.card-actions-pro {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn-buy {
+  background-color: $web-orange;
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 1rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background-color: $web-orange-dark;
+  }
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.btn-details {
+  background-color: $web-dark;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background-color: #3f3f3f;
+  }
+}
+
+/* Ajuste para pantallas pequeñas */
+@media (max-width: 480px) {
+  .product-card-pro {
+    width: 100%;
+    padding: 1.25rem;
   }
 }

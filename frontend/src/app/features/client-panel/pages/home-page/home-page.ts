@@ -5,7 +5,7 @@ import { MatIcon } from '@angular/material/icon';
   standalone: true,
   imports: [ MatIcon],
   templateUrl: './home-page.html',
-  styleUrls: ['./home-page.scss'],
+  styleUrls: ['./../web-style.scss'],
 })
 export class HomePage {
 

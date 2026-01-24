@@ -1,44 +1,86 @@
-<div class="page-content">
-  
-  <section class="hero-section">
-    <div class="hero-content">
-      <span class="pill-badge">Nueva Colección 2025</span>
-      <h1>Todo lo que tu mascota necesita, <span>en un solo lugar</span></h1>
-      <p>Descubre productos premium seleccionados para el bienestar y la felicidad de tus compañeros de vida.</p>
-      <div class="hero-btns">
-        <button routerLink="/shop" class="btn-primary">Explorar Tienda</button>
-        <button class="btn-secondary">Saber más</button>
-      </div>
-    </div>
-    <div class="hero-image-container">
-      <img src="https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?q=80&w=2071&auto=format&fit=crop" alt="Mascotas felices">
-    </div>
-  </section>
+<div class="web-main-container">
 
-  <section class="features-grid">
-    <div class="feature-card">
-      <div class="icon-wrap"><mat-icon>local_shipping</mat-icon></div>
-      <div class="feature-info">
-        <h3>Envío Rápido</h3>
-        <p>Recibe tus pedidos en menos de 24 horas.</p>
+  <div class="web-card">
+
+    <h1 class="web-h1">Bienestar <span class="web-accent">Premium</span> para tu mascota.</h1>
+    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+      <button style="
+        background: #d97706; 
+        color: white; 
+        padding: 20px 40px; 
+        border-radius: 16px; 
+        border: none; 
+        font-weight: 800; 
+        cursor: pointer; 
+        font-size: 1.1rem; 
+        text-transform: uppercase; 
+        letter-spacing: 1px;
+        box-shadow: 0 6px 0px #b45309;
+        transition: all 0.1s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      " onmouseover="this.style.transform='translateY(2px)'; this.style.boxShadow='0 4px 0px #b45309'"
+        onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 6px 0px #b45309'">
+        Explorar Tienda
+      </button>
+
+      <button style="
+        background: #1c1917; 
+        color: white; 
+        padding: 20px 40px; 
+        border-radius: 16px; 
+        border: none; 
+        font-weight: 800; 
+        cursor: pointer; 
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      " onmouseover="this.style.backgroundColor='#3f3f3f'" onmouseout="this.style.backgroundColor='#1c1917'">
+        Catálogo 2025
+      </button>
+    </div>
+
+    <p class="web-p">
+      Desarrollamos soluciones de alto rendimiento integrando <strong>Spring Boot</strong> y <strong>Angular</strong>.
+      Curamos los mejores productos del mercado para asegurar que la salud de tu compañero sea nuestra prioridad número
+      uno.
+    </p>
+
+    <div class="web-inner-benefits">
+      <div class="inner-item">
+        <mat-icon>local_shipping</mat-icon>
+        <div class="item-text">
+          <span class="item-title">Logística</span>
+          <span class="item-sub">Envíos 24h</span>
+        </div>
+      </div>
+      <div class="inner-item">
+        <mat-icon>verified_user</mat-icon>
+        <div class="item-text">
+          <span class="item-title">Seguridad</span>
+          <span class="item-sub">Pagos Cifrados</span>
+        </div>
+      </div>
+      <div class="inner-item">
+        <mat-icon>pets</mat-icon>
+        <div class="item-text">
+          <span class="item-title">Premium</span>
+          <span class="item-sub">Calidad Expert</span>
+        </div>
       </div>
     </div>
-    
-    <div class="feature-card">
-      <div class="icon-wrap"><mat-icon>verified_user</mat-icon></div>
-      <div class="feature-info">
-        <h3>Pago Seguro</h3>
-        <p>Transacciones protegidas con altos estándares.</p>
-      </div>
-    </div>
-    
-    <div class="feature-card">
-      <div class="icon-wrap"><mat-icon>pets</mat-icon></div>
-      <div class="feature-info">
-        <h3>Calidad Premium</h3>
-        <p>Marcas que garantizan la salud animal.</p>
-      </div>
-    </div>
-  </section>
+  </div>
+
+  <div class="web-image-row">
+    <div class="web-image-card"><img src="1.png" alt="Mascota 1"></div>
+    <div class="web-image-card"><img src="2.png" alt="Mascota 2"></div>
+    <div class="web-image-card"><img src="3.png" alt="Mascota 3"></div>
+    <div class="web-image-card"><img src="4.png" alt="Mascota 4"></div>
+  </div>
 
 </div>

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { ToolBar } from '../tool-bar/tool-bar';
-import { AppFooter } from '../app-footer/app-footer';
+import { ToolBar } from '../web-tool-bar/tool-bar';
+import { AppFooter } from '../web-app-footer/app-footer';
 import { RouterOutlet } from '@angular/router';
 
 
@@ -8,8 +8,7 @@ import { RouterOutlet } from '@angular/router';
   selector: 'app-app-shell',
   standalone:true,
   imports: [ToolBar,AppFooter,RouterOutlet],
-  templateUrl: './client-app-shell.html',
-  styleUrl: './app-shell.scss'
+  templateUrl: './app-shell.html'
 })
 export class ClientAppShell {
 

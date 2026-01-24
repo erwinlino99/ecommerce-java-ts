@@ -1,6 +1,27 @@
-<div class="contenedor-productos">
-    <shop-product-card
-      *ngFor="let p of (shopProduct$ | async)"
-      [shopProduct]="p">
+<div class="shop-layout">
+  <aside class="shop-sidebar">
+    <div class="filter-group">
+      <h3 class="filter-title">Marcas</h3>
+      <ul class="filter-list">
+        <li><input type="checkbox" id="m1"> <label for="m1">Acana Premium</label></li>
+        <li><input type="checkbox" id="m2"> <label for="m2">Royal Canin</label></li>
+        <li><input type="checkbox" id="m3"> <label for="m3">Taste of Wild</label></li>
+      </ul>
+    </div>
+    <div class="filter-group">
+      <h3 class="filter-title">Medidas</h3>
+      <ul class="filter-list">
+        <li><input type="checkbox" id="s1"> <label for="s1">Pequeña (0-10kg)</label></li>
+        <li><input type="checkbox" id="s2"> <label for="s2">Mediana (10-25kg)</label></li>
+        <li><input type="checkbox" id="s3"> <label for="s3">Grande (+25kg)</label></li>
+      </ul>
+    </div>
+
+    <button class="btn-apply-filters">Aplicar Filtros</button>
+  </aside>
+
+  <main class="contenedor-productos">
+    <shop-product-card *ngFor="let p of (shopProduct$ | async)" [shopProduct]="p">
     </shop-product-card>
+  </main>
 </div>

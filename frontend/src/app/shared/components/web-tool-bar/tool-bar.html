@@ -7,7 +7,10 @@
     </div>
     
     <div class="nav-right">
-      <span class="user-welcome">Bienvenido, <strong>{{ user.name }}</strong></span>
+      <div class="user-info-box">
+        <span class="user-label">Bienvenido,</span>
+        <strong class="user-name">{{ user.name }}</strong>
+      </div>
       
       <div class="divider"></div>
 
@@ -19,8 +22,14 @@
 
   <main class="micro-content">
     <div class="compact-grid" *ngIf="shopIndex | async as items">
-      <div *ngFor="let item of items" [routerLink]="[item.path]" class="mini-card">
-        <div class="icon-bg"><mat-icon>apps</mat-icon></div>
+      <div *ngFor="let item of items" 
+           [routerLink]="[item.path]" 
+           routerLinkActive="active-card"
+           [routerLinkActiveOptions]="{exact: true}"
+           class="mini-card">
+        <div class="icon-bg">
+          <mat-icon>apps</mat-icon>
+        </div>
         <div class="info">
           <h3>{{ item.name }}</h3>
         </div>
@@ -28,4 +37,5 @@
       </div>
     </div>
   </main>
+
 </div>

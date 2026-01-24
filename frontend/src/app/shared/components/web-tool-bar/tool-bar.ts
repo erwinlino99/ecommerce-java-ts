@@ -8,13 +8,12 @@ import { WebUser } from '../../model-interface/WebUser';
 import { ShopIndex } from '../../model-interface/ShopIndex';
 import { ApiService } from '../../../service/api.service';
 import { SessionService } from '../../../service/session.service';
-import { RouterLink } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
-
+import { RouterLink, RouterLinkActive, RouterModule } from '@angular/router'; // Importa estos
 @Component({
   selector: 'app-tool-bar',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule, RouterLink, MatIcon],
+  imports: [CommonModule, MatCardModule, MatButtonModule, RouterLink, MatIcon,RouterLinkActive,RouterModule],
   templateUrl: './tool-bar.html',
   styleUrl: './tool-bar.scss',
 })

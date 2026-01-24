@@ -1,233 +1,243 @@
-// Paleta Verde Micro (Consistente)
-$green-dark: #064e3b;
-$green-main: #00cf8d;
-$green-light: #f6fffa;
-$border-color: #eef2ef;
-$text-gray: #64748b;
+/* --- VARIABLES CORPORATIVAS --- */
+$web-dark: #1c1917;
+$web-orange: #d97706;
+$web-orange-dark: #b45309;
+$web-bg: #f8fafc;
+$web-border: #e2e8f0;
+$web-text-muted: #64748b;
 
+/* --- CONTENEDOR (ADAPTATIVO) --- */
 .orders-compact-container {
-  max-width: 900px; // Un poco más ancho para mayor legibilidad
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 2.5rem 1.5rem;
-  font-family: 'Inter', sans-serif;
+  padding: clamp(20px, 5vw, 40px) 15px; // Padding fluido
+  box-sizing: border-box;
+  min-height: 100vh;
 
   .page-title {
-    color: $green-dark;
-    font-size: 2rem; // Título más grande y potente
-    font-weight: 800;
-    margin-bottom: 2.5rem;
-    
-    &::after {
-      content: '';
-      display: block;
-      width: 60px;
-      height: 4px;
-      background: $green-main;
-      margin-top: 8px;
-      border-radius: 2px;
-    }
+    color: $web-dark;
+    font-size: clamp(1.8rem, 5vw, 3rem); 
+    font-weight: 900;
+    margin-bottom: 2rem;
+    letter-spacing: -2px;
+    text-transform: uppercase;
+    text-align: center; // Centrado en móvil por defecto
   }
 }
 
+@media (min-width: 768px) {
+  .orders-compact-container .page-title { text-align: left; }
+}
+
+/* --- TARJETA --- */
 .order-mini-card {
   background: white;
-  border-radius: 16px; // Bordes más redondeados
-  margin-bottom: 2.5rem;
+  border-radius: 24px;
+  margin-bottom: 35px;
+  border: 1px solid $web-border;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.04);
   overflow: hidden;
-  border: 1px solid $border-color;
-  box-shadow: 0 10px 25px rgba(6, 78, 59, 0.05); // Sombra más profunda
-  transition: transform 0.2s ease;
+}
 
-  &:hover {
-    border-color: $green-main;
+/* --- HEADER (RESPONSIVE FLEX) --- */
+.order-header {
+  background-color: $web-dark;
+  color: white;
+  padding: 22px clamp(15px, 5vw, 35px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+
+  .header-left {
+    .order-id { font-weight: 800; font-size: 1.1rem; text-transform: uppercase; display: block; }
+    .order-date { font-size: 0.85rem; color: rgba(255, 255, 255, 0.5); }
   }
 
-  // CABECERA: Más alta y con texto claro
-  .order-header {
-    background-color: $green-dark;
-    color: white;
-    padding: 1.25rem 2rem; 
+  .header-right {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    .header-left {
-      .order-id { 
-        font-weight: 700; 
-        font-size: 1.1rem; 
-        display: block; 
-        letter-spacing: 0.5px;
-      }
-      .order-date { 
-        font-size: 0.85rem; 
-        color: rgba(255, 255, 255, 0.7); 
-      }
-    }
-
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-  }
-
-  .btn-repeat {
-    background: $green-main;
-    color: $green-dark;
-    border: none;
-    padding: 8px 18px;
-    border-radius: 8px;
-    font-weight: 700;
-    font-size: 0.85rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.3s ease;
-
-    &:hover {
-      background: white;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    
-    mat-icon { font-size: 18px; width: 18px; height: 18px; }
-  }
-
-  .status-badge {
-    background: rgba(255, 255, 255, 0.15);
-    padding: 6px 14px;
-    border-radius: 6px;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    font-weight: 700;
-    letter-spacing: 0.8px;
-  }
-
-  .order-body {
-    padding: 1.5rem 2rem;
-
-    .items-table {
-      width: 100%;
-      border-collapse: collapse;
-
-      th { 
-        text-align: left; 
-        color: $green-dark; 
-        font-size: 0.8rem;
-        text-transform: uppercase;
-        padding-bottom: 12px;
-        border-bottom: 2px solid $green-light;
-      }
-
-      td { 
-        padding: 15px 0; 
-        border-bottom: 1px solid $green-light; 
-      }
-
-      .product-name { 
-        color: $green-dark; 
-        font-weight: 700; 
-        font-size: 1rem; 
-        display: block; 
-      }
-      .product-meta { 
-        color: $text-gray; 
-        font-size: 0.85rem; 
-        margin-top: 2px;
-        display: block; 
-      }
-      
-      .text-right { text-align: right; }
-      .text-center { text-align: center; }
-      .font-bold { font-weight: 800; color: $green-dark; }
-    }
-  }
-
-  // SECCIÓN DE REGALOS: Más visual
-  .order-gifts {
-    background-color: $green-light;
-    padding: 1.5rem 2rem;
-    border-top: 1px dashed $border-color;
-    display: flex;
-    flex-direction: column; // Volvemos a columna para que los stickers luzcan
-    gap: 1rem;
-
-    .gifts-label {
-      color: $green-main;
-      font-weight: 800;
-      font-size: 0.9rem;
-      margin: 0;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      &::before { content: '🎁'; font-size: 1.1rem; }
-    }
-
-    .sticker-album {
-      display: flex;
-      gap: 15px;
-    }
-
-    .sticker-item {
-      .sticker-wrapper {
-        background: white;
-        border: 2px solid $border-color;
-        border-radius: 12px;
-        width: 60px; // Tamaño grande de nuevo
-        height: 60px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-
-        &:hover {
-          transform: scale(1.1) rotate(5deg);
-          border-color: $green-main;
-        }
-
-        .pokemon-img {
-          width: 80%;
-          height: 80%;
-          object-fit: contain;
-        }
-      }
-    }
-  }
-
-  .order-footer {
-    padding: 1.5rem 2rem;
-    background-color: #fafbfc;
-    border-top: 1px solid $border-color;
-    display: flex;
-    justify-content: flex-end;
     align-items: center;
     gap: 15px;
-
-    .total-label { 
-      color: $text-gray; 
-      font-weight: 600; 
-      font-size: 1rem; 
-    }
-    .total-amount { 
-      color: $green-main; 
-      font-size: 1.8rem; // Precio grande y destacado
-      font-weight: 900; 
+    flex-wrap: wrap; // Permite que el botón y el badge bajen si no hay espacio
+    
+    .status-badge {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      border: 1px solid rgba(255, 255, 255, 0.2);
     }
   }
 }
 
-// Estados de carga y vacío proporcionales
-.loading-state-mini, .empty-state-mini {
-  text-align: center;
-  padding: 5rem 2rem;
-  mat-icon { 
-    font-size: 60px; 
-    width: 60px; 
-    height: 60px; 
-    color: $green-main; 
-    margin-bottom: 1rem;
+/* --- BOTÓN REPETIR --- */
+.btn-repeat {
+  background: $web-orange;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.2s;
+
+  &:hover { background: $web-orange-dark; }
+  mat-icon { font-size: 18px; width: 18px; height: 18px; }
+}
+
+/* --- CUERPO Y TABLA (ULTRA RESPONSIVE) --- */
+.order-body {
+  padding: 30px clamp(15px, 5vw, 35px);
+
+  .items-table {
+    width: 100%;
+    border-collapse: collapse;
+    
+    /* Configuración para Escritorio */
+    @media (min-width: 601px) {
+      table-layout: fixed;
+      th:nth-child(1), td:nth-child(1) { width: 60%; text-align: left; }
+      th:nth-child(2), td:nth-child(2) { width: 15%; text-align: center; }
+      th:nth-child(3), td:nth-child(3) { width: 25%; text-align: right; }
+      
+      th, td { padding: 15px 10px; border-bottom: 1px solid $web-bg; }
+    }
+
+    /* Transformación para Móvil */
+    @media (max-width: 600px) {
+      display: block;
+      
+      thead { display: none; } // Ocultamos cabeceras en móvil
+      
+      tbody, tr, td { display: block; width: 100%; }
+      
+      tr { padding: 15px 0; border-bottom: 1px solid $web-bg; }
+      
+      td { 
+        padding: 5px 0; 
+        border: none;
+        text-align: left !important; // Todo a la izquierda en móvil
+        
+        &.text-right { margin-top: 10px; font-size: 1.2rem; }
+      }
+    }
+
+    th {
+      color: $web-text-muted;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-bottom: 2px solid $web-bg;
+    }
+
+    .product-name { color: $web-dark; font-weight: 800; font-size: 1.05rem; display: block; }
+    .product-meta { color: $web-text-muted; font-size: 0.85rem; }
   }
-  p { font-size: 1.2rem; color: $text-gray; }
+}
+
+/* --- REGALOS (ADAPTATIVOS) --- */
+.order-gifts {
+  background-color: #fffaf5;
+  padding: 35px 15px;
+  border-top: 1px dashed $web-border;
+  text-align: center;
+
+  .gifts-label {
+    color: $web-orange;
+    font-weight: 900;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px; // Aumentado un poco para que respiren las líneas
+    &::before, &::after { 
+      content: ''; 
+      height: 1px; 
+      width: 40px; 
+      background: $web-orange; 
+      opacity: 0.3; 
+    }
+  }
+
+  .sticker-album { 
+    display: flex; 
+    gap: 20px; 
+    justify-content: center; 
+    flex-wrap: wrap; 
+  }
+
+  .sticker-item {
+    perspective: 1000px; // Añade profundidad a la animación
+    
+    .sticker-wrapper {
+      background: white; 
+      border: 3px solid white; 
+      border-radius: 20px;
+      width: clamp(80px, 10vw, 120px); // Tamaño un poco más generoso
+      height: clamp(80px, 10vw, 120px);
+      display: flex; 
+      align-items: center; 
+      justify-content: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+      
+      /* ANIMACIÓN BASE */
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer;
+
+      &:hover {
+        transform: translateY(-10px) rotate(5deg) scale(1.1);
+        border-color: $web-orange;
+        box-shadow: 0 15px 30px rgba($web-orange, 0.2);
+        
+        .pokemon-img {
+          transform: scale(1.1);
+        }
+      }
+      .pokemon-img { 
+        width: 85%; 
+        height: 85%; 
+        object-fit: contain; 
+        transition: transform 0.4s ease;
+      }
+    }
+  }
+}
+
+/* --- FOOTER --- */
+.order-footer {
+  padding: 25px clamp(15px, 5vw, 35px);
+  background-color: #fafbfc;
+  border-top: 1px solid $web-border;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .total-label { color: $web-text-muted; font-weight: 700; text-transform: uppercase; }
+  .total-amount { color: $web-dark; font-size: clamp(1.8rem, 8vw, 2.5rem); font-weight: 900; letter-spacing: -2px; }
+}
+
+/* --- RESPONSIVE FINAL --- */
+@media (max-width: 768px) {
+  .order-header {
+    flex-direction: column;
+    align-items: flex-start;
+    .header-right { width: 100%; justify-content: space-between; margin-top: 10px; }
+  }
 }
